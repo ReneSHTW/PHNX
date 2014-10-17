@@ -13,6 +13,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 	}
 //kommentar
+	//zweiter Kommentar
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
