@@ -14,6 +14,7 @@ public class MainActivity extends Activity {
 	}
 //kommentar
 	//zweiter Kommentar
+	//AJAJAJAJAJAJJAJAAJJA
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
