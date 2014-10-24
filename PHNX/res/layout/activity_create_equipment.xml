@@ -32,15 +32,7 @@
         android:ems="10"
         android:text="amount" />
 
-    <Spinner
-        android:id="@+id/spinner1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@android:drawable/btn_dropdown"
-        android:entries="@string/selectType"
-        android:prompt="@string/selectType"
-        android:spinnerMode="dropdown" />
+
 
     <TextView
         android:id="@+id/textView2"
