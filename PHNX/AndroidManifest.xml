@@ -23,6 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name="MainMenuActivity"></activity>
+        <activity android:name="BuisnessCardActivity"></activity>
     </application>
 
 </manifest>

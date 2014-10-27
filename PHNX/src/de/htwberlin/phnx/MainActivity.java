@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-
 public class MainActivity extends Activity {
 
 	@Override
@@ -18,18 +17,28 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.first_use_welcome_screen);
 	}
 
-	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		Button button1 = (Button) findViewById(R.id.button1);
-        button1.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MainMenuActivity.class);
-                startActivity(intent);
-            }
-        });
+		Button button2 = (Button) findViewById(R.id.button2);
+		button1.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				Intent intent = new Intent(MainActivity.this,
+						MainMenuActivity.class);
+				startActivity(intent);
+			}
+
+		});
+		button2.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				Intent intent = new Intent(MainActivity.this,
+						BuisnessCardActivity.class);
+				startActivity(intent);
+			}
+
+		});
 		return true;
 	}
 
@@ -44,6 +53,5 @@ public class MainActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
-	
+
 }

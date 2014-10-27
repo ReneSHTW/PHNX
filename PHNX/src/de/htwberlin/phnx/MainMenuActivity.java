@@ -10,5 +10,5 @@ public class MainMenuActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.profile_create_1);
 	}
-	
+
 }
