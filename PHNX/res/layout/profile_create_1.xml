@@ -5,7 +5,7 @@
 
 <RelativeLayout 
     
-    android:layout_height="900dp"
+    android:layout_height="750dp"
     android:layout_width="match_parent"
     >
 
@@ -128,24 +128,51 @@
         android:ems="10" />
 
     <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button1"
+        android:layout_toLeftOf="@+id/imageView1"
+        android:text="My departure"
+        android:textSize="22dp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button1"
+        android:layout_alignBottom="@+id/button1"
+        android:layout_alignLeft="@+id/textView3"
+        android:text="today" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/button2"
+        android:layout_marginTop="23dp"
+        android:text="save" />
+
+    <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/editText12"
-        android:layout_marginTop="55dp"
-        android:text="-My arrival:"
+        android:layout_marginTop="56dp"
+        android:text="My arrival:"
         android:textSize="22dp" />
 
-    <TextView
-        android:id="@+id/textView3"
+    <Button
+        android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView2"
-        android:layout_alignBottom="@+id/textView2"
-        android:layout_toLeftOf="@+id/imageView1"
-        android:text="-My departure"
-        android:textSize="22dp" />
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="14dp"
+        android:text="today" />
 
 </RelativeLayout>
 </ScrollView>
