@@ -134,7 +134,8 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/editText12"
         android:layout_marginTop="55dp"
-        android:text="TextView" />
+        android:text="-My arrival:"
+        android:textSize="22dp" />
 
     <TextView
         android:id="@+id/textView3"
@@ -143,7 +144,8 @@
         android:layout_alignBaseline="@+id/textView2"
         android:layout_alignBottom="@+id/textView2"
         android:layout_toLeftOf="@+id/imageView1"
-        android:text="TextView" />
+        android:text="-My departure"
+        android:textSize="22dp" />
 
 </RelativeLayout>
 </ScrollView>
