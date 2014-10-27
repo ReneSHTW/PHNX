@@ -1,6 +1,7 @@
 package de.htwberlin.phnx;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,7 +26,8 @@ public class MainActivity extends Activity {
 		Button button1 = (Button) findViewById(R.id.button1);
         button1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-            	setContentView(R.layout.first_use_welcome_screen);
+                Intent intent = new Intent(MainActivity.this, MainMenuActivity.class);
+                startActivity(intent);
             }
         });
 		return true;
