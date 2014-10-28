@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import net.sharkfw.knowledgeBase.PeerSemanticNet;
+import net.sharkfw.knowledgeBase.PeerSemanticTag;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
