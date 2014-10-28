@@ -38,8 +38,8 @@ public class ProfileCreateActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		arrival = (Button) findViewById(R.id.button1);
 		departure = (Button) findViewById(R.id.button2);
-		arrival.setText(dateFormatter.format(dateTime.getTime()));
-		departure.setText(dateFormatter.format(dateTime.getTime()));
+		//arrival.setText(dateFormatter.format(dateTime.getTime()));
+		//departure.setText(dateFormatter.format(dateTime.getTime()));
 		arrival.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				selection = 0;
