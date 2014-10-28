@@ -4,6 +4,85 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="59dp"
+        android:text="@string/welcomePhnx"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="32dp" />
+
+    <Button
+        android:id="@+id/buttonSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="30dp"
+        android:layout_toLeftOf="@+id/buttonHelpOne"
+        android:text="Search" />
+
+    <Button
+        android:id="@+id/buttonHelpOne"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/buttonSearch"
+        android:layout_alignBottom="@+id/buttonSearch"
+        android:layout_alignRight="@+id/textView1"
+        android:text="\?" />
+
+    <Button
+        android:id="@+id/buttonCreateEditRessources"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonSearch"
+        android:layout_alignRight="@+id/buttonSearch"
+        android:layout_below="@+id/buttonHelpOne"
+        android:layout_marginTop="30dp"
+        android:text="Create/Edit Ressources" />
+
+    <Button
+        android:id="@+id/buttonHelpTwo"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/buttonHelpOne"
+        android:layout_centerVertical="true"
+        android:text="\?" />
+
+    <Button
+        android:id="@+id/buttonMap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonCreateEditRessources"
+        android:layout_alignRight="@+id/buttonCreateEditRessources"
+        android:layout_below="@+id/buttonHelpTwo"
+        android:layout_marginTop="30dp"
+        android:text="Map" />
+
+    <Button
+        android:id="@+id/buttonHelpThree"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/buttonMap"
+        android:layout_alignBottom="@+id/buttonMap"
+        android:layout_alignRight="@+id/buttonHelpTwo"
+        android:text="\?" />
+
+    <Button
+        android:id="@+id/buttonEditProfile"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonMap"
+        android:layout_alignRight="@+id/buttonHelpThree"
+        android:layout_below="@+id/buttonHelpThree"
+        android:layout_marginTop="40dp"
+        android:text="Edit Profile" />
 
 </RelativeLayout>
