@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
 		button2.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Intent intent = new Intent(MainActivity.this,
-						BuisnessCardActivity.class);
+						MainMenuActivity.class);
 				startActivity(intent);
 			}
 
