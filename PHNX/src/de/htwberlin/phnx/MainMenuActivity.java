@@ -10,7 +10,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class MainMenuActivity extends Activity implements OnClickListener {
+public class MainMenuActivity extends Activity implements OnClickListener
+{
 
 	private Button search;
 	private Button createEditRessources;
@@ -22,17 +23,19 @@ public class MainMenuActivity extends Activity implements OnClickListener {
 
 	Context context;
 	private Toast toast;
-	
-	//Intent intent = new Intent(MainMenuActivity.this, MainActivity.class);
+
+	Intent intent;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main_menu); 
+		setContentView(R.layout.main_menu);
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		context = getApplicationContext();
@@ -56,22 +59,21 @@ public class MainMenuActivity extends Activity implements OnClickListener {
 	}
 
 	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
+	public void onClick(View v)
+	{
+		switch (v.getId())
+		{
 		case R.id.buttonSearch:
 			// intent = new Intent(MainMenuActivity.this,
 			// SearchActivity.class);
 			// startActivity(intent);
-			//context = getApplicationContext();
+			// context = getApplicationContext();
 			toast = Toast.makeText(context, "Hier wird dann die Search Activity aufgerufen", Toast.LENGTH_SHORT);
 			toast.show();
 			break;
 		case R.id.buttonCreateEditRessources:
-			// intent = new Intent(MainMenuActivity.this,
-			// CreateEditRessourcesActivity.class);
-			// startActivity(intent);
-			toast = Toast.makeText(context, "Hier wird dann die Create and Editd Ressources Activity aufgerufen", Toast.LENGTH_SHORT);
-			toast.show();
+			intent = new Intent(MainMenuActivity.this, CreateEquipmentActivity.class);
+			startActivity(intent);
 			break;
 		case R.id.buttonMap:
 			// intent = new Intent(MainMenuActivity.this,
@@ -81,7 +83,7 @@ public class MainMenuActivity extends Activity implements OnClickListener {
 			toast.show();
 			break;
 		case R.id.buttonEditProfile:
-			Intent intent = new Intent(MainMenuActivity.this, ProfileCreateActivity.class);
+			intent = new Intent(MainMenuActivity.this, ProfileCreateActivity.class);
 			startActivity(intent);
 			break;
 		case R.id.buttonHelpOne:
