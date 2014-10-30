@@ -64,12 +64,8 @@ public class MainMenuActivity extends Activity implements OnClickListener
 		switch (v.getId())
 		{
 		case R.id.buttonSearch:
-			// intent = new Intent(MainMenuActivity.this,
-			// SearchActivity.class);
-			// startActivity(intent);
-			// context = getApplicationContext();
-			toast = Toast.makeText(context, "Hier wird dann die Search Activity aufgerufen", Toast.LENGTH_SHORT);
-			toast.show();
+			intent = new Intent(MainMenuActivity.this, SearchActivity.class);
+			startActivity(intent);
 			break;
 		case R.id.buttonCreateEditRessources:
 			intent = new Intent(MainMenuActivity.this, CreateEquipmentActivity.class);
