@@ -32,8 +32,6 @@
         android:ems="10"
         android:text="amount" />
 
-
-
     <TextView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
@@ -62,7 +60,7 @@
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="match_parent"
+        android:layout_width="318dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
