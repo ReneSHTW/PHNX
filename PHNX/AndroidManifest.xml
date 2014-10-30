@@ -25,6 +25,7 @@
         <activity android:name="ProfileCreateActivity"></activity>
         <activity android:name="BuisnessCardActivity"></activity>
         <activity android:name="MainMenuActivity"></activity>
+        <activity android:name="CreateEquipmentActivity"></activity>
     </application>
 
 </manifest>
