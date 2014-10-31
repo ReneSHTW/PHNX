@@ -10,14 +10,14 @@ import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-public class BuisnessCardActivity extends Activity {
+public class BusinessCardActivity extends Activity {
 
 	SimpleAdapter simpleAdpt = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.show_buisness_card);
+		setContentView(R.layout.show_business_card);
 
 		initList();
 
@@ -41,7 +41,6 @@ public class BuisnessCardActivity extends Activity {
 	// The data to show
 	List<Map<String, String>> planetsList = new ArrayList<Map<String, String>>();
 
-	// .....
 
 	private void initList() {
 		// We populate the planets
@@ -53,6 +52,7 @@ public class BuisnessCardActivity extends Activity {
 		planetsList.add(createPlanet("planet", "Saturn"));
 		planetsList.add(createPlanet("planet", "Uranus"));
 		planetsList.add(createPlanet("planet", "Neptune"));
+		planetsList.add(createPlanet("planet", "Pluto"));
 
 	}
 

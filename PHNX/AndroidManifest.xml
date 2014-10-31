@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name="ProfileCreateActivity"></activity>
-        <activity android:name="BuisnessCardActivity"></activity>
+        <activity android:name="BusinessCardActivity"></activity>
         <activity android:name="MainMenuActivity"></activity>
         <activity android:name="CreateEquipmentActivity"></activity>
         <activity android:name="SearchActivity"></activity>
