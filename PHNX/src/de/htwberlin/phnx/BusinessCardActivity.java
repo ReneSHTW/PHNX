@@ -6,23 +6,33 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-public class BusinessCardActivity extends Activity {
+public class BusinessCardActivity extends Activity implements OnClickListener {
 
 	SimpleAdapter simpleAdpt = null;
+	private Button showMainMenuBtn;
+	private Button editProfileBtn;
+	private Intent intent;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.show_business_card);
-
+		showMainMenuBtn = (Button) findViewById(R.id.button1);
+		editProfileBtn = (Button) findViewById(R.id.button2);
+		showMainMenuBtn.setOnClickListener(this);
+		editProfileBtn.setOnClickListener(this);
 		initList();
 
 		// We get the ListView component from the layout
-		ListView lv = (ListView) findViewById(R.id.listView);
+		ListView lv = (ListView) findViewById(R.id.listView1);
 
 		// This is a simple adapter that accepts as parameter
 		// Context
@@ -63,4 +73,21 @@ public class BusinessCardActivity extends Activity {
 		return planet;
 	}
 
+	@Override
+	public void onClick(View v) {
+		switch (v.getId())
+		{
+		case R.id.button1:
+			intent = new Intent(BusinessCardActivity.this, MainMenuActivity.class);
+			startActivity(intent);
+			break;
+		case R.id.button2:
+			intent = new Intent(BusinessCardActivity.this, ProfileCreateActivity.class);
+			startActivity(intent);
+			break;
+		
+	}
+
 }
+	
+}	

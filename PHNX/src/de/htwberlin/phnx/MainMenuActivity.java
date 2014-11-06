@@ -21,10 +21,10 @@ public class MainMenuActivity extends Activity implements OnClickListener
 	private Button helpButtonTwo;
 	private Button helpButtonThree;
 
-	Context context;
+	private Context context;
 	private Toast toast;
 
-	Intent intent;
+	private Intent intent;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -76,7 +76,7 @@ public class MainMenuActivity extends Activity implements OnClickListener
 			startActivity(intent);
 			break;
 		case R.id.buttonEditProfile:
-			intent = new Intent(MainMenuActivity.this, ProfileCreateActivity.class);
+			intent = new Intent(MainMenuActivity.this, BusinessCardActivity.class);
 			startActivity(intent);
 			break;
 		case R.id.buttonHelpOne:

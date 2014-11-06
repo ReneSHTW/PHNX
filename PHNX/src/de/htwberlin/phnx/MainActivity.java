@@ -22,16 +22,8 @@ public class MainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		Button button1 = (Button) findViewById(R.id.button1);
-		Button button2 = (Button) findViewById(R.id.button2);
+		//Button button2 = (Button) findViewById(R.id.button2);
 		button1.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				Intent intent = new Intent(MainActivity.this,
-						ProfileCreateActivity.class);
-				startActivity(intent);
-			}
-
-		});
-		button2.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Intent intent = new Intent(MainActivity.this,
 						MainMenuActivity.class);
@@ -39,6 +31,14 @@ public class MainActivity extends Activity {
 			}
 
 		});
+		/*button2.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				Intent intent = new Intent(MainActivity.this,
+						MainMenuActivity.class);
+				startActivity(intent);
+			}
+
+		});*/
 		return true;
 	}
 

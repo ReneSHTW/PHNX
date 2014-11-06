@@ -33,16 +33,6 @@
         android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="47dp"
-        android:text="@string/createCard" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button1"
-        android:layout_alignRight="@+id/button1"
-        android:layout_below="@+id/button1"
-        android:layout_marginTop="25dp"
-        android:text="show Business Card" />
+        android:text="show Main Menu" />
 
 </RelativeLayout>
