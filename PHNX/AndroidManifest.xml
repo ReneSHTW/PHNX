@@ -27,6 +27,7 @@
         <activity android:name="MainMenuActivity"></activity>
         <activity android:name="CreateEquipmentActivity"></activity>
         <activity android:name="SearchActivity"></activity>
+        <activity android:name="SearchResultActivity"></activity>
     </application>
 
 </manifest>
