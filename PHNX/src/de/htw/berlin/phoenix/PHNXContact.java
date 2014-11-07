@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 /**email, phone number, home address, www address
  * 
- * @author olga
+ * @author olga, Rene
  *
  */
 public interface PHNXContact {

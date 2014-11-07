@@ -1,9 +1,9 @@
 package de.htw.berlin.phoenix;
 
+import java.util.Iterator;
+
 public interface PHNX {
 	
 	PHNXBusinessCard getBusinessCard();
-	
-	PHNXSearchResult getSearchResults();
-	
+	Iterator<PHNXSearchResult> getSearchResults(boolean buttonPerson, boolean buttonOrganization, boolean buttonResource, boolean buttonMap, String searchInput);	
 }
