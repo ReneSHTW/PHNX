@@ -20,6 +20,7 @@ public class MainMenuActivity extends Activity implements OnClickListener
 	private Button helpButtonOne;
 	private Button helpButtonTwo;
 	private Button helpButtonThree;
+	private Button organizationButton;
 
 	private Context context;
 	private Toast toast;
@@ -53,6 +54,8 @@ public class MainMenuActivity extends Activity implements OnClickListener
 		helpButtonTwo.setOnClickListener(this);
 		helpButtonThree = (Button) findViewById(R.id.buttonHelpThree);
 		helpButtonThree.setOnClickListener(this);
+		organizationButton = (Button) findViewById(R.id.buttonOrganization);
+		organizationButton.setOnClickListener(this);
 
 		return true;
 
@@ -79,6 +82,9 @@ public class MainMenuActivity extends Activity implements OnClickListener
 			intent = new Intent(MainMenuActivity.this, BusinessCardActivity.class);
 			startActivity(intent);
 			break;
+		case R.id.buttonOrganization:
+			intent = new Intent(MainMenuActivity.this, ShowOrganizationActivity.class);
+			startActivity(intent);	
 		case R.id.buttonHelpOne:
 			toast = Toast.makeText(context, "Hilfe Text Eins", Toast.LENGTH_SHORT);
 			toast.show();
