@@ -71,7 +71,7 @@ public class MainMenuActivity extends Activity implements OnClickListener
 			startActivity(intent);
 			break;
 		case R.id.buttonCreateEditRessources:
-			intent = new Intent(MainMenuActivity.this, CreateEquipmentActivity.class);
+			intent = new Intent(MainMenuActivity.this, CreateResourceActivity.class);
 			startActivity(intent);
 			break;
 		case R.id.buttonMap:

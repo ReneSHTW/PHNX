@@ -3,13 +3,13 @@ package de.htwberlin.phnx;
 import android.app.Activity;
 import android.os.Bundle;
 
-public class CreateEquipmentActivity extends Activity
+public class CreateResourceActivity extends Activity
 {
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.create_equipment);
+		setContentView(R.layout.create_resource);
 	}
 
 }
