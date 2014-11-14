@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 public interface PHNXName {
 
-	String getPrintableName();
+	String getPrintableFullName();
 
 	String getFirstName();
 

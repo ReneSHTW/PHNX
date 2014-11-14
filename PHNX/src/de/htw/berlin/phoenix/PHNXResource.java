@@ -13,4 +13,6 @@ public interface PHNXResource {
 	int getAmount();
 
 	PHNXPicture getPicture();
+	
+//	PHNXLocation getPHNXCoordinates();
 }

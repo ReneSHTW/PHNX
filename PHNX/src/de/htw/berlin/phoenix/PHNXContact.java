@@ -12,5 +12,5 @@ public interface PHNXContact {
 
 	Iterator<String> getWwwAddress();
 	
-	String getUsualMeetingPlace();
+	String getCurrentLocation();
 }
