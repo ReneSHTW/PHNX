@@ -25,7 +25,7 @@
         <activity android:name="ProfileCreateActivity"></activity>
         <activity android:name="BusinessCardActivity"></activity>
         <activity android:name="MainMenuActivity"></activity>
-        <activity android:name="CreateEquipmentActivity"></activity>
+        <activity android:name="CreateResourceActivity"></activity>
         <activity android:name="SearchActivity"></activity>
         <activity android:name="SearchResultActivity"></activity>
         <activity android:name="ShowOrganizationActivity"></activity>
