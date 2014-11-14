@@ -1,4 +1,4 @@
-package de.htw.berlin.phoenix;
+package de.htw.berlin.PHNX.interfaces;
 
 public interface PHNXResource {
 
@@ -6,9 +6,9 @@ public interface PHNXResource {
 
 	String getResourceName();
 
-	String getOwnerOrganization();
+	PHNXOrganization getOwnerOrganization();
 
-	String getContactPerson();
+	PHNXContact getContactPerson();
 
 	int getAmount();
 

@@ -1,4 +1,4 @@
-package de.htw.berlin.phoenix;
+package de.htw.berlin.PHNX.interfaces;
 
 import java.util.Date;
 import java.util.Iterator;

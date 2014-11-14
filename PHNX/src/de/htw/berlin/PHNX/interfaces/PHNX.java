@@ -1,6 +1,4 @@
-package de.htw.berlin.phoenix;
-
-import java.util.Iterator;
+package de.htw.berlin.PHNX.interfaces;
 
 public interface PHNX {
 
@@ -8,7 +6,7 @@ public interface PHNX {
 
 	PHNXResource getPHNXResource();
 
-	PHNXOrganization getOrganziation();
+	PHNXOrganization getOrganization();
 
 	// PHNXMap getPHNXMap();
 }
