@@ -31,13 +31,7 @@ public class PHNXContactImpl implements PHNXContact{
 	}
 
 	@Override
-	public String getPrivateEmailAddress() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getPublicEmailAddress() {
+	public String getEmailAddress() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -53,5 +47,6 @@ public class PHNXContactImpl implements PHNXContact{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 }

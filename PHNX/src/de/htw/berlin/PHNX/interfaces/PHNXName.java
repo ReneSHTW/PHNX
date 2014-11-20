@@ -4,13 +4,19 @@ import java.util.Iterator;
 
 public interface PHNXName {
 
-	String getPrintableFullName();
+	public String getPrintableFullName();
 
-	String getFirstName();
+	public String getFirstName();
 
-	String getLastName();
+	public void setFirstName(String value);
 
-	Iterator<String> getMiddleNames();
+	public String getLastName();
 
-	String getNickname();
+	public void setLastName(String value);
+
+	public Iterator<String> getMiddleNames();
+
+	public void addMiddleName(String value);
+
+	public void removeMiddleName(String value);
 }

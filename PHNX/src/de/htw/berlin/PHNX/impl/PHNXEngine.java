@@ -4,6 +4,7 @@ import de.htw.berlin.PHNX.interfaces.PHNX;
 import de.htw.berlin.PHNX.interfaces.PHNXBusinessCard;
 import de.htw.berlin.PHNX.interfaces.PHNXOrganization;
 import de.htw.berlin.PHNX.interfaces.PHNXResource;
+import de.htwberlin.phnx.BusinessCardActivity;
 import net.sharkfw.knowledgeBase.SharkKB;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.knowledgeBase.filesystem.FSSharkKB;
@@ -31,21 +32,39 @@ public class PHNXEngine implements PHNX {
 	}
 
 	@Override
-	public PHNXBusinessCard getBusinessCard() {
-		
+	public PHNXBusinessCard getBusinessCard(String key) {
+		// sharkKB nach key durchsuchen
+		// gefundene BuisnessCard returnen
+
 		return null;
 	}
 
 	@Override
 	public PHNXResource getPHNXResource() {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
 	@Override
 	public PHNXOrganization getOrganization() {
-		// TODO Auto-generated method stub
+
 		return null;
+	}
+
+	@Override
+	public void setPHNXBusinessCard(PHNXBusinessCard value) throws PHNXException {
+		//speichere value in KB
+		
+	}
+
+	@Override
+	public void setPHNXResource(PHNXResource value) throws PHNXException {
+
+	}
+
+	@Override
+	public void setPHNXOrganization(PHNXOrganization value) throws PHNXException {
+
 	}
 
 }

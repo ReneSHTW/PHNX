@@ -4,19 +4,37 @@ import java.util.Date;
 import java.util.Iterator;
 
 public interface PHNXBusinessCard {
-	PHNXName getName();
+	public PHNXName getName();
 
-	PHNXContact getContact();
+	public void setPHNXName(PHNXName value);
 
-	PHNXOrganization getOrganization();
+	public PHNXContact getContact();
 
-	PHNXResource getProfession();
+	public void setPHNXContact(PHNXContact value);
 
-	String getPrintableProfessionalDegree();
+	public PHNXOrganization getOrganization();
 
-	Iterator<PHNXResource> getSkills();
+	public void setPHNXOrganization(PHNXOrganization value);
 
-	Date getArrival();
+	public PHNXResource getProfession();
 
-	Date getDeparture();
+	public void setPHNXResource(PHNXResource value);
+
+	public String getPrintableProfessionalDegree();
+
+	public void setPrintableProfessionalDegree(String value);
+
+	public Iterator<PHNXResource> getSkills();
+
+	public void addSkill(PHNXResource value);
+
+	public void removeSkill(String value);
+
+	public Date getArrival();
+
+	public void setArrival(Date value);
+
+	public Date getDeparture();
+
+	public void setDeparture(Date value);
 }

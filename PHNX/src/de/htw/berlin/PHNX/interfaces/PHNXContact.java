@@ -12,10 +12,8 @@ public interface PHNXContact {
 	
 	String publicLandLineNumber();
 
-	String getPrivateEmailAddress();
+	String getEmailAddress();
 	
-	String getPublicEmailAddress();
-
 	String getHomeAddress();
 
 	Iterator<String> getWwwAddress();
