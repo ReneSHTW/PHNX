@@ -13,10 +13,15 @@ public class PHNXBusinessCardImpl implements PHNXBusinessCard {
 
 	private PHNXName name;
 	private PHNXContact contact;
-	private PHNXOrganization organization;
-	private PHNXResource profession;
+	private PHNXOrganization organization; // Es wird in der KB unter der
+											// BusinessCard nur der SI zur
+											// Organisation gespeichert
+	private PHNXResource profession; // der SI zur profession-Resource ist die
+										// email-Addresse der BusinessCard
+										// Die Resource wird zeitgleich also
+										// angelegt passiv.
 	private String printableProfessionalDegree;
-	private Iterator<PHNXResource> skills;
+	private Iterator<PHNXResource> skills; // genau wie beim Profession-Resource
 	private Date arrival;
 	private Date departure;
 

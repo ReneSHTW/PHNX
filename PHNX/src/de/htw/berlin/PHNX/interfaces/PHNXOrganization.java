@@ -7,7 +7,7 @@ import java.util.Iterator;
 public interface PHNXOrganization {
 	String getName();
 
-	Iterator<String> getWwwAddress();
+	String getWwwAddress();
 
 	void setName(String name);
 

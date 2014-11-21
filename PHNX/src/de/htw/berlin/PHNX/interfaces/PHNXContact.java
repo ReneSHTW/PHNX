@@ -6,14 +6,10 @@ import java.util.Iterator;
  * PHNX_Contact_Firmenaddresse*/
 
 public interface PHNXContact {
-
-	String getPrivateMobileNumber();
 	
-	String getPrivateLandLineNumber();
+	String getMobileNumber();
 	
-	String getPublicMobileNumber();
-	
-	String getPublicLandLineNumber();
+	String getLandLineNumber();
 
 	String getEmailAddress();
 	

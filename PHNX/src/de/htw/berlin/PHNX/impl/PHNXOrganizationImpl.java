@@ -15,7 +15,7 @@ public class PHNXOrganizationImpl implements PHNXOrganization{
 	}
 
 	@Override
-	public Iterator<String> getWwwAddress() {
+	public String getWwwAddress() {
 		// TODO Auto-generated method stub
 		return null;
 	}
