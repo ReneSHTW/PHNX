@@ -7,13 +7,13 @@ import java.util.Iterator;
 
 public interface PHNXContact {
 
-	String privateMobileNumber();
+	String getPrivateMobileNumber();
 	
-	String privateLandLineNumber();
+	String getPrivateLandLineNumber();
 	
-	String publicMobileNumber();
+	String getPublicMobileNumber();
 	
-	String publicLandLineNumber();
+	String getPublicLandLineNumber();
 
 	String getEmailAddress();
 	

@@ -15,7 +15,7 @@ public class PHNXBusinessCardImpl implements PHNXBusinessCard {
 	private PHNXContact contact;
 	private PHNXOrganization organization;
 	private PHNXResource profession;
-	private String printableProffesionalDegree;
+	private String printableProfessionalDegree;
 	private Iterator<PHNXResource> skills;
 	private Date arrival;
 	private Date departure;
@@ -29,7 +29,7 @@ public class PHNXBusinessCardImpl implements PHNXBusinessCard {
 			contact = contactP;
 			organization = organizationP;
 			profession = professionP;
-			printableProffesionalDegree = degreeP;
+			printableProfessionalDegree = degreeP;
 			skills = skillsP;
 		} else {
 			throw new IllegalArgumentException();
@@ -58,7 +58,7 @@ public class PHNXBusinessCardImpl implements PHNXBusinessCard {
 
 	@Override
 	public String getPrintableProfessionalDegree() {
-		return printableProffesionalDegree;
+		return printableProfessionalDegree;
 	}
 
 	@Override
@@ -115,7 +115,7 @@ public class PHNXBusinessCardImpl implements PHNXBusinessCard {
 	@Override
 	public void setPrintableProfessionalDegree(String value) {
 		if (value != null) {
-			printableProffesionalDegree = value;
+			printableProfessionalDegree = value;
 		} else {
 			throw new IllegalArgumentException();
 		}
