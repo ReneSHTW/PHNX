@@ -1,5 +1,7 @@
 package de.htw.berlin.PHNX.interfaces;
 
+/*Als Topic speichern
+ * Subject Identifier finden*/
 public interface PHNXResource {
 
 	String getResourceType();
@@ -8,7 +10,7 @@ public interface PHNXResource {
 
 	PHNXOrganization getOwnerOrganization();
 
-	PHNXContact getContactPerson();
+	PHNXBusinessCard getContactPerson();
 
 	int getAmount();
 

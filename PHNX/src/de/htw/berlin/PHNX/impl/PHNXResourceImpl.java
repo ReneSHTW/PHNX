@@ -1,11 +1,12 @@
 package de.htw.berlin.PHNX.impl;
 
-import de.htw.berlin.PHNX.interfaces.PHNXContact;
+import de.htw.berlin.PHNX.interfaces.PHNXBusinessCard;
 import de.htw.berlin.PHNX.interfaces.PHNXOrganization;
 import de.htw.berlin.PHNX.interfaces.PHNXPicture;
 import de.htw.berlin.PHNX.interfaces.PHNXResource;
 
-public class PHNXResourceImpl implements PHNXResource{
+/*Als Peer Semantic Tag speichern*/
+public class PHNXResourceImpl implements PHNXResource {
 
 	@Override
 	public String getResourceType() {
@@ -26,7 +27,7 @@ public class PHNXResourceImpl implements PHNXResource{
 	}
 
 	@Override
-	public PHNXContact getContactPerson() {
+	public PHNXBusinessCard getContactPerson() {
 		// TODO Auto-generated method stub
 		return null;
 	}

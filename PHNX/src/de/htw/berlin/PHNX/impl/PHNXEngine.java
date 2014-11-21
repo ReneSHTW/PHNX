@@ -32,39 +32,47 @@ public class PHNXEngine implements PHNX {
 	}
 
 	@Override
-	public PHNXBusinessCard getBusinessCard(String key) {
-		// sharkKB nach key durchsuchen
-		// gefundene BuisnessCard returnen
-
+	public PHNXBusinessCard getBusinessCard(String emailAddress) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public PHNXResource getPHNXResource() {
-
+	public PHNXResource getPHNXResource(String type) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public PHNXOrganization getOrganization() {
-
+	public PHNXOrganization getOrganization(String wwwAddress) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void setPHNXBusinessCard(PHNXBusinessCard value) throws PHNXException {
-		//speichere value in KB
+		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void setPHNXResource(PHNXResource value) throws PHNXException {
-
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void setPHNXOrganization(PHNXOrganization value) throws PHNXException {
-
+		// TODO Auto-generated method stub
+		
 	}
+
+	@Override
+	public void removePHNXBusinessCard(PHNXBusinessCard value) throws PHNXException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 
 }

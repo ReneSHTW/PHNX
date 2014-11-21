@@ -1,5 +1,6 @@
 package de.htw.berlin.PHNX.impl;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import de.htw.berlin.PHNX.interfaces.PHNXName;
@@ -72,7 +73,12 @@ public class PHNXNameImpl implements PHNXName {
 	@Override
 	public void addMiddleName(String value) {
 		if (value != null) {
-			// dem iterator hinzufügen
+			ArrayList<String> tempList = new ArrayList<String>();
+			while (middleNames.hasNext()) {
+				tempList.add(middleNames.next());
+			}
+			tempList.add(value);
+			middleNames = tempList.iterator();
 		} else {
 			throw new IllegalArgumentException();
 		}

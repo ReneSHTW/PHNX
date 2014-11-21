@@ -1,7 +1,9 @@
 package de.htw.berlin.PHNX.interfaces;
 
 import java.util.Iterator;
-
+/*Peer Dimension
+ * Organisation als Root
+ * jede einzelnde Organisation als instanz davon*/
 public interface PHNXOrganization {
 	String getName();
 
