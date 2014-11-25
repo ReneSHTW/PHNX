@@ -96,8 +96,7 @@ public class PHNXEngine implements PHNX {
 
 	@Override
 	public void setPHNXResource(PHNXResource value) throws PHNXException, SharkKBException {
-		// TODO Auto-generated method stub
-
+		// kB.createSemanticTag(arg0, arg1)
 	}
 
 	@Override
@@ -123,7 +122,7 @@ public class PHNXEngine implements PHNX {
 	private Iterator<String> concatenateStringsToIterator(String strings) {
 		String[] temp = strings.split(" ");
 		ArrayList<String> tempList = new ArrayList<String>();
-		for (int i = 0; i < strings.length(); i++) {
+		for (int i = 0; i < temp.length; i++) {
 			tempList.add(temp[i]);
 		}
 		return tempList.iterator();
