@@ -12,7 +12,7 @@ public interface PHNXResource {
 
 	PHNXBusinessCard getContactPerson();
 
-	int getAmount();
+	String getAmount();
 
 	PHNXPicture getPicture();
 	

@@ -33,9 +33,9 @@ public class PHNXResourceImpl implements PHNXResource {
 	}
 
 	@Override
-	public int getAmount() {
+	public String getAmount() {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 	@Override

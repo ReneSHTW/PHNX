@@ -13,10 +13,13 @@ import de.htw.berlin.PHNX.interfaces.PHNX;
 import de.htw.berlin.PHNX.interfaces.PHNXBusinessCard;
 import de.htw.berlin.PHNX.interfaces.PHNXOrganization;
 import de.htw.berlin.PHNX.interfaces.PHNXResource;
+import net.sharkfw.knowledgeBase.ContextCoordinates;
 import net.sharkfw.knowledgeBase.PeerSemanticTag;
+import net.sharkfw.knowledgeBase.SemanticTag;
 import net.sharkfw.knowledgeBase.SharkKB;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.knowledgeBase.filesystem.FSSharkKB;
+import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
 
 public class PHNXEngine implements PHNX {
 
@@ -96,13 +99,19 @@ public class PHNXEngine implements PHNX {
 
 	@Override
 	public void setPHNXResource(PHNXResource value) throws PHNXException, SharkKBException {
-		// kB.createSemanticTag(arg0, arg1)
+		ContextCoordinates cc = InMemoSharkKB.createInMemoContextCoordinates(
+				InMemoSharkKB.createInMemoSemanticTag(value.getResourceName(), value.getResourceType()),
+				kB.getPeerSemanticTag(value.getOwnerOrganization().getWwwAddress()),
+				kB.getPeerSemanticTag(value.getContactPerson().getContact().getEmailAddress()), null, null, null, 0);
+		kB.createContextPoint(cc);
+		kB.getContextPoint(cc).addInformation(value.getAmount());
+		// Picture wird als eigener ContextPunkt erstellt
 	}
 
 	@Override
 	public void setPHNXOrganization(PHNXOrganization value) throws PHNXException, SharkKBException {
-		// TODO Auto-generated method stub
-
+		kB.createPeerSemanticTag(null, value.getName(), value.getWwwAddress());
+		//kB.getPeerSemanticTag(value.getWwwAddress()).setProperty(arg0, arg1)
 	}
 
 	@Override
