@@ -38,4 +38,8 @@ public interface PHNXBusinessCard {
 	public Date getDeparture();
 
 	public void setDeparture(Date value);
+
+	public PHNXPicture getPicture();
+
+	public void setPicture(PHNXPicture value);
 }

@@ -48,9 +48,9 @@ public class PHNXEngine implements PHNX {
 
 	@Override
 	public PHNXBusinessCard getBusinessCard(String emailAddress) throws SharkKBException, ParseException {
-		// Bedingung einfügen -> PeerSemanticTag mit dieser emailaddresse muss
-		// vorhanden sein
-		if (emailAddress != null) {
+		// Bedingung einfügen -> PeerSemanticTag mit dieser emailaddresse muss vorhanden sein
+		if (emailAddress != null && (kB.getPeerSemanticTag(emailAddress) != null)) {
+			Format formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMAN);
 			PHNXName name = new PHNXNameImpl(kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Name_firstName"), kB.getPeerSemanticTag(emailAddress)
 					.getProperty("PHNX_Name_lastName"), concatenateStringsToIterator(kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Name_middleName")));
 			PHNXContact contact = new PHNXContactImpl(emailAddress, kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Contact_homeAddress"), kB
@@ -58,8 +58,8 @@ public class PHNXEngine implements PHNX {
 					"PHNX_Contact_privateMobileNumber"), kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Contact_privateLandLineNumber"));
 			PHNXBusinessCard card = new PHNXBusinessCardImpl(name, contact, getOrganization(kB.getPeerSemanticTag(emailAddress).getProperty(
 					"PHNX_Organization_SI")), null, kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_printableProfessionalDegree"), null,
-					new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH).parse(kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_departure")),
-					new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH).parse(kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_arrival")));
+					(Date) formatter.parseObject((kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_departure"))), (Date) formatter.parseObject((kB
+							.getPeerSemanticTag(emailAddress).getProperty("PHNX_arrival"))), null);
 			kB.getPeerSemanticTag(emailAddress);
 			return card;
 		} else {
@@ -68,21 +68,29 @@ public class PHNXEngine implements PHNX {
 
 		/* null #1 -> getPHNXResource fuer Profession */
 		/* null #2 -> getPHNXResource fuer Skills */
+		/* null #3 -> Bild Holen */
 	}
 
 	@Override
 	public Iterator<PHNXResource> getPHNXResource(String type, String name) {
-		/*
-		 * kB.getContextPoint(arg0)
+		/* kB.getContextPoint(arg0)
 		 * 
-		 * PHNXResource resource = null;
-		 */
+		 * PHNXResource resource = null; */
 		return null;
 	}
 
 	@Override
-	public PHNXOrganization getOrganization(String wwwAddress) {
-		return null;
+	public PHNXOrganization getOrganization(String wwwAddress) throws SharkKBException {
+		if (wwwAddress != null && (kB.getPeerSemanticTag(wwwAddress) != null)) {
+			PHNXOrganization organization = new PHNXOrganizationImpl(kB.getPeerSemanticTag(wwwAddress).getName(), kB.getPeerSemanticTag(wwwAddress).getSI()[0],
+					null, null);
+			return organization;
+		} else {
+			throw new IllegalArgumentException();
+		}
+
+		/* null #1 -> Bild Holen */
+		/* null #2 -> getPHNXResource fuer resources */
 	}
 
 	@Override
@@ -111,7 +119,7 @@ public class PHNXEngine implements PHNX {
 						.next().getPicture());
 				setPHNXResource(resource);
 			}
-			Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+			Format formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 			kB.getPeerSemanticTag(value.getContact().getEmailAddress()).setProperty("PHNX_arrival", formatter.format(value.getArrival()));
 			kB.getPeerSemanticTag(value.getContact().getEmailAddress()).setProperty("PHNX_departure", formatter.format(value.getDeparture()));
 		} else {
@@ -164,6 +172,7 @@ public class PHNXEngine implements PHNX {
 	@Override
 	public void removePHNXResource(PHNXResource value) throws PHNXException, SharkKBException {
 		if (value != null) {
+
 		} else {
 			throw new IllegalArgumentException();
 		}

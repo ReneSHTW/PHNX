@@ -1,23 +1,23 @@
 package de.htw.berlin.PHNX.interfaces;
 
 import java.util.Iterator;
-/*Peer Dimension
- * Organisation als Root
- * jede einzelnde Organisation als instanz davon*/
+
 public interface PHNXOrganization {
-	String getName();
+	public String getName();
 
-	String getWwwAddress();
+	public void setName(String value);
 
-	void setName(String name);
+	public String getWwwAddress();
 
-	PHNXPicture getLogo();
+	public void setWwwAddress(String value);
 
-	void setLogo(PHNXPicture picture);
+	public PHNXPicture getLogo();
 
-	Iterator<PHNXResource> getResources();
-	
-	void setResource(PHNXResource resource);
-	
-//	PHNXLocation getPHNXLocation();
+	public void setLogo(PHNXPicture value);
+
+	public Iterator<PHNXResource> getResources();
+
+	public void addResource(PHNXResource value);
+
+	// public PHNXLocation getPHNXLocation();
 }

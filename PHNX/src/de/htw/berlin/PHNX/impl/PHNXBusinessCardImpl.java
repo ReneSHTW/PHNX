@@ -7,6 +7,7 @@ import de.htw.berlin.PHNX.interfaces.PHNXBusinessCard;
 import de.htw.berlin.PHNX.interfaces.PHNXContact;
 import de.htw.berlin.PHNX.interfaces.PHNXName;
 import de.htw.berlin.PHNX.interfaces.PHNXOrganization;
+import de.htw.berlin.PHNX.interfaces.PHNXPicture;
 import de.htw.berlin.PHNX.interfaces.PHNXResource;
 
 public class PHNXBusinessCardImpl implements PHNXBusinessCard {
@@ -24,9 +25,10 @@ public class PHNXBusinessCardImpl implements PHNXBusinessCard {
 	private Iterator<PHNXResource> skills; // genau wie beim Profession-Resource
 	private Date arrival;
 	private Date departure;
+	private PHNXPicture picture;
 
 	public PHNXBusinessCardImpl(PHNXName nameP, PHNXContact contactP, PHNXOrganization organizationP, PHNXResource professionP, String degreeP,
-			Iterator<PHNXResource> skillsP, Date departureP, Date arrivalP) {
+			Iterator<PHNXResource> skillsP, Date departureP, Date arrivalP, PHNXPicture pictureP) {
 		if (nameP != null && arrivalP != null && departureP != null) {
 			name = nameP;
 			arrival = arrivalP;
@@ -36,6 +38,7 @@ public class PHNXBusinessCardImpl implements PHNXBusinessCard {
 			profession = professionP;
 			printableProfessionalDegree = degreeP;
 			skills = skillsP;
+			picture = pictureP;
 		} else {
 			throw new IllegalArgumentException();
 		}
@@ -79,6 +82,11 @@ public class PHNXBusinessCardImpl implements PHNXBusinessCard {
 	@Override
 	public Date getDeparture() {
 		return departure;
+	}
+
+	@Override
+	public PHNXPicture getPicture() {
+		return picture;
 	}
 
 	@Override
@@ -162,6 +170,15 @@ public class PHNXBusinessCardImpl implements PHNXBusinessCard {
 	public void setDeparture(Date value) {
 		if (value != null) {
 			departure = value;
+		} else {
+			throw new IllegalArgumentException();
+		}
+	}
+
+	@Override
+	public void setPicture(PHNXPicture value) {
+		if (value != null) {
+			picture = value;
 		} else {
 			throw new IllegalArgumentException();
 		}
