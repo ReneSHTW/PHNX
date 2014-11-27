@@ -7,34 +7,32 @@ import de.htw.berlin.PHNX.interfaces.PHNXName;
 
 public class PHNXNameImpl implements PHNXName {
 
-	private String printableFullName;
 	private String firstName;
 	private String lastName;
 	private Iterator<String> middleNames;
 
 	public PHNXNameImpl(String firstNameP, String lastNameP, Iterator<String> middleNamesP) {
-		if (firstNameP != null && lastNameP != null && middleNamesP != null) {
+		if (firstNameP != null && lastNameP != null) {
 			firstName = firstNameP;
 			lastName = lastNameP;
 			middleNames = middleNamesP;
-			printableFullName = "This should never been shown.";
 		} else {
 			throw new IllegalArgumentException();
 		}
 	}
 
-	private void buildFullName() {
-		printableFullName = firstName;
+	private String buildFullName() {
+		String printableFullName = firstName;
 		while (middleNames.hasNext()) {
 			printableFullName += " " + middleNames.next();
 		}
 		printableFullName += " " + lastName;
+		return printableFullName;
 	}
 
 	@Override
 	public String getPrintableFullName() {
-		buildFullName();
-		return printableFullName;
+		return buildFullName();
 	}
 
 	@Override
