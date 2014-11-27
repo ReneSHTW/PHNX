@@ -18,6 +18,10 @@ public interface PHNX {
 	public void setPHNXOrganization(PHNXOrganization value) throws PHNXException, SharkKBException;
 	
 	public void removePHNXBusinessCard(PHNXBusinessCard value) throws PHNXException, SharkKBException;
+	
+	public void removePHNXResource(PHNXResource value) throws PHNXException, SharkKBException;
+	
+	public void removePHNXOrganization(PHNXOrganization value) throws PHNXException, SharkKBException;
 		
 	//Create Methoden einfügen
 

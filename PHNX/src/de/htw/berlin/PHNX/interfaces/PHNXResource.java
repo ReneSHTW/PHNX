@@ -4,17 +4,25 @@ package de.htw.berlin.PHNX.interfaces;
  * Subject Identifier finden*/
 public interface PHNXResource {
 
-	String getResourceType();
+	public String getResourceType();
 
-	String getResourceName();
+	public String getResourceName();
 
-	PHNXOrganization getOwnerOrganization();
+	public PHNXOrganization getOwnerOrganization();
 
-	PHNXBusinessCard getContactPerson();
+	public void setOwnerOrgianization(PHNXOrganization value);
 
-	String getAmount();
+	public PHNXBusinessCard getContactPerson();
 
-	PHNXPicture getPicture();
-	
-//	PHNXLocation getPHNXCoordinates();
+	public void setContactPerson(PHNXBusinessCard value);
+
+	public String getAmount();
+
+	public void setAmount(String value);
+
+	public PHNXPicture getPicture();
+
+	public void setPicture(PHNXPicture value);
+
+	// public PHNXLocation getPHNXCoordinates();
 }
