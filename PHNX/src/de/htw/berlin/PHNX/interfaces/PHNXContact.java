@@ -7,15 +7,27 @@ import java.util.Iterator;
 
 public interface PHNXContact {
 	
-	String getMobileNumber();
+	public String getMobileNumber();
 	
-	String getLandLineNumber();
+	public String getLandLineNumber();
 
-	String getEmailAddress();
+	public String getEmailAddress();
 	
-	String getHomeAddress();
+	public String getHomeAddress();
 
-	Iterator<String> getWwwAddress();
+	public Iterator<String> getWwwAddress();
+	
+	public void setMobileNumber();
+	
+	public void setLandLineNumber();
+	
+	public void setEmailAddress();
+	
+	public void setHomeAddress();
+	
+	public void setWwwAddress();
+	
+	
 	
 //	PHNXLocation getCurrentLocation();
 }
