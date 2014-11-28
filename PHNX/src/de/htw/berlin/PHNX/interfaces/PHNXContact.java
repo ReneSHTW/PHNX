@@ -25,7 +25,7 @@ public interface PHNXContact {
 	
 	public void setHomeAddress(String aHomeAddress);
 	
-	public void setWwwAddress(String aWwwAddress);
+	public void addWwwAddress(String aWwwAddress);
 	
 	
 	

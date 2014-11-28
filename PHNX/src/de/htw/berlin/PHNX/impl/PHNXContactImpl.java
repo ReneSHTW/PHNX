@@ -13,24 +13,13 @@ public class PHNXContactImpl implements PHNXContact {
 	private String mobileNumber;
 	private String landLineNumber;
 
-	public PHNXContactImpl(String anEmailAddress, String aHomeAddress, String aWwwAddress, String aMobileNumber, String aLandLineNumber) {
+	public PHNXContactImpl(String anEmailAddress, String aHomeAddress, Iterator<String> aWwwAddress, String aMobileNumber, String aLandLineNumber) {
 		if (anEmailAddress != null) {
 			emailAddress = anEmailAddress;
 			homeAddress = aHomeAddress;
-			if (aWwwAddress != null) {
-				ArrayList<String> tempList = new ArrayList<String>();
-				while (wwwAddress.hasNext()) {
-					tempList.add(wwwAddress.next());
-				}
-				tempList.add(aWwwAddress);
-				wwwAddress = tempList.iterator();
-			} else {
-				throw new IllegalArgumentException();
-			}
-			
+			wwwAddress = aWwwAddress;
 			mobileNumber = aMobileNumber;
 			landLineNumber = aLandLineNumber;
-
 		} else {
 			throw new IllegalArgumentException();
 		}
@@ -64,19 +53,19 @@ public class PHNXContactImpl implements PHNXContact {
 	@Override
 	public void setMobileNumber(String aMobileNumber) {
 		this.mobileNumber = aMobileNumber;
-		
+
 	}
 
 	@Override
 	public void setLandLineNumber(String aLandLineNumber) {
 		this.landLineNumber = aLandLineNumber;
-		
+
 	}
 
 	@Override
 	public void setEmailAddress(String anEmailAddress) {
 		this.emailAddress = anEmailAddress;
-		
+
 	}
 
 	@Override
@@ -85,22 +74,19 @@ public class PHNXContactImpl implements PHNXContact {
 	}
 
 	@Override
-	public void setWwwAddress(String aWwwAddress) {
-		if (aWwwAddress != null){
+	public void addWwwAddress(String aWwwAddress) {
+		if (aWwwAddress != null) {
 			ArrayList<String> tempList = new ArrayList<String>();
 			if (wwwAddress != null) {
 				while (wwwAddress.hasNext()) {
 					tempList.add(wwwAddress.next());
 				}
-			}
-			else {
+			} else {
 				tempList.add(aWwwAddress);
 				wwwAddress = tempList.iterator();
 			}
-		} 
-		
-	}
-	
+		}
 
+	}
 
 }
