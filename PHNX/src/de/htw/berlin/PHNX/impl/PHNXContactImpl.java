@@ -1,5 +1,6 @@
 package de.htw.berlin.PHNX.impl;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import de.htw.berlin.PHNX.interfaces.PHNXContact;
@@ -16,7 +17,17 @@ public class PHNXContactImpl implements PHNXContact {
 		if (anEmailAddress != null) {
 			emailAddress = anEmailAddress;
 			homeAddress = aHomeAddress;
-			///wwwAddress = aWwwAddress;
+			if (aWwwAddress != null) {
+				ArrayList<String> tempList = new ArrayList<String>();
+				while (wwwAddress.hasNext()) {
+					tempList.add(wwwAddress.next());
+				}
+				tempList.add(aWwwAddress);
+				wwwAddress = tempList.iterator();
+			} else {
+				throw new IllegalArgumentException();
+			}
+			
 			mobileNumber = aMobileNumber;
 			landLineNumber = aLandLineNumber;
 
@@ -51,32 +62,42 @@ public class PHNXContactImpl implements PHNXContact {
 	}
 
 	@Override
-	public void setMobileNumber() {
-		// TODO Auto-generated method stub
+	public void setMobileNumber(String aMobileNumber) {
+		this.mobileNumber = aMobileNumber;
 		
 	}
 
 	@Override
-	public void setLandLineNumber() {
-		// TODO Auto-generated method stub
+	public void setLandLineNumber(String aLandLineNumber) {
+		this.landLineNumber = aLandLineNumber;
 		
 	}
 
 	@Override
-	public void setEmailAddress() {
-		// TODO Auto-generated method stub
+	public void setEmailAddress(String anEmailAddress) {
+		this.emailAddress = anEmailAddress;
 		
 	}
 
 	@Override
-	public void setHomeAddress() {
-		// TODO Auto-generated method stub
-		
+	public void setHomeAddress(String aHomeAddress) {
+		this.homeAddress = aHomeAddress;
 	}
 
 	@Override
-	public void setWwwAddress() {
-		// TODO Auto-generated method stub
+	public void setWwwAddress(String aWwwAddress) {
+		if (aWwwAddress != null){
+			ArrayList<String> tempList = new ArrayList<String>();
+			if (wwwAddress != null) {
+				while (wwwAddress.hasNext()) {
+					tempList.add(wwwAddress.next());
+				}
+			}
+			else {
+				tempList.add(aWwwAddress);
+				wwwAddress = tempList.iterator();
+			}
+		} 
 		
 	}
 	

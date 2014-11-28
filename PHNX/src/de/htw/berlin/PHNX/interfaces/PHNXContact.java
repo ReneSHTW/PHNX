@@ -17,15 +17,15 @@ public interface PHNXContact {
 
 	public Iterator<String> getWwwAddress();
 	
-	public void setMobileNumber();
+	public void setMobileNumber(String aMobileNumber);
 	
-	public void setLandLineNumber();
+	public void setLandLineNumber(String aLandLineNumber);
 	
-	public void setEmailAddress();
+	public void setEmailAddress(String anEmailAddress);
 	
-	public void setHomeAddress();
+	public void setHomeAddress(String aHomeAddress);
 	
-	public void setWwwAddress();
+	public void setWwwAddress(String aWwwAddress);
 	
 	
 	
