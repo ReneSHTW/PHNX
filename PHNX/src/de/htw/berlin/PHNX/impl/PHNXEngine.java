@@ -19,6 +19,7 @@ import net.sharkfw.knowledgeBase.ContextCoordinates;
 import net.sharkfw.knowledgeBase.Knowledge;
 import net.sharkfw.knowledgeBase.PeerSemanticTag;
 import net.sharkfw.knowledgeBase.SemanticTag;
+import net.sharkfw.knowledgeBase.SharkCSAlgebra;
 import net.sharkfw.knowledgeBase.SharkKB;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.knowledgeBase.filesystem.FSSharkKB;
@@ -73,9 +74,8 @@ public class PHNXEngine implements PHNX {
 
 	@Override
 	public Iterator<PHNXResource> getPHNXResource(String type, String name) {
-		/* kB.getContextPoint(arg0)
-		 * 
-		 * PHNXResource resource = null; */
+		// kB.createContextCoordinates(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+		// SharkCSAlgebra.extract(kB, arg1);
 		return null;
 	}
 
@@ -131,8 +131,7 @@ public class PHNXEngine implements PHNX {
 	@Override
 	public void setPHNXResource(PHNXResource value) throws PHNXException, SharkKBException {
 		if (value != null) {
-			ContextCoordinates cc = InMemoSharkKB.createInMemoContextCoordinates(
-					InMemoSharkKB.createInMemoSemanticTag(value.getResourceName(), value.getResourceType()),
+			ContextCoordinates cc = kB.createContextCoordinates(kB.createSemanticTag(value.getResourceName(), value.getResourceType()),
 					kB.getPeerSemanticTag(value.getOwnerOrganization().getWwwAddress()),
 					kB.getPeerSemanticTag(value.getContactPerson().getContact().getEmailAddress()), null, null, null, 0);
 			kB.createContextPoint(cc);
@@ -163,7 +162,7 @@ public class PHNXEngine implements PHNX {
 	@Override
 	public void removePHNXBusinessCard(PHNXBusinessCard value) throws PHNXException, SharkKBException {
 		if (value != null) {
-			// kB.removeSemanticTag(value.getContact().getEmailAddress());
+			// kB.getPeersAsSemanticNet().removeSemanticTag(kB.getPeerSemanticTag(arg0));
 		} else {
 			throw new IllegalArgumentException();
 		}
@@ -172,7 +171,7 @@ public class PHNXEngine implements PHNX {
 	@Override
 	public void removePHNXResource(PHNXResource value) throws PHNXException, SharkKBException {
 		if (value != null) {
-
+		//	kB.removeContextPoint(kB.get);
 		} else {
 			throw new IllegalArgumentException();
 		}
