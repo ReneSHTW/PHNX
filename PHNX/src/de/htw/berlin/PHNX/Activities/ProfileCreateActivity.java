@@ -1,19 +1,21 @@
 package de.htw.berlin.PHNX.Activities;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Iterator;
 
+import net.sharkfw.knowledgeBase.SharkKBException;
+import de.htw.berlin.PHNX.impl.PHNXBusinessCardImpl;
 import de.htw.berlin.PHNX.impl.PHNXEngine;
 import de.htw.berlin.PHNX.impl.PHNXException;
-import de.htwberlin.phnx.R;
+import de.htw.berlin.PHNX.impl.PHNXNameImpl;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
-import android.app.TimePickerDialog;
-import android.app.TimePickerDialog.OnTimeSetListener;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -22,7 +24,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 public class ProfileCreateActivity extends Activity implements OnClickListener {
@@ -43,7 +44,7 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 	private EditText website;
 	private ImageView picture;
 	private Toast toast;
-	private Context context;
+	private PHNXBusinessCardImpl businessCard;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -122,17 +123,66 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-
-
+		boolean cardCreated = false;
 		switch (v.getId()) {
 		case R.id.button3:
-			
+			String[] temp = name.getText().toString().split(" ");
+			PHNXNameImpl phnxName = null;
+			try {
+				phnxName = new PHNXNameImpl(temp[0], temp[1],
+						concatenateStringsToIterator(middleNames.getText()
+								.toString()));
+			} catch (ArrayIndexOutOfBoundsException aie) {
+			}
+			Date arrivalDate = null;
+			Date departureDate = null;
+			try {
+				arrivalDate = dateFormatter.parse(arrival.getText().toString());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				departureDate = dateFormatter.parse(arrival.getText()
+						.toString());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				businessCard = new PHNXBusinessCardImpl(phnxName, null, null,
+						null, null, null, arrivalDate, departureDate, null);
+				cardCreated = true;
+			} catch (IllegalArgumentException iae) {
+			}
+			try {
+				engine.setPHNXBusinessCard(businessCard);
+				toast = Toast.makeText(getApplicationContext(),
+						"Business Card wurde erstellt", Toast.LENGTH_LONG);
+				toast.show();
+			} catch (SharkKBException e) {
+			} catch (PHNXException e) {
+							}
+			catch (IllegalArgumentException e) {
+				toast = Toast.makeText(	getApplicationContext(),
+								"Mindestens eine der Pflichtangaben fehlt oder ist fehlerhaft",
+								Toast.LENGTH_LONG);
+				toast.show();
+			}
 			break;
-
 		default:
 			break;
 		}
 
+	}
+
+	private Iterator<String> concatenateStringsToIterator(String strings) {
+		String[] temp = strings.split(" ");
+		ArrayList<String> tempList = new ArrayList<String>();
+		for (int i = 0; i < temp.length; i++) {
+			tempList.add(temp[i]);
+		}
+		return tempList.iterator();
 	}
 
 }
