@@ -66,7 +66,7 @@ public class ProfileCreateActivity extends Activity {
 		save = (Button) findViewById(R.id.button3);
 		//arrival.setText(dateFormatter.format(dateTime.getTime()));
 		//departure.setText(dateFormatter.format(dateTime.getTime()));
-		
+		//Bla
 		arrival.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				selection = 0;
