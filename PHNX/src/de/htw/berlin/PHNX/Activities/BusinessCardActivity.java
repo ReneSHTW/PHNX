@@ -1,4 +1,4 @@
-package de.htwberlin.phnx;
+package de.htw.berlin.PHNX.Activities;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,6 +7,7 @@ import java.util.Map;
 
 import de.htw.berlin.PHNX.impl.PHNXEngine;
 import de.htw.berlin.PHNX.impl.PHNXException;
+import de.htwberlin.phnx.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

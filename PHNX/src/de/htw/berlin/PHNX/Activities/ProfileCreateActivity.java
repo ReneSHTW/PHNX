@@ -1,10 +1,11 @@
-package de.htwberlin.phnx;
+package de.htw.berlin.PHNX.Activities;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import de.htw.berlin.PHNX.impl.PHNXEngine;
 import de.htw.berlin.PHNX.impl.PHNXException;
+import de.htwberlin.phnx.R;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;

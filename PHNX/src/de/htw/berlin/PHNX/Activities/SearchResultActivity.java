@@ -1,5 +1,6 @@
-package de.htwberlin.phnx;
+package de.htw.berlin.PHNX.Activities;
 
+import de.htwberlin.phnx.R;
 import android.app.Activity;
 import android.os.Bundle;
 
