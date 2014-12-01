@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.htw.berlin.PHNX.impl.PHNXEngine;
+import de.htw.berlin.PHNX.impl.PHNXException;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ public class BusinessCardActivity extends Activity implements OnClickListener {
 	private Button editProfileBtn;
 	private Intent intent;
 
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -30,7 +33,6 @@ public class BusinessCardActivity extends Activity implements OnClickListener {
 		showMainMenuBtn.setOnClickListener(this);
 		editProfileBtn.setOnClickListener(this);
 		initList();
-
 		// We get the ListView component from the layout
 		ListView lv = (ListView) findViewById(R.id.listView1);
 
@@ -50,7 +52,6 @@ public class BusinessCardActivity extends Activity implements OnClickListener {
 
 	// The data to show
 	List<Map<String, String>> planetsList = new ArrayList<Map<String, String>>();
-
 
 	private void initList() {
 		// We populate the planets
@@ -75,19 +76,20 @@ public class BusinessCardActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		switch (v.getId())
-		{
+		switch (v.getId()) {
 		case R.id.button1:
-			intent = new Intent(BusinessCardActivity.this, MainMenuActivity.class);
+			intent = new Intent(BusinessCardActivity.this,
+					MainMenuActivity.class);
 			startActivity(intent);
 			break;
 		case R.id.button2:
-			intent = new Intent(BusinessCardActivity.this, ProfileCreateActivity.class);
+			intent = new Intent(BusinessCardActivity.this,
+					ProfileCreateActivity.class);
 			startActivity(intent);
 			break;
-		
+
+		}
+
 	}
 
 }
-	
-}	
