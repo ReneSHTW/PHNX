@@ -11,17 +11,20 @@ import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
-public class ProfileCreateActivity extends Activity {
+public class ProfileCreateActivity extends Activity implements OnClickListener {
 
 	private Button arrival;
 	private Button departure;
@@ -38,6 +41,8 @@ public class ProfileCreateActivity extends Activity {
 	private EditText hometown;
 	private EditText website;
 	private ImageView picture;
+	private Toast toast;
+	private Context context;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +69,10 @@ public class ProfileCreateActivity extends Activity {
 		arrival = (Button) findViewById(R.id.button1);
 		departure = (Button) findViewById(R.id.button2);
 		save = (Button) findViewById(R.id.button3);
-		//arrival.setText(dateFormatter.format(dateTime.getTime()));
-		//departure.setText(dateFormatter.format(dateTime.getTime()));
-		//Bla
+		save.setOnClickListener(this);
+		// arrival.setText(dateFormatter.format(dateTime.getTime()));
+		// departure.setText(dateFormatter.format(dateTime.getTime()));
+		// Bla
 		arrival.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				selection = 0;
@@ -90,8 +96,6 @@ public class ProfileCreateActivity extends Activity {
 
 		});
 		return true;
-		
-		
 
 	}
 
@@ -112,6 +116,21 @@ public class ProfileCreateActivity extends Activity {
 			}
 		}, dateTime.get(Calendar.YEAR), dateTime.get(Calendar.MONTH), dateTime
 				.get(Calendar.DAY_OF_MONTH));
+
+	}
+
+	@Override
+	public void onClick(View v) {
+
+
+		switch (v.getId()) {
+		case R.id.button3:
+			
+			break;
+
+		default:
+			break;
+		}
 
 	}
 
