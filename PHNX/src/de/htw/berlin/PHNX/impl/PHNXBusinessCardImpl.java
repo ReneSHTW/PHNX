@@ -26,6 +26,7 @@ public class PHNXBusinessCardImpl implements PHNXBusinessCard {
 	private Date arrival;
 	private Date departure;
 	private PHNXPicture picture;
+	
 
 	public PHNXBusinessCardImpl(PHNXName nameP, PHNXContact contactP, PHNXOrganization organizationP, PHNXResource professionP, String degreeP,
 			Iterator<PHNXResource> skillsP, Date departureP, Date arrivalP, PHNXPicture pictureP) {
