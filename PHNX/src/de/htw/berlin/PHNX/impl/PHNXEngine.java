@@ -12,6 +12,7 @@ import android.text.format.DateFormat;
 import de.htw.berlin.PHNX.interfaces.PHNX;
 import de.htw.berlin.PHNX.interfaces.PHNXBusinessCard;
 import de.htw.berlin.PHNX.interfaces.PHNXContact;
+import de.htw.berlin.PHNX.interfaces.PHNXMapPOI;
 import de.htw.berlin.PHNX.interfaces.PHNXName;
 import de.htw.berlin.PHNX.interfaces.PHNXOrganization;
 import de.htw.berlin.PHNX.interfaces.PHNXResource;
@@ -54,10 +55,10 @@ public class PHNXEngine implements PHNX {
 			Format formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMAN);
 			PHNXName name = new PHNXNameImpl(kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Name_firstName"), kB.getPeerSemanticTag(emailAddress)
 					.getProperty("PHNX_Name_lastName"), concatenateStringsToIterator(kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Name_middleName")));
-			//PHNXContact contact = new PHNXContactImpl(emailAddress, kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Contact_homeAddress"), kB
-					//.getPeerSemanticTag(emailAddress).getProperty("PHNX_Contact_wwwAddress"), kB.getPeerSemanticTag(emailAddress).getProperty(
-					//"PHNX_Contact_privateMobileNumber"), kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Contact_privateLandLineNumber"));
-			PHNXBusinessCard card = new PHNXBusinessCardImpl(name, /*contact*/null, getOrganization(kB.getPeerSemanticTag(emailAddress).getProperty(
+			PHNXContact contact = new PHNXContactImpl(emailAddress, kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Contact_homeAddress"), kB
+					.getPeerSemanticTag(emailAddress).getProperty("PHNX_Contact_wwwAddress"), kB.getPeerSemanticTag(emailAddress).getProperty(
+					"PHNX_Contact_privateMobileNumber"), kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Contact_privateLandLineNumber"), null);
+			PHNXBusinessCard card = new PHNXBusinessCardImpl(name, contact, getOrganization(kB.getPeerSemanticTag(emailAddress).getProperty(
 					"PHNX_Organization_SI")), null, kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_printableProfessionalDegree"), null,
 					(Date) formatter.parseObject((kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_departure"))), (Date) formatter.parseObject((kB
 							.getPeerSemanticTag(emailAddress).getProperty("PHNX_arrival"))), null);
@@ -73,7 +74,7 @@ public class PHNXEngine implements PHNX {
 	}
 
 	@Override
-	public Iterator<PHNXResource> getPHNXResource(String type, String name) {
+	public Iterator<PHNXResource> getResource(String type, String name) {
 		// kB.createContextCoordinates(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
 		// SharkCSAlgebra.extract(kB, arg1);
 		return null;
@@ -94,7 +95,7 @@ public class PHNXEngine implements PHNX {
 	}
 
 	@Override
-	public void setPHNXBusinessCard(PHNXBusinessCard value) throws PHNXException, SharkKBException {
+	public void setBusinessCard(PHNXBusinessCard value) throws PHNXException, SharkKBException {
 		if (value != null) {
 			PHNXResource resource = null;
 			kB.createPeerSemanticTag(value.getName().getPrintableFullName(), value.getContact().getEmailAddress(), "null");
@@ -103,21 +104,21 @@ public class PHNXEngine implements PHNX {
 			kB.getPeerSemanticTag(value.getContact().getEmailAddress()).setProperty("PHNX_Name_middleNames",
 					concatenateStringiteratorToString(value.getName().getMiddleNames()));
 			kB.getPeerSemanticTag(value.getContact().getEmailAddress()).setProperty("PHNX_Contact_homeAddress", value.getContact().getHomeAddress());
-			kB.getPeerSemanticTag(value.getContact().getEmailAddress()).setProperty("PHNX_Contact_wwwAddress",
-					concatenateStringiteratorToString(value.getContact().getWwwAddress()));
+			kB.getPeerSemanticTag(value.getContact().getEmailAddress()).setProperty("PHNX_Contact_wwwAddress", value.getContact().getWwwAddress());
 			kB.getPeerSemanticTag(value.getContact().getEmailAddress()).setProperty("PHNX_Contact_privateMobileNumber", value.getContact().getMobileNumber());
 			kB.getPeerSemanticTag(value.getContact().getEmailAddress()).setProperty("PHNX_Contact_privateLandLineNumber",
 					value.getContact().getLandLineNumber());
+			// PHNXMapPOI speichern von PHNXContact fehlt noch
 			kB.getPeerSemanticTag(value.getContact().getEmailAddress()).setProperty("PHNX_Organization_SI", value.getOrganization().getWwwAddress());
 			resource = new PHNXResourceImpl(value.getProfession().getResourceType(), value.getProfession().getResourceName(), value.getProfession()
 					.getOwnerOrganization(), value.getProfession().getContactPerson(), value.getProfession().getAmount(), value.getProfession().getPicture());
-			setPHNXResource(resource);
+			setResource(resource);
 			kB.getPeerSemanticTag(value.getContact().getEmailAddress()).setProperty("PHNX_printableProfessionalDegree", value.getPrintableProfessionalDegree());
 			while (value.getSkills().hasNext()) {
 				resource = new PHNXResourceImpl(value.getSkills().next().getResourceType(), value.getSkills().next().getResourceName(), value.getSkills()
 						.next().getOwnerOrganization(), value.getSkills().next().getContactPerson(), value.getSkills().next().getAmount(), value.getSkills()
 						.next().getPicture());
-				setPHNXResource(resource);
+				setResource(resource);
 			}
 			Format formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 			kB.getPeerSemanticTag(value.getContact().getEmailAddress()).setProperty("PHNX_arrival", formatter.format(value.getArrival()));
@@ -129,7 +130,7 @@ public class PHNXEngine implements PHNX {
 	}
 
 	@Override
-	public void setPHNXResource(PHNXResource value) throws PHNXException, SharkKBException {
+	public void setResource(PHNXResource value) throws PHNXException, SharkKBException {
 		if (value != null) {
 			ContextCoordinates cc = kB.createContextCoordinates(kB.createSemanticTag(value.getResourceName(), value.getResourceType()),
 					kB.getPeerSemanticTag(value.getOwnerOrganization().getWwwAddress()),
@@ -143,7 +144,7 @@ public class PHNXEngine implements PHNX {
 	}
 
 	@Override
-	public void setPHNXOrganization(PHNXOrganization value) throws PHNXException, SharkKBException {
+	public void setOrganization(PHNXOrganization value) throws PHNXException, SharkKBException {
 		if (value != null) {
 			PHNXResource resource = null;
 			kB.createPeerSemanticTag(value.getName(), value.getWwwAddress(), "null");
@@ -151,7 +152,7 @@ public class PHNXEngine implements PHNX {
 				resource = new PHNXResourceImpl(value.getResources().next().getResourceType(), value.getResources().next().getResourceName(), value
 						.getResources().next().getOwnerOrganization(), value.getResources().next().getContactPerson(), value.getResources().next().getAmount(),
 						value.getResources().next().getPicture());
-				setPHNXResource(resource);
+				setResource(resource);
 			}
 			// Logo wird als eigener ContextPunkt erstellt
 		} else {
@@ -160,7 +161,7 @@ public class PHNXEngine implements PHNX {
 	}
 
 	@Override
-	public void removePHNXBusinessCard(PHNXBusinessCard value) throws PHNXException, SharkKBException {
+	public void removeBusinessCard(PHNXBusinessCard value) throws PHNXException, SharkKBException {
 		if (value != null) {
 			// kB.getPeersAsSemanticNet().removeSemanticTag(kB.getPeerSemanticTag(arg0));
 		} else {
@@ -169,16 +170,16 @@ public class PHNXEngine implements PHNX {
 	}
 
 	@Override
-	public void removePHNXResource(PHNXResource value) throws PHNXException, SharkKBException {
+	public void removeResource(PHNXResource value) throws PHNXException, SharkKBException {
 		if (value != null) {
-		//	kB.removeContextPoint(kB.get);
+			// kB.removeContextPoint(kB.get);
 		} else {
 			throw new IllegalArgumentException();
 		}
 	}
 
 	@Override
-	public void removePHNXOrganization(PHNXOrganization value) throws PHNXException, SharkKBException {
+	public void removeOrganization(PHNXOrganization value) throws PHNXException, SharkKBException {
 		if (value != null) {
 		} else {
 			throw new IllegalArgumentException();
@@ -200,5 +201,23 @@ public class PHNXEngine implements PHNX {
 			tempList.add(temp[i]);
 		}
 		return tempList.iterator();
+	}
+
+	@Override
+	public PHNXMapPOI getPointOfInterest(String pointIdentifier) throws PHNXException, SharkKBException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setPointOfInterest(PHNXMapPOI value) throws PHNXException, SharkKBException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removePointOfInterest(PHNXMapPOI value) throws PHNXException, SharkKBException {
+		// TODO Auto-generated method stub
+		
 	}
 }

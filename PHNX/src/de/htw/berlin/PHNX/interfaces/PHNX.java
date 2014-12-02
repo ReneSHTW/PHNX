@@ -10,23 +10,25 @@ public interface PHNX {
 
 	public PHNXBusinessCard getBusinessCard(String emailAddress) throws PHNXException, SharkKBException, ParseException;
 
-	public Iterator<PHNXResource> getPHNXResource(String type, String name) throws PHNXException, SharkKBException;
+	public Iterator<PHNXResource> getResource(String type, String name) throws PHNXException, SharkKBException;
 
 	public PHNXOrganization getOrganization(String wwwAddress) throws PHNXException, SharkKBException;
 
-	public void setPHNXBusinessCard(PHNXBusinessCard value) throws PHNXException, SharkKBException;
+	public PHNXMapPOI getPointOfInterest(String pointIdentifier) throws PHNXException, SharkKBException;
 
-	public void setPHNXResource(PHNXResource value) throws PHNXException, SharkKBException;
+	public void setBusinessCard(PHNXBusinessCard value) throws PHNXException, SharkKBException;
 
-	public void setPHNXOrganization(PHNXOrganization value) throws PHNXException, SharkKBException;
+	public void setResource(PHNXResource value) throws PHNXException, SharkKBException;
 
-	public void removePHNXBusinessCard(PHNXBusinessCard value) throws PHNXException, SharkKBException;
+	public void setOrganization(PHNXOrganization value) throws PHNXException, SharkKBException;
 
-	public void removePHNXResource(PHNXResource value) throws PHNXException, SharkKBException;
+	public void setPointOfInterest(PHNXMapPOI value) throws PHNXException, SharkKBException;
 
-	public void removePHNXOrganization(PHNXOrganization value) throws PHNXException, SharkKBException;
+	public void removeBusinessCard(PHNXBusinessCard value) throws PHNXException, SharkKBException;
 
-	// Create Methoden einfügen
+	public void removeResource(PHNXResource value) throws PHNXException, SharkKBException;
 
-	// PHNXMap getPHNXMap();
+	public void removeOrganization(PHNXOrganization value) throws PHNXException, SharkKBException;
+
+	public void removePointOfInterest(PHNXMapPOI value) throws PHNXException, SharkKBException;
 }

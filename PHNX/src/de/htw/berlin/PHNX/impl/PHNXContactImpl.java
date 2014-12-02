@@ -1,25 +1,26 @@
 package de.htw.berlin.PHNX.impl;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import de.htw.berlin.PHNX.interfaces.PHNXContact;
+import de.htw.berlin.PHNX.interfaces.PHNXMapPOI;
 
 public class PHNXContactImpl implements PHNXContact {
 
 	private String emailAddress;
 	private String homeAddress;
-	private Iterator<String> wwwAddress;
+	private String wwwAddress;
 	private String mobileNumber;
 	private String landLineNumber;
+	private PHNXMapPOI currentLocation;
 
-	public PHNXContactImpl(String anEmailAddress, String aHomeAddress, Iterator<String> aWwwAddress, String aMobileNumber, String aLandLineNumber) {
+	public PHNXContactImpl(String anEmailAddress, String aHomeAddress, String aWwwAddress, String aMobileNumber, String aLandLineNumber,
+			PHNXMapPOI aCurrentLocation) {
 		if (anEmailAddress != null) {
 			emailAddress = anEmailAddress;
 			homeAddress = aHomeAddress;
 			wwwAddress = aWwwAddress;
 			mobileNumber = aMobileNumber;
 			landLineNumber = aLandLineNumber;
+			currentLocation = aCurrentLocation;
 		} else {
 			throw new IllegalArgumentException();
 		}
@@ -46,47 +47,54 @@ public class PHNXContactImpl implements PHNXContact {
 	}
 
 	@Override
-	public Iterator<String> getWwwAddress() {
+	public String getWwwAddress() {
 		return wwwAddress;
 	}
 
 	@Override
 	public void setMobileNumber(String aMobileNumber) {
-		this.mobileNumber = aMobileNumber;
-
+		if (aMobileNumber != null) {
+			mobileNumber = aMobileNumber;
+		}
 	}
 
 	@Override
 	public void setLandLineNumber(String aLandLineNumber) {
-		this.landLineNumber = aLandLineNumber;
-
+		if (aLandLineNumber != null) {
+			landLineNumber = aLandLineNumber;
+		}
 	}
 
 	@Override
 	public void setEmailAddress(String anEmailAddress) {
-		this.emailAddress = anEmailAddress;
-
+		if (anEmailAddress != null) {
+			emailAddress = anEmailAddress;
+		}
 	}
 
 	@Override
 	public void setHomeAddress(String aHomeAddress) {
-		this.homeAddress = aHomeAddress;
+		if (aHomeAddress != null) {
+			homeAddress = aHomeAddress;
+		}
 	}
 
 	@Override
-	public void addWwwAddress(String aWwwAddress) {
+	public void setWwwAddress(String aWwwAddress) {
 		if (aWwwAddress != null) {
-			ArrayList<String> tempList = new ArrayList<String>();
-			if (wwwAddress != null) {
-				while (wwwAddress.hasNext()) {
-					tempList.add(wwwAddress.next());
-				}
-			} else {
-				tempList.add(aWwwAddress);
-				wwwAddress = tempList.iterator();
-			}
+			wwwAddress = aWwwAddress;
 		}
-
 	}
 
+	@Override
+	public PHNXMapPOI getCurrentLocation() {
+		return currentLocation;
+	}
+
+	@Override
+	public void setCurrentLocation(PHNXMapPOI aCurrentLocation) {
+		if (aCurrentLocation != null) {
+			currentLocation = aCurrentLocation;
+		}
+	}
 }

@@ -156,7 +156,7 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 			} catch (IllegalArgumentException iae) {
 			}
 			try {
-				engine.setPHNXBusinessCard(businessCard);
+				engine.setBusinessCard(businessCard);
 				toast = Toast.makeText(getApplicationContext(),
 						"Business Card wurde erstellt", Toast.LENGTH_LONG);
 				toast.show();
