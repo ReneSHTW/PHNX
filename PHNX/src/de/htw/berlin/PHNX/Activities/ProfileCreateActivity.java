@@ -9,6 +9,7 @@ import java.util.Iterator;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
 import de.htw.berlin.PHNX.impl.PHNXBusinessCardImpl;
+import de.htw.berlin.PHNX.impl.PHNXContactImpl;
 import de.htw.berlin.PHNX.impl.PHNXEngine;
 import de.htw.berlin.PHNX.impl.PHNXException;
 import de.htw.berlin.PHNX.impl.PHNXNameImpl;
@@ -45,6 +46,8 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 	private ImageView picture;
 	private Toast toast;
 	private PHNXBusinessCardImpl businessCard;
+	private PHNXContactImpl phnxContact;
+	private PHNXNameImpl phnxName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -127,7 +130,7 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.button3:
 			String[] temp = name.getText().toString().split(" ");
-			PHNXNameImpl phnxName = null;
+			
 			try {
 				phnxName = new PHNXNameImpl(temp[0], temp[1],
 						concatenateStringsToIterator(middleNames.getText()
@@ -149,8 +152,10 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			phnxContact = new PHNXContactImpl("bosche@hotmail.de", null, null, null, null, null);
 			try {
-				businessCard = new PHNXBusinessCardImpl(phnxName, null, null,
+				
+				businessCard = new PHNXBusinessCardImpl(phnxName, phnxContact, null,
 						null, null, null, arrivalDate, departureDate, null);
 				cardCreated = true;
 			} catch (IllegalArgumentException iae) {
