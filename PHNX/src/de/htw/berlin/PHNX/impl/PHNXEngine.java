@@ -1,12 +1,9 @@
 package de.htw.berlin.PHNX.impl;
 
-import java.text.Format;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.Locale;
 import de.htw.berlin.PHNX.interfaces.PHNX;
 import de.htw.berlin.PHNX.interfaces.PHNXBusinessCard;
 import de.htw.berlin.PHNX.interfaces.PHNXContact;
@@ -15,9 +12,11 @@ import de.htw.berlin.PHNX.interfaces.PHNXName;
 import de.htw.berlin.PHNX.interfaces.PHNXOrganization;
 import de.htw.berlin.PHNX.interfaces.PHNXResource;
 import net.sharkfw.knowledgeBase.ContextCoordinates;
+import net.sharkfw.knowledgeBase.STSet;
 import net.sharkfw.knowledgeBase.SharkKB;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.knowledgeBase.filesystem.FSSharkKB;
+import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
 
 public class PHNXEngine implements PHNX {
 
@@ -65,7 +64,9 @@ public class PHNXEngine implements PHNX {
 	}
 
 	@Override
-	public Iterator<PHNXResource> getResource(String type, String name) {
+	public Iterator<PHNXResource> getResource(String type, String name) throws SharkKBException {
+		STSet tempSet = InMemoSharkKB.createInMemoSTSet();
+		tempSet.merge(kB.getSemanticTag(type));
 		// kB.createContextCoordinates(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
 		// SharkCSAlgebra.extract(kB, arg1);
 		return null;
@@ -102,6 +103,8 @@ public class PHNXEngine implements PHNX {
 			// PHNXMapPOI speichern von PHNXContact fehlt noch
 			if (value.getOrganization() != null) {
 				kB.getPeerSemanticTag(value.getContact().getEmailAddress()).setProperty("PHNX_Organization_SI", value.getOrganization().getWwwAddress());
+			}
+			if (value.getProfession() != null) {
 				resource = new PHNXResourceImpl(value.getProfession().getResourceType(), value.getProfession().getResourceName(), value.getProfession()
 						.getOwnerOrganization(), value.getProfession().getContactPerson(), value.getProfession().getAmount(), value.getProfession()
 						.getPicture());
@@ -144,13 +147,9 @@ public class PHNXEngine implements PHNX {
 	@Override
 	public void setOrganization(PHNXOrganization value) throws PHNXException, SharkKBException {
 		if (value != null && value.getWwwAddress() != null) {
-			PHNXResource resource = null;
 			kB.createPeerSemanticTag(value.getName(), value.getWwwAddress(), "null");
 			while (value.getResources().hasNext()) {
-				resource = new PHNXResourceImpl(value.getResources().next().getResourceType(), value.getResources().next().getResourceName(), value
-						.getResources().next().getOwnerOrganization(), value.getResources().next().getContactPerson(), value.getResources().next().getAmount(),
-						value.getResources().next().getPicture());
-				setResource(resource);
+				setResource(value.getResources().next());
 			}
 			// Logo wird als eigener ContextPunkt erstellt
 		} else {

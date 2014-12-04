@@ -8,6 +8,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Locale;
+
+import net.sharkfw.knowledgeBase.STSet;
+import net.sharkfw.knowledgeBase.SemanticTag;
+import net.sharkfw.knowledgeBase.SharkKBException;
+import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -72,13 +78,23 @@ public class EngineTests {
 	}
 
 	@Test
-	public void BusinescCardTest() throws ParseException {
+	public void BusinessCardDateTest() throws ParseException {
 		Format formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMAN); // Formatierer erzeugen
 		Calendar datum = Calendar.getInstance(); // Calender Datum erzeugen
 		datum.set(1988, 8 - 1, 21, 0, 0); // Calender Datum festlegen, Monate beginnen bei Januar mit 0
 		Assert.assertTrue(formatter.format(datum.getTime()).equals("1988-08-21")); // formatiere Calendar-Typ zu String und vergleiche
 		datum.setTime((Date) formatter.parseObject("1988-08-21")); // Ein Datum aus einem String erzeugen (setTime erwartet den Datentyp Date)
 		Assert.assertTrue(formatter.format(datum.getTime()).equals("1988-08-21")); // aus String erzeugtes Datum testen
+	}
+
+	@Test
+	public void STSetTest() throws SharkKBException {
+		STSet plainSet = InMemoSharkKB.createInMemoSTSet();
+		SemanticTag one = plainSet.createSemanticTag("eins", "Nummer");
+		SemanticTag two = plainSet.createSemanticTag("zwei", "Nummer");
+		
+		plainSet.getSemanticTag("Nummer").getName();
+		System.out.println(plainSet.getSemanticTag("Nummer").getName());
 	}
 
 }
