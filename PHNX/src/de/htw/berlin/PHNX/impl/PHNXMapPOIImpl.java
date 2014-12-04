@@ -1,8 +1,12 @@
 package de.htw.berlin.PHNX.impl;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Locale;
 
 import de.htw.berlin.PHNX.Map.PHNXPoint;
 import de.htw.berlin.PHNX.interfaces.PHNXMapPOI;
@@ -13,11 +17,19 @@ public class PHNXMapPOIImpl implements PHNXMapPOI {
 	private String pointName;
 	private String pointDescription;
 	private String pointCategorie;
+	private String pOIIdentifier;
 	private Date timestamp;
 
-	public PHNXMapPOIImpl(String subjctIdentifierP, Iterator<PHNXPoint> PHNXPointsP, String pointNameP, String pointDescriptionP, String pointCategorieP,
-			Date timestampP) {
-
+	public PHNXMapPOIImpl(Iterator<PHNXPoint> PHNXPointsP, String pointNameP, String pointDescriptionP, String pointCategorieP) {
+		if (PHNXPointsP != null && pointNameP != null && pointCategorieP != null) {
+			PHNXPoints = PHNXPointsP;
+			pointName = pointNameP;
+			pointDescription = pointDescriptionP;
+			pointCategorie = pointCategorieP;
+			
+		} else {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	@Override
@@ -101,8 +113,7 @@ public class PHNXMapPOIImpl implements PHNXMapPOI {
 
 	@Override
 	public String getPOIIdentifier() {
-		String identifier = "";
-		return identifier;
+		return pOIIdentifier;
 	}
 
 }

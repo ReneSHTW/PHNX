@@ -25,7 +25,7 @@ public class PHNXBusinessCardImpl implements PHNXBusinessCard {
 
 	public PHNXBusinessCardImpl(PHNXName nameP, PHNXContact contactP, PHNXOrganization organizationP, PHNXResource professionP, String degreeP,
 			Iterator<PHNXResource> skillsP, Date departureP, Date arrivalP, PHNXPicture pictureP) {
-		if (nameP != null && arrivalP != null && departureP != null) {
+		if (nameP != null && arrivalP != null && departureP != null && contactP != null && contactP.getEmailAddress() != null) {
 			name = nameP;
 			arrival = arrivalP;
 			departure = departureP;
