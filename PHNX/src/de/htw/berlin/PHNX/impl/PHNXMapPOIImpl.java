@@ -1,5 +1,6 @@
 package de.htw.berlin.PHNX.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -21,67 +22,87 @@ public class PHNXMapPOIImpl implements PHNXMapPOI {
 
 	@Override
 	public Iterator<PHNXPoint> getPHNXPoints() {
-		// TODO Auto-generated method stub
-		return null;
+		return PHNXPoints;
 	}
 
 	@Override
 	public void addPHNXPoint(PHNXPoint value) {
-		// TODO Auto-generated method stub
-
+		if (value != null) {
+			ArrayList<PHNXPoint> tempList = new ArrayList<PHNXPoint>();
+			while (PHNXPoints.hasNext()) {
+				tempList.add(PHNXPoints.next());
+			}
+			tempList.add(value);
+			PHNXPoints = tempList.iterator();
+		} else {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	@Override
 	public String getPointName() {
-		// TODO Auto-generated method stub
-		return null;
+		return pointName;
 	}
 
 	@Override
 	public void setPointName(String value) {
-		// TODO Auto-generated method stub
-
+		if (value != null) {
+			pointName = value;
+		} else {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	@Override
 	public String getPointDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		return pointDescription;
 	}
 
 	@Override
-	public void setPointDescription() {
-		// TODO Auto-generated method stub
-
+	public void setPointDescription(String value) {
+		if (value != null) {
+			pointDescription = value;
+		} else {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	@Override
 	public String getPointCategorie() {
-		// TODO Auto-generated method stub
-		return null;
+		return pointCategorie;
 	}
 
 	@Override
-	public void setPointCategorie() {
-		// TODO Auto-generated method stub
-
+	public void setPointCategorie(String value) {
+		if (value != null) {
+			pointCategorie = value;
+		} else {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	@Override
 	public Date getTimestamp() {
-		// TODO Auto-generated method stub
-		return null;
+		return timestamp;
 	}
 
 	@Override
-	public void removePHNXMapPOI(PHNXMapPOI value) {
-		// TODO Auto-generated method stub
-
+	public void removePHNXPoint(PHNXPoint value) {
+		if (value != null) {
+			while (PHNXPoints.hasNext()) {
+				if ((PHNXPoints.next().getLattitude() == value.getLattitude()) && (PHNXPoints.next().getLongitude() == value.getLongitude())) {
+					PHNXPoints.remove();
+				}
+			}
+		} else {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	@Override
-	public String getSubjectIdentifier() {
-		return null;
+	public String getPOIIdentifier() {
+		String identifier = "";
+		return identifier;
 	}
 
 }

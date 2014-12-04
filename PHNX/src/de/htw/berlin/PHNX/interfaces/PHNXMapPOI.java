@@ -7,7 +7,7 @@ import de.htw.berlin.PHNX.Map.PHNXPoint;
 
 public interface PHNXMapPOI {
 	
-	public String getSubjectIdentifier();
+	public String getPOIIdentifier();
 
 	public Iterator<PHNXPoint> getPHNXPoints();
 
@@ -19,13 +19,13 @@ public interface PHNXMapPOI {
 
 	public String getPointDescription();
 
-	public void setPointDescription();
+	public void setPointDescription(String value);
 
 	public String getPointCategorie();
 
-	public void setPointCategorie();
+	public void setPointCategorie(String value);
 
 	public Date getTimestamp();
 
-	public void removePHNXMapPOI(PHNXMapPOI value);
+	public void removePHNXPoint(PHNXPoint value);
 }
