@@ -134,7 +134,7 @@
         android:layout_below="@+id/editText1"
         android:ems="10"
         android:inputType="textPersonName" 
-        android:hint="middle names (optional)"/>
+        android:hint="Your Email address"/>
 
     <EditText
         android:id="@+id/editText2"
@@ -144,7 +144,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/editText8"
         android:ems="10"
-        android:hint="Your phone number"
+        android:hint="Your phone number (optional)"
         android:inputType="phone" />
 
     <EditText
@@ -155,7 +155,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/editText2"
         android:ems="10"
-        android:hint="Your Email address"
+        android:hint="middle Names (optional)"
         android:inputType="textEmailAddress" />
 
 </RelativeLayout>

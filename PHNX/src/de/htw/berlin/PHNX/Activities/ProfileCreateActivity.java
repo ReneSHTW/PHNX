@@ -65,9 +65,9 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		name = (EditText) findViewById(R.id.editText1);
-		middleNames = (EditText) findViewById(R.id.editText8);
+		eMail = (EditText) findViewById(R.id.editText8);
 		phoneNumer = (EditText) findViewById(R.id.editText2);
-		eMail = (EditText) findViewById(R.id.editText3);
+		middleNames = (EditText) findViewById(R.id.editText3);
 		hometown = (EditText) findViewById(R.id.editText5);
 		website = (EditText) findViewById(R.id.editText7);
 		picture = (ImageView) findViewById(R.id.imageView1);
@@ -129,56 +129,67 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 		boolean cardCreated = false;
 		switch (v.getId()) {
 		case R.id.button3:
-			String[] temp = name.getText().toString().split(" ");
-			
-			try {
-				phnxName = new PHNXNameImpl(temp[0], temp[1],
-						concatenateStringsToIterator(middleNames.getText()
-								.toString()));
-			} catch (ArrayIndexOutOfBoundsException aie) {
-			}
-			Date arrivalDate = null;
-			Date departureDate = null;
-			try {
-				arrivalDate = dateFormatter.parse(arrival.getText().toString());
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			try {
-				departureDate = dateFormatter.parse(arrival.getText()
-						.toString());
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			phnxContact = new PHNXContactImpl("bosche@hotmail.de", null, null, null, null, null);
-			try {
-				
-				businessCard = new PHNXBusinessCardImpl(phnxName, phnxContact, null,
-						null, null, null, arrivalDate, departureDate, null);
-				cardCreated = true;
-			} catch (IllegalArgumentException iae) {
-			}
-			try {
-				engine.setBusinessCard(businessCard);
-				toast = Toast.makeText(getApplicationContext(),
-						"Business Card wurde erstellt", Toast.LENGTH_LONG);
-				toast.show();
-			} catch (SharkKBException e) {
-			} catch (PHNXException e) {
-							}
-			catch (IllegalArgumentException e) {
-				toast = Toast.makeText(	getApplicationContext(),
+			if (isEditTextNotEmpty(eMail) && isEditTextNotEmpty(name)) {
+				String[] temp = name.getText().toString().split(" ");
+
+				try {
+					phnxName = new PHNXNameImpl(temp[0], temp[1],
+							concatenateStringsToIterator(middleNames.getText()
+									.toString()));
+				} catch (ArrayIndexOutOfBoundsException aie) {
+				}
+				Date arrivalDate = null;
+				Date departureDate = null;
+				try {
+					arrivalDate = dateFormatter.parse(arrival.getText()
+							.toString());
+				} catch (ParseException e) {
+				}
+				try {
+					departureDate = dateFormatter.parse(arrival.getText()
+							.toString());
+				} catch (ParseException e) {
+				}
+				phnxContact = new PHNXContactImpl(eMail.getText().toString(),
+						null, null, null, null, null);
+				try {
+
+					businessCard = new PHNXBusinessCardImpl(phnxName,
+							phnxContact, null, null, null, null, arrivalDate,
+							departureDate, null);
+					cardCreated = true;
+				} catch (IllegalArgumentException iae) {
+				}
+				try {
+					engine.setBusinessCard(businessCard);
+					toast = Toast.makeText(getApplicationContext(),
+							"Business Card wurde erstellt".toString(),
+							Toast.LENGTH_LONG);
+					toast.show();
+				} catch (SharkKBException e) {
+				} catch (PHNXException e) {
+				} catch (IllegalArgumentException e) {
+					toast = Toast
+							.makeText(
+									getApplicationContext(),
+									"Mindestens eine der Pflichtangaben fehlt oder ist fehlerhaft",
+									Toast.LENGTH_LONG);
+					toast.show();
+				}
+				break;
+			} else {
+				toast = Toast
+						.makeText(
+								getApplicationContext(),
 								"Mindestens eine der Pflichtangaben fehlt oder ist fehlerhaft",
 								Toast.LENGTH_LONG);
 				toast.show();
 			}
-			break;
-		default:
+		default: {
 			break;
 		}
 
+		}
 	}
 
 	private Iterator<String> concatenateStringsToIterator(String strings) {
@@ -188,6 +199,10 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 			tempList.add(temp[i]);
 		}
 		return tempList.iterator();
+	}
+
+	private boolean isEditTextNotEmpty(EditText etText) {
+		return (!(etText.getText().toString().matches("")));
 	}
 
 }
