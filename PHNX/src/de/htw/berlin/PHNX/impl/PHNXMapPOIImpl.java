@@ -99,7 +99,7 @@ public class PHNXMapPOIImpl implements PHNXMapPOI {
 	public void removePHNXPoint(PHNXPoint value) {
 		if (value != null) {
 			while (PHNXPoints.hasNext()) {
-				if ((PHNXPoints.next().getLattitude() == value.getLattitude()) && (PHNXPoints.next().getLongitude() == value.getLongitude())) {
+				if ((PHNXPoints.next().getLatitude() == value.getLatitude()) && (PHNXPoints.next().getLongitude() == value.getLongitude())) {
 					PHNXPoints.remove();
 				}
 			}
