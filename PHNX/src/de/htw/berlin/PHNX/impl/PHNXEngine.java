@@ -109,20 +109,27 @@ public class PHNXEngine implements PHNX {
 			kB.getPeerSemanticTag(value.getContact().getEmailAddress()).setProperty("PHNX_Contact_privateLandLineNumber",
 					value.getContact().getLandLineNumber());
 			// PHNXMapPOI speichern von PHNXContact fehlt noch
-			kB.getPeerSemanticTag(value.getContact().getEmailAddress()).setProperty("PHNX_Organization_SI", value.getOrganization().getWwwAddress());
-			resource = new PHNXResourceImpl(value.getProfession().getResourceType(), value.getProfession().getResourceName(), value.getProfession()
-					.getOwnerOrganization(), value.getProfession().getContactPerson(), value.getProfession().getAmount(), value.getProfession().getPicture());
-			setResource(resource);
-			kB.getPeerSemanticTag(value.getContact().getEmailAddress()).setProperty("PHNX_printableProfessionalDegree", value.getPrintableProfessionalDegree());
-			while (value.getSkills().hasNext()) {
-				resource = new PHNXResourceImpl(value.getSkills().next().getResourceType(), value.getSkills().next().getResourceName(), value.getSkills()
-						.next().getOwnerOrganization(), value.getSkills().next().getContactPerson(), value.getSkills().next().getAmount(), value.getSkills()
-						.next().getPicture());
+			if (value.getOrganization() != null) {
+				kB.getPeerSemanticTag(value.getContact().getEmailAddress()).setProperty("PHNX_Organization_SI", value.getOrganization().getWwwAddress());
+				resource = new PHNXResourceImpl(value.getProfession().getResourceType(), value.getProfession().getResourceName(), value.getProfession()
+						.getOwnerOrganization(), value.getProfession().getContactPerson(), value.getProfession().getAmount(), value.getProfession()
+						.getPicture());
 				setResource(resource);
 			}
-			Format formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-			kB.getPeerSemanticTag(value.getContact().getEmailAddress()).setProperty("PHNX_arrival", formatter.format(value.getArrival()));
-			kB.getPeerSemanticTag(value.getContact().getEmailAddress()).setProperty("PHNX_departure", formatter.format(value.getDeparture()));
+			if (value.getPrintableProfessionalDegree() != null) {
+				kB.getPeerSemanticTag(value.getContact().getEmailAddress()).setProperty("PHNX_printableProfessionalDegree",
+						value.getPrintableProfessionalDegree());
+			}
+			if (value.getSkills() != null) {
+				while (value.getSkills().hasNext()) {
+					resource = new PHNXResourceImpl(value.getSkills().next().getResourceType(), value.getSkills().next().getResourceName(), value.getSkills()
+							.next().getOwnerOrganization(), value.getSkills().next().getContactPerson(), value.getSkills().next().getAmount(), value
+							.getSkills().next().getPicture());
+					setResource(resource);
+				}
+			}
+			kB.getPeerSemanticTag(value.getContact().getEmailAddress()).setProperty("PHNX_arrival", String.valueOf(value.getArrival().getTime()));
+			kB.getPeerSemanticTag(value.getContact().getEmailAddress()).setProperty("PHNX_departure", String.valueOf(value.getDeparture()));
 		} else {
 			throw new IllegalArgumentException();
 		}
@@ -212,12 +219,12 @@ public class PHNXEngine implements PHNX {
 	@Override
 	public void setPointOfInterest(PHNXMapPOI value) throws PHNXException, SharkKBException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void removePointOfInterest(PHNXMapPOI value) throws PHNXException, SharkKBException {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
