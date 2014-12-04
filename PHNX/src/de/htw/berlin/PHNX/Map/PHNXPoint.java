@@ -4,11 +4,11 @@ public class PHNXPoint {
 
 	private double longitude;
 
-	private double lattitude;
+	private double latitude;
 
-	public PHNXPoint(double longitudeP, double lattitudeP) {
+	public PHNXPoint(double longitudeP, double latitudeP) {
 		longitude = longitudeP;
-		lattitude = lattitudeP;
+		latitude = latitudeP;
 	}
 
 	public double getLongitude() {
@@ -19,12 +19,12 @@ public class PHNXPoint {
 		longitude = longitudeP;
 	}
 
-	public double getLattitude() {
-		return lattitude;
+	public double getLatitude() {
+		return latitude;
 	}
 
-	public void setLattitude(double lattitudeP) {
-		lattitude = lattitudeP;
+	public void setLatitude(double latitudeP) {
+		latitude = latitudeP;
 	}
 
 }
