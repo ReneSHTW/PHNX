@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Locale;
-
-import android.text.format.DateFormat;
 import de.htw.berlin.PHNX.interfaces.PHNX;
 import de.htw.berlin.PHNX.interfaces.PHNXBusinessCard;
 import de.htw.berlin.PHNX.interfaces.PHNXContact;
@@ -17,14 +15,9 @@ import de.htw.berlin.PHNX.interfaces.PHNXName;
 import de.htw.berlin.PHNX.interfaces.PHNXOrganization;
 import de.htw.berlin.PHNX.interfaces.PHNXResource;
 import net.sharkfw.knowledgeBase.ContextCoordinates;
-import net.sharkfw.knowledgeBase.Knowledge;
-import net.sharkfw.knowledgeBase.PeerSemanticTag;
-import net.sharkfw.knowledgeBase.SemanticTag;
-import net.sharkfw.knowledgeBase.SharkCSAlgebra;
 import net.sharkfw.knowledgeBase.SharkKB;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.knowledgeBase.filesystem.FSSharkKB;
-import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
 
 public class PHNXEngine implements PHNX {
 
@@ -50,18 +43,16 @@ public class PHNXEngine implements PHNX {
 
 	@Override
 	public PHNXBusinessCard getBusinessCard(String emailAddress) throws SharkKBException, ParseException {
-		// Bedingung einfügen -> PeerSemanticTag mit dieser emailaddresse muss vorhanden sein
 		if (emailAddress != null && (kB.getPeerSemanticTag(emailAddress) != null)) {
-			Format formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMAN);
 			PHNXName name = new PHNXNameImpl(kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Name_firstName"), kB.getPeerSemanticTag(emailAddress)
 					.getProperty("PHNX_Name_lastName"), concatenateStringsToIterator(kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Name_middleName")));
 			PHNXContact contact = new PHNXContactImpl(emailAddress, kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Contact_homeAddress"), kB
 					.getPeerSemanticTag(emailAddress).getProperty("PHNX_Contact_wwwAddress"), kB.getPeerSemanticTag(emailAddress).getProperty(
 					"PHNX_Contact_privateMobileNumber"), kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Contact_privateLandLineNumber"), null);
 			PHNXBusinessCard card = new PHNXBusinessCardImpl(name, contact, getOrganization(kB.getPeerSemanticTag(emailAddress).getProperty(
-					"PHNX_Organization_SI")), null, kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_printableProfessionalDegree"), null,
-					(Date) formatter.parseObject((kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_departure"))), (Date) formatter.parseObject((kB
-							.getPeerSemanticTag(emailAddress).getProperty("PHNX_arrival"))), null);
+					"PHNX_Organization_SI")), null, kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_printableProfessionalDegree"), null, new Date(
+					Long.parseLong(kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_departure"))), new Date(Long.parseLong(kB.getPeerSemanticTag(
+					emailAddress).getProperty("PHNX_arrival"))), null);
 			kB.getPeerSemanticTag(emailAddress);
 			return card;
 		} else {
@@ -152,7 +143,7 @@ public class PHNXEngine implements PHNX {
 
 	@Override
 	public void setOrganization(PHNXOrganization value) throws PHNXException, SharkKBException {
-		if (value != null) {
+		if (value != null && value.getWwwAddress() != null) {
 			PHNXResource resource = null;
 			kB.createPeerSemanticTag(value.getName(), value.getWwwAddress(), "null");
 			while (value.getResources().hasNext()) {
@@ -170,7 +161,7 @@ public class PHNXEngine implements PHNX {
 	@Override
 	public void removeBusinessCard(PHNXBusinessCard value) throws PHNXException, SharkKBException {
 		if (value != null) {
-			// kB.getPeersAsSemanticNet().removeSemanticTag(kB.getPeerSemanticTag(arg0));
+			kB.getPeersAsSemanticNet().removeSemanticTag(kB.getPeerSemanticTag(value.getContact().getEmailAddress()));
 		} else {
 			throw new IllegalArgumentException();
 		}
@@ -188,6 +179,7 @@ public class PHNXEngine implements PHNX {
 	@Override
 	public void removeOrganization(PHNXOrganization value) throws PHNXException, SharkKBException {
 		if (value != null) {
+			kB.getPeersAsSemanticNet().removeSemanticTag(kB.getPeerSemanticTag(value.getWwwAddress()));
 		} else {
 			throw new IllegalArgumentException();
 		}
