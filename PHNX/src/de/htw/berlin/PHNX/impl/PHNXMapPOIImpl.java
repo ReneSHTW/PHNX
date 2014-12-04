@@ -1,12 +1,8 @@
 package de.htw.berlin.PHNX.impl;
 
-import java.text.Format;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.Locale;
 
 import de.htw.berlin.PHNX.Map.PHNXPoint;
 import de.htw.berlin.PHNX.interfaces.PHNXMapPOI;
@@ -26,7 +22,8 @@ public class PHNXMapPOIImpl implements PHNXMapPOI {
 			pointName = pointNameP;
 			pointDescription = pointDescriptionP;
 			pointCategorie = pointCategorieP;
-			
+			timestamp = new Date(System.currentTimeMillis());
+			pOIIdentifier = pointName + "_" + timestamp.getTime();
 		} else {
 			throw new IllegalArgumentException();
 		}
