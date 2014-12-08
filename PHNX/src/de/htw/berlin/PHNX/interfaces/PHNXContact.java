@@ -1,6 +1,5 @@
 package de.htw.berlin.PHNX.interfaces;
 
-import java.util.Iterator;
 
 public interface PHNXContact {
 
@@ -9,8 +8,6 @@ public interface PHNXContact {
 	public String getLandLineNumber();
 
 	public String getEmailAddress();
-
-	public String getHomeAddress();
 
 	public String getWwwAddress();
 	
@@ -21,8 +18,6 @@ public interface PHNXContact {
 	public void setLandLineNumber(String aLandLineNumber);
 
 	public void setEmailAddress(String anEmailAddress);
-
-	public void setHomeAddress(String aHomeAddress);
 
 	public void setWwwAddress(String aWwwAddress);
 

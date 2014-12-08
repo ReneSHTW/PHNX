@@ -42,11 +42,6 @@ public class PHNXContactImpl implements PHNXContact {
 	}
 
 	@Override
-	public String getHomeAddress() {
-		return homeAddress;
-	}
-
-	@Override
 	public String getWwwAddress() {
 		return wwwAddress;
 	}
@@ -69,13 +64,6 @@ public class PHNXContactImpl implements PHNXContact {
 	public void setEmailAddress(String anEmailAddress) {
 		if (anEmailAddress != null) {
 			emailAddress = anEmailAddress;
-		}
-	}
-
-	@Override
-	public void setHomeAddress(String aHomeAddress) {
-		if (aHomeAddress != null) {
-			homeAddress = aHomeAddress;
 		}
 	}
 
