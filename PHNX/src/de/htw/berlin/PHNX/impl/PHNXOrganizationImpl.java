@@ -85,4 +85,16 @@ public class PHNXOrganizationImpl implements PHNXOrganization {
 			throw new IllegalArgumentException();
 		}
 	}
+
+	@Override
+	public String getContactPersonEmailAddress() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setContactPersonEmailAddress(String value) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -11,6 +11,10 @@ public interface PHNXOrganization {
 
 	public void setWwwAddress(String value);
 
+	public String getContactPersonEmailAddress();
+
+	public void setContactPersonEmailAddress(String value);
+
 	public PHNXPicture getLogo();
 
 	public void setLogo(PHNXPicture value);
