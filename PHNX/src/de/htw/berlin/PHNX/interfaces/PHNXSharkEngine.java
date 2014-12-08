@@ -15,7 +15,7 @@ public interface PHNXSharkEngine {
 	public PHNXBusinessCard getPHNXBusinessCard(String emailAddressP) throws PHNXException, SharkKBException;
 
 	public void removePHNXBusinessCard(String emailAddressP) throws PHNXException, SharkKBException;
-
-	public Iterator<PHNXResource> getPHNXResource(String nameP, String subjectIdentifierP) throws PHNXException, SharkKBException;
+	
+	public void removePHNXResource(String nameP, String TypP, String owner);
 
 }

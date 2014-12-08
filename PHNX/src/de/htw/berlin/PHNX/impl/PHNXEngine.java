@@ -108,24 +108,20 @@ public class PHNXEngine implements PHNX {
 			if (value.getOrganization() != null) {
 				kB.getPeerSemanticTag(value.getContact().getEmailAddress()).setProperty("PHNX_Organization_SI", value.getOrganization().getWwwAddress());
 			}
-			if (value.getProfession() != null) {
+			/*if (value.getProfession() != null) {
 				resource = new PHNXResourceImpl(value.getProfession().getResourceType(), value.getProfession().getResourceName(), value.getProfession()
 						.getOwnerOrganization(), value.getProfession().getContactPerson(), value.getProfession().getAmount(), value.getProfession()
 						.getPicture());
 				setResource(resource);
-			}
+			}*/
 			if (value.getPrintableProfessionalDegree() != null) {
 				kB.getPeerSemanticTag(value.getContact().getEmailAddress()).setProperty("PHNX_printableProfessionalDegree",
 						value.getPrintableProfessionalDegree());
 			}
-			if (value.getSkills() != null) {
-				while (value.getSkills().hasNext()) {
-					resource = new PHNXResourceImpl(value.getSkills().next().getResourceType(), value.getSkills().next().getResourceName(), value.getSkills()
-							.next().getOwnerOrganization(), value.getSkills().next().getContactPerson(), value.getSkills().next().getAmount(), value
-							.getSkills().next().getPicture());
-					setResource(resource);
-				}
-			}
+			/* if (value.getSkills() != null) { while (value.getSkills().hasNext()) { resource = new
+			 * PHNXResourceImpl(value.getSkills().next().getResourceType(), value.getSkills().next().getResourceName(), value.getSkills()
+			 * .next().getOwnerOrganization(), value.getSkills().next().getContactPerson(), value.getSkills().next().getAmount(), value
+			 * .getSkills().next().getPicture()); setResource(resource); } } */
 			kB.getPeerSemanticTag(value.getContact().getEmailAddress()).setProperty("PHNX_arrival", String.valueOf(value.getArrival().getTime()));
 			kB.getPeerSemanticTag(value.getContact().getEmailAddress()).setProperty("PHNX_departure", String.valueOf(value.getDeparture()));
 		} else {
@@ -136,7 +132,7 @@ public class PHNXEngine implements PHNX {
 
 	@Override
 	public void setResource(PHNXResource value) throws PHNXException, SharkKBException {
-		if (value != null) {
+	/*	if (value != null) {
 			ContextCoordinates cc = kB.createContextCoordinates(kB.createSemanticTag(value.getResourceName(), value.getResourceType()),
 					kB.getPeerSemanticTag(value.getOwnerOrganization().getWwwAddress()),
 					kB.getPeerSemanticTag(value.getContactPerson().getContact().getEmailAddress()), null, null, null, 0);
@@ -145,7 +141,7 @@ public class PHNXEngine implements PHNX {
 			// Picture wird als eigener ContextPunkt erstellt
 		} else {
 			throw new IllegalArgumentException();
-		}
+		}*/
 	}
 
 	@Override

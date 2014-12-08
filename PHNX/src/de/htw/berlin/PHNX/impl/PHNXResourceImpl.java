@@ -1,8 +1,5 @@
 package de.htw.berlin.PHNX.impl;
 
-import de.htw.berlin.PHNX.interfaces.PHNXBusinessCard;
-import de.htw.berlin.PHNX.interfaces.PHNXContact;
-import de.htw.berlin.PHNX.interfaces.PHNXOrganization;
 import de.htw.berlin.PHNX.interfaces.PHNXPicture;
 import de.htw.berlin.PHNX.interfaces.PHNXResource;
 
@@ -11,17 +8,16 @@ public class PHNXResourceImpl implements PHNXResource {
 
 	private String resourceType;
 	private String resourceName;
-	private PHNXOrganization ownerOrganization;
-	private PHNXBusinessCard contactPerson;
+	private String owner;
+	private String contactPerson;
 	private String amount;
 	private PHNXPicture picture;
 
-	public PHNXResourceImpl(String resourceTypeP, String resourceNameP, PHNXOrganization ownerOrganizationP, PHNXBusinessCard contactPersonP, String amountP,
-			PHNXPicture pictureP) {
-		if (resourceTypeP != null && resourceNameP != null && ownerOrganizationP != null) {
+	public PHNXResourceImpl(String resourceTypeP, String resourceNameP, String ownerIdentifierP, String contactPersonP, String amountP, PHNXPicture pictureP) {
+		if (resourceTypeP != null && resourceNameP != null && ownerIdentifierP != null) {
 			resourceName = resourceNameP;
 			resourceType = resourceTypeP;
-			ownerOrganization = ownerOrganizationP;
+			owner = ownerIdentifierP;
 			contactPerson = contactPersonP;
 			amount = amountP;
 			picture = pictureP;
@@ -42,12 +38,12 @@ public class PHNXResourceImpl implements PHNXResource {
 	}
 
 	@Override
-	public PHNXOrganization getOwnerOrganization() {
-		return ownerOrganization;
+	public String getOwner() {
+		return owner;
 	}
 
 	@Override
-	public PHNXBusinessCard getContactPerson() {
+	public String getContactPerson() {
 		return contactPerson;
 	}
 
@@ -62,18 +58,18 @@ public class PHNXResourceImpl implements PHNXResource {
 	}
 
 	@Override
-	public void setOwnerOrgianization(PHNXOrganization value) {
-		if (value != null) {
-			ownerOrganization = value;
+	public void setOwner(String ownerIdentifierP) {
+		if (ownerIdentifierP != null) {
+			owner = ownerIdentifierP;
 		} else {
 			throw new IllegalArgumentException();
 		}
 	}
 
 	@Override
-	public void setContactPerson(PHNXBusinessCard value) {
-		if (value != null) {
-			contactPerson = value;
+	public void setContactPerson(String emailAddressP) {
+		if (emailAddressP != null) {
+			contactPerson = emailAddressP;
 		} else {
 			throw new IllegalArgumentException();
 		}

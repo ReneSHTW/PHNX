@@ -8,13 +8,13 @@ public interface PHNXResource {
 
 	public String getResourceName();
 
-	public PHNXOrganization getOwnerOrganization();
+	public String getOwner();
 
-	public void setOwnerOrgianization(PHNXOrganization value);
+	public void setOwner(String ownerIdentifierP);
 
-	public PHNXBusinessCard getContactPerson();
+	public String getContactPerson();
 
-	public void setContactPerson(PHNXBusinessCard value);
+	public void setContactPerson(String emailAddressP);
 
 	public String getAmount();
 
