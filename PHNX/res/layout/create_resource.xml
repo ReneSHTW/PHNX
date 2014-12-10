@@ -46,7 +46,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/editText2"
         android:ems="10"
-        android:hint="Owner-Organization of the resource" />
+        android:hint="Owner (E-Mail or www Address)" />
 
     <EditText
         android:id="@+id/editText4"
