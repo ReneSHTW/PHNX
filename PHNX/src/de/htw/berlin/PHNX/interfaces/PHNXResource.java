@@ -8,11 +8,11 @@ public interface PHNXResource {
 
 	public String getResourceName();
 
-	public String getOwner();
+	public String getOwnerSI();
 
 	public void setOwner(String ownerIdentifierP);
 
-	public String getContactPerson();
+	public String getContactPersonSI();
 
 	public void setContactPerson(String emailAddressP);
 

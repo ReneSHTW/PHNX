@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.Iterator;
 import net.sharkfw.knowledgeBase.ContextPoint;
+import net.sharkfw.knowledgeBase.SemanticTag;
 import net.sharkfw.knowledgeBase.SharkKB;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.knowledgeBase.filesystem.FSSharkKB;
@@ -57,77 +58,86 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 
 	private Iterator<PHNXResource> getSpecificPHNXResource(String nameP, String TypP, String ownerP) throws SharkKBException {
 		Enumeration<ContextPoint> tempEnum = kB.getAllContextPoints();
-		ArrayList<ContextPoint> tempList = new ArrayList<ContextPoint>();
+		ArrayList<ContextPoint> tempListCP = new ArrayList<ContextPoint>();
+		ArrayList<PHNXResource> tempListResource = new ArrayList<PHNXResource>();
 		ContextPoint tempPoint = null;
-		String[] tempStrings;
+		String tempStringTyp;
+		String tempStringOwner;
+		String tempStringName;
 		while (tempEnum.hasMoreElements()) {
 			tempPoint = kB.getAllContextPoints().nextElement();
-			tempStrings = tempPoint.getContextCoordinates().getTopic().getSI();
-			if (tempStrings[0].equals(TypP)) {
-				tempList.add(tempPoint);
+			tempStringTyp = tempPoint.getContextCoordinates().getTopic().getSI()[0];
+			tempStringName = tempPoint.getContextCoordinates().getTopic().getName();
+			tempStringOwner = tempPoint.getContextCoordinates().getOriginator().getSI()[0];
+			if (tempStringTyp.equals(TypP) && tempStringOwner.equals(ownerP) && tempStringName.equals(nameP)) {
+				tempListCP.add(tempPoint);
 			}
-			for (int i = 0; i < tempList.size(); i++) {
-				// baue Resource zusammen
+			for (int i = 0; i < tempListCP.size(); i++) {
+				tempListResource.add(new PHNXResourceImpl(tempListCP.get(i)));
 			}
 		}
-		return null;
+		return tempListResource.iterator();
 	}
 
 	private Iterator<PHNXResource> getPHNXResourceByType(String TypP) throws SharkKBException {
 		Enumeration<ContextPoint> tempEnum = kB.getAllContextPoints();
-		ArrayList<ContextPoint> tempList = new ArrayList<ContextPoint>();
+		ArrayList<ContextPoint> tempListCP = new ArrayList<ContextPoint>();
+		ArrayList<PHNXResource> tempListResource = new ArrayList<PHNXResource>();
 		ContextPoint tempPoint = null;
-		String[] tempStrings;
+		String tempStringTyp;
 		while (tempEnum.hasMoreElements()) {
 			tempPoint = kB.getAllContextPoints().nextElement();
-			tempStrings = tempPoint.getContextCoordinates().getTopic().getSI();
-			if (tempStrings[0].equals(TypP)) {
-				tempList.add(tempPoint);
+			tempStringTyp = tempPoint.getContextCoordinates().getTopic().getSI()[0];
+			if (tempStringTyp.equals(TypP)) {
+				tempListCP.add(tempPoint);
 			}
-			for (int i = 0; i < tempList.size(); i++) {
-				// baue Resource zusammen
+			for (int i = 0; i < tempListCP.size(); i++) {
+				tempListResource.add(new PHNXResourceImpl(tempListCP.get(i)));
 			}
 		}
-
-		return null;
+		return tempListResource.iterator();
 	}
 
 	private Iterator<PHNXResource> getPHNXResourceByTypeAndOwner(String TypP, String ownerP) throws SharkKBException {
 		Enumeration<ContextPoint> tempEnum = kB.getAllContextPoints();
-		ArrayList<ContextPoint> tempList = new ArrayList<ContextPoint>();
+		ArrayList<ContextPoint> tempListCP = new ArrayList<ContextPoint>();
+		ArrayList<PHNXResource> tempListResource = new ArrayList<PHNXResource>();
 		ContextPoint tempPoint = null;
-		String[] tempStrings;
+		String tempStringTyp;
+		String tempStringOwner;
 		while (tempEnum.hasMoreElements()) {
 			tempPoint = kB.getAllContextPoints().nextElement();
-			tempStrings = tempPoint.getContextCoordinates().getTopic().getSI();
-			if (tempStrings[0].equals(TypP)) {
-				tempList.add(tempPoint);
+			tempStringTyp = tempPoint.getContextCoordinates().getTopic().getSI()[0];
+			tempStringOwner = tempPoint.getContextCoordinates().getOriginator().getSI()[0];
+			if (tempStringTyp.equals(TypP) && tempStringOwner.equals(ownerP)) {
+				tempListCP.add(tempPoint);
 			}
-			for (int i = 0; i < tempList.size(); i++) {
-				// baue Resource zusammen
+			for (int i = 0; i < tempListCP.size(); i++) {
+				tempListResource.add(new PHNXResourceImpl(tempListCP.get(i)));
 			}
 		}
-
-		return null;
+		return tempListResource.iterator();
 	}
 
 	private Iterator<PHNXResource> getPHNXResourceByTypeAndName(String TypP, String nameP) throws SharkKBException {
 		Enumeration<ContextPoint> tempEnum = kB.getAllContextPoints();
-		ArrayList<ContextPoint> tempList = new ArrayList<ContextPoint>();
+		ArrayList<ContextPoint> tempListCP = new ArrayList<ContextPoint>();
+		ArrayList<PHNXResource> tempListResource = new ArrayList<PHNXResource>();
 		ContextPoint tempPoint = null;
-		String[] tempStrings;
+		String tempStringTyp;
+		String tempStringName;
 		while (tempEnum.hasMoreElements()) {
 			tempPoint = kB.getAllContextPoints().nextElement();
-			tempStrings = tempPoint.getContextCoordinates().getTopic().getSI();
-			if (tempStrings[0].equals(TypP)) {
-				tempList.add(tempPoint);
+			tempStringTyp = tempPoint.getContextCoordinates().getTopic().getSI()[0];
+			tempStringName = tempPoint.getContextCoordinates().getTopic().getName();
+			if (tempStringTyp.equals(TypP) && tempStringName.equals(nameP)) {
+				tempListCP.add(tempPoint);
 			}
-			for (int i = 0; i < tempList.size(); i++) {
-				// baue Resource zusammen
+			for (int i = 0; i < tempListCP.size(); i++) {
+				tempListResource.add(new PHNXResourceImpl(tempListCP.get(i)));
 			}
 		}
-
-		return null;
+		return tempListResource.iterator();
 	}
 
 	@Override
@@ -145,7 +155,9 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 	@Override
 	public void createPHNXBusinessCard(PHNXName nameP, PHNXContact contactP, String organizationSubjectIdentifierP, PHNXResource professionP, String degreeP,
 			Iterator<PHNXResource> skillsP, Date departureP, Date arrivalP, PHNXPicture pictureP) throws PHNXException, SharkKBException, ParseException {
-		// TODO Auto-generated method stub
+		// Keine verschachtelten Create aufrufe
+		// die Skills bekommt man wieder raus anhand von getPHNXResource (null, skill, SI der BusinessCard)
+		// dito für die profession (null, profession, SI der BusinessCard)
 
 	}
 
@@ -153,6 +165,12 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 	public void removePHNXResource(String nameP, String TypP, String owner) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public PHNXResource createPHNXResource() throws PHNXException, SharkKBException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

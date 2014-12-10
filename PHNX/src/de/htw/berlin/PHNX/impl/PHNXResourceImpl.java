@@ -1,15 +1,18 @@
 package de.htw.berlin.PHNX.impl;
 
+import net.sharkfw.knowledgeBase.ContextPoint;
+import net.sharkfw.knowledgeBase.SharkKBException;
 import de.htw.berlin.PHNX.interfaces.PHNXPicture;
 import de.htw.berlin.PHNX.interfaces.PHNXResource;
+import de.htw.berlin.PHNX.interfaces.PHNXSharkEngine;
 
 /*Als Peer Semantic Tag speichern*/
 public class PHNXResourceImpl implements PHNXResource {
 
 	private String resourceType;
 	private String resourceName;
-	private String owner;
-	private String contactPerson;
+	private String ownerSI;
+	private String contactPersonSI;
 	private String amount;
 	private PHNXPicture picture;
 
@@ -17,14 +20,23 @@ public class PHNXResourceImpl implements PHNXResource {
 		if (resourceTypeP != null && resourceNameP != null && ownerIdentifierP != null) {
 			resourceName = resourceNameP;
 			resourceType = resourceTypeP;
-			owner = ownerIdentifierP;
-			contactPerson = contactPersonP;
+			ownerSI = ownerIdentifierP;
+			contactPersonSI = contactPersonP;
 			amount = amountP;
 			picture = pictureP;
 		} else {
 			throw new IllegalArgumentException();
 		}
 
+	}
+
+	public PHNXResourceImpl(ContextPoint pointP) throws SharkKBException {
+		resourceType = pointP.getContextCoordinates().getTopic().getSI()[0];
+		resourceName = pointP.getContextCoordinates().getTopic().getName();
+		ownerSI = pointP.getContextCoordinates().getOriginator().getSI()[0];
+		contactPersonSI = pointP.getContextCoordinates().getPeer().getSI()[0];
+		amount = pointP.getInformation().next().getContentAsString();
+		picture = null;
 	}
 
 	@Override
@@ -38,13 +50,13 @@ public class PHNXResourceImpl implements PHNXResource {
 	}
 
 	@Override
-	public String getOwner() {
-		return owner;
+	public String getOwnerSI() {
+		return ownerSI;
 	}
 
 	@Override
-	public String getContactPerson() {
-		return contactPerson;
+	public String getContactPersonSI() {
+		return contactPersonSI;
 	}
 
 	@Override
@@ -60,7 +72,7 @@ public class PHNXResourceImpl implements PHNXResource {
 	@Override
 	public void setOwner(String ownerIdentifierP) {
 		if (ownerIdentifierP != null) {
-			owner = ownerIdentifierP;
+			ownerSI = ownerIdentifierP;
 		} else {
 			throw new IllegalArgumentException();
 		}
@@ -69,7 +81,7 @@ public class PHNXResourceImpl implements PHNXResource {
 	@Override
 	public void setContactPerson(String emailAddressP) {
 		if (emailAddressP != null) {
-			contactPerson = emailAddressP;
+			contactPersonSI = emailAddressP;
 		} else {
 			throw new IllegalArgumentException();
 		}
