@@ -168,9 +168,9 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 	}
 
 	@Override
-	public PHNXResource createPHNXResource() throws PHNXException, SharkKBException {
-		// TODO Auto-generated method stub
-		return null;
+	public void createPHNXResource(String resourceTypeP, String resourceNameP, String ownerIdentifierP, String contactPersonP, String amountP,
+			PHNXPicture pictureP) throws PHNXException, SharkKBException {
+		new PHNXResourceImpl(kB, resourceTypeP, resourceNameP, ownerIdentifierP, contactPersonP, amountP, pictureP);
 	}
 
 }

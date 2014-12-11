@@ -1,6 +1,11 @@
 package de.htw.berlin.PHNX.impl;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
+
 import net.sharkfw.knowledgeBase.ContextPoint;
+import net.sharkfw.knowledgeBase.SharkCS;
+import net.sharkfw.knowledgeBase.SharkKB;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import de.htw.berlin.PHNX.interfaces.PHNXPicture;
 import de.htw.berlin.PHNX.interfaces.PHNXResource;
@@ -24,6 +29,32 @@ public class PHNXResourceImpl implements PHNXResource {
 			contactPersonSI = contactPersonP;
 			amount = amountP;
 			picture = pictureP;
+		} else {
+			throw new IllegalArgumentException();
+		}
+
+	}
+
+	public PHNXResourceImpl(SharkKB kB, String resourceTypeP, String resourceNameP, String ownerIdentifierP, String contactPersonP, String amountP,
+			PHNXPicture pictureP) throws SharkKBException {
+		if (resourceTypeP != null && resourceNameP != null && ownerIdentifierP != null) {
+			kB.createContextPoint(kB.createContextCoordinates(kB.createSemanticTag(resourceNameP, resourceTypeP),
+					kB.createPeerSemanticTag("OwnerIdentifier_" + ownerIdentifierP, ownerIdentifierP, "null"),
+					kB.createPeerSemanticTag("ContactPersonIdentifier_" + contactPersonP, contactPersonP, "null"), null, null, null, SharkCS.DIRECTION_NOTHING));
+			Enumeration<ContextPoint> tempEnum = kB.getAllContextPoints();
+			ContextPoint tempPoint = null;
+			String tempStringTyp;
+			String tempStringName;
+			String tempStringOwner;
+			while (tempEnum.hasMoreElements()) {
+				tempPoint = kB.getAllContextPoints().nextElement();
+				tempStringTyp = tempPoint.getContextCoordinates().getTopic().getSI()[0];
+				tempStringName = tempPoint.getContextCoordinates().getTopic().getName();
+				tempStringOwner = tempPoint.getContextCoordinates().getOriginator().getSI()[0];
+				if (tempStringTyp.equals(resourceTypeP) && tempStringName.equals(resourceNameP) && tempStringOwner.equals(ownerIdentifierP)) {
+					tempPoint.addInformation(amountP);
+				}
+			}
 		} else {
 			throw new IllegalArgumentException();
 		}
