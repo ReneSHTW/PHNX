@@ -44,7 +44,7 @@ public class CreateResourceActivity extends Activity implements OnClickListener 
 		try {
 			engine = PHNXEngine.getPHNXEngine();
 		} catch (PHNXException e) {
-
+			throw new IllegalStateException("Couldn't retrieve the PHNX Engine");
 		}
 
 		return true;
@@ -57,7 +57,16 @@ public class CreateResourceActivity extends Activity implements OnClickListener 
 			if (isEditTextNotEmpty(resourceNameEdit)
 					&& isEditTextNotEmpty(resourceTypeEdit)
 					&& isEditTextNotEmpty(ownerEdit)) {
-				// engine.createPHNXResource(params)
+				if (isEditTextNotEmpty(contact)
+						&& isEditTextNotEmpty(resourceAmount)) {
+					// engine.createResource...
+				} else if (isEditTextNotEmpty(contact)) {
+					// engine.createResource...
+				} else if (isEditTextNotEmpty(resourceAmount)) {
+					// engine.createResource...
+				} else if (!(isEditTextNotEmpty(contact) && isEditTextNotEmpty(resourceAmount))) {
+					// engine.createResource...
+				}
 
 			} else {
 				toast = Toast

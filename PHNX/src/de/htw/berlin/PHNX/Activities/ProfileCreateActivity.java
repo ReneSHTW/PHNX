@@ -56,7 +56,8 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 		try {
 			engine = PHNXEngine.getPHNXEngine();
 		} catch (PHNXException e) {
-			e.printStackTrace();
+			throw new IllegalStateException(
+					"Couldn't retrieve the PHNX Engine");
 		}
 	}
 

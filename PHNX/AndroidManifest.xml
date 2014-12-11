@@ -29,6 +29,8 @@
         <activity android:name="SearchActivity"></activity>
         <activity android:name="SearchResultActivity"></activity>
         <activity android:name="ShowOrganizationActivity"></activity>
+        <activity android:name="CreateOrganizationActivity"></activity>
+        
     </application>
 
 </manifest>
