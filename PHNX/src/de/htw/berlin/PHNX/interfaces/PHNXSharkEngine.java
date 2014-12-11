@@ -24,6 +24,6 @@ public interface PHNXSharkEngine {
 	public void editPHNXResource(String resourceNameP, String resourceTypeP, String ownerIdentifierP, String changeResourceTypeP, String changeResourceNameP,
 			String changeOwnerIdentifierP, String changeContactPersonP, String changeAmountP, PHNXPicture changePictureP) throws SharkKBException;
 
-	public void removePHNXResource(String nameP, String TypP, String owner);
+	public void removePHNXResource(String nameP, String TypP, String ownerP) throws SharkKBException;
 
 }

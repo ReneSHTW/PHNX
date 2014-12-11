@@ -1,7 +1,5 @@
 package de.htw.berlin.PHNX.impl;
 
-import java.util.Enumeration;
-
 import net.sharkfw.knowledgeBase.ContextPoint;
 import net.sharkfw.knowledgeBase.SharkCS;
 import net.sharkfw.knowledgeBase.SharkKB;
@@ -36,8 +34,12 @@ public class PHNXResourceImpl implements PHNXResource {
 
 	public PHNXResourceImpl(SharkKB kB, String resourceTypeP, String resourceNameP, String ownerIdentifierP, String contactPersonP, String amountP,
 			PHNXPicture pictureP) throws SharkKBException {
+		// was wenn contactPersonP null ist?
 		if (resourceTypeP != null && resourceNameP != null && ownerIdentifierP != null) {
-			kB.createContextPoint(kB.createContextCoordinates(kB.createSemanticTag(resourceNameP, resourceTypeP),
+			String[] tempStringArray = new String[2];
+			tempStringArray[0] = resourceTypeP;
+			tempStringArray[1] = resourceNameP;
+			kB.createContextPoint(kB.createContextCoordinates(kB.createSemanticTag(null, tempStringArray),
 					kB.createPeerSemanticTag("OwnerIdentifier_" + ownerIdentifierP, ownerIdentifierP, "null"),
 					kB.createPeerSemanticTag("ContactPersonIdentifier_" + contactPersonP, contactPersonP, "null"), null, null, null, SharkCS.DIRECTION_NOTHING));
 			kB.getContextPoint(

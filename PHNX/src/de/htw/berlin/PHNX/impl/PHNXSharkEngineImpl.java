@@ -58,7 +58,7 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 			while (tempEnum.hasMoreElements()) {
 				tempPoint = kB.getAllContextPoints().nextElement();
 				tempStringTyp = tempPoint.getContextCoordinates().getTopic().getSI()[0];
-				tempStringName = tempPoint.getContextCoordinates().getTopic().getName();
+				tempStringName = tempPoint.getContextCoordinates().getTopic().getSI()[1];
 				if (tempStringTyp.equals(TypP) && tempStringName.equals(nameP)) {
 					tempListCP.add(tempPoint);
 				}
@@ -96,7 +96,7 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 			while (tempEnum.hasMoreElements()) {
 				tempPoint = kB.getAllContextPoints().nextElement();
 				tempStringTyp = tempPoint.getContextCoordinates().getTopic().getSI()[0];
-				tempStringName = tempPoint.getContextCoordinates().getTopic().getName();
+				tempStringName = tempPoint.getContextCoordinates().getTopic().getSI()[1];
 				tempStringOwner = tempPoint.getContextCoordinates().getOriginator().getSI()[0];
 				if (tempStringTyp.equals(TypP) && tempStringOwner.equals(ownerP) && tempStringName.equals(nameP)) {
 					tempListCP.add(tempPoint);
@@ -132,9 +132,12 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 	}
 
 	@Override
-	public void removePHNXResource(String nameP, String TypP, String owner) {
-		// TODO Auto-generated method stub
-
+	public void removePHNXResource(String nameP, String TypP, String ownerP) throws SharkKBException {
+		String[] tempStringArray = new String[2];
+		tempStringArray[0] = TypP;
+		tempStringArray[1] = nameP;
+		kB.removeContextPoint(kB.createContextCoordinates(kB.getSemanticTag(tempStringArray), kB.getPeerSemanticTag(ownerP), null, null, null, null,
+				SharkCS.DIRECTION_NOTHING));
 	}
 
 	@Override
