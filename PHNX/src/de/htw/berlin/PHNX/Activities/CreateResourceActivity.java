@@ -55,6 +55,7 @@ public class CreateResourceActivity extends Activity implements OnClickListener 
 
 	@Override
 	public void onClick(View v) {
+		
 		String amountString = null;
 		String contactString = null;
 		switch (v.getId()) {
@@ -76,6 +77,7 @@ public class CreateResourceActivity extends Activity implements OnClickListener 
 							.toString(), resourceNameEdit.getText().toString(),
 							ownerEdit.getText().toString(), contactString,
 							amountString, null);
+					successToast();
 				} catch (SharkKBException e) {
 					errorToast();
 				} catch (PHNXException e) {
@@ -85,10 +87,7 @@ public class CreateResourceActivity extends Activity implements OnClickListener 
 				missingParamsToast();
 			}
 		}
-		toast = Toast.makeText(getApplicationContext(),
-				"Resource created!",
-				Toast.LENGTH_LONG);
-		toast.show();
+
 			break;
 		}
 	}
@@ -108,6 +107,12 @@ public class CreateResourceActivity extends Activity implements OnClickListener 
 		toast = Toast.makeText(getApplicationContext(),
 				"Couldn't create the resource!", Toast.LENGTH_LONG);
 		toast.show();
+	}
+	private void successToast() {
+	toast = Toast.makeText(getApplicationContext(),
+			"Resource created!",
+			Toast.LENGTH_LONG);
+	toast.show();
 	}
 
 }
