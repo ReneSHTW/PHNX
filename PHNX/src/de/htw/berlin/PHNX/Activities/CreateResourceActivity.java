@@ -55,16 +55,13 @@ public class CreateResourceActivity extends Activity implements OnClickListener 
 
 	@Override
 	public void onClick(View v) {
-		
+
 		String amountString = null;
 		String contactString = null;
 		switch (v.getId()) {
 		case R.id.button1: {
-			if (isEditTextNotEmpty(resourceNameEdit)
-					&& isEditTextNotEmpty(resourceTypeEdit)
-					&& isEditTextNotEmpty(ownerEdit)) {
-				if (isEditTextNotEmpty(contact)
-						&& isEditTextNotEmpty(resourceAmount)) {
+			if (isEditTextNotEmpty(resourceNameEdit) && isEditTextNotEmpty(resourceTypeEdit) && isEditTextNotEmpty(ownerEdit)) {
+				if (isEditTextNotEmpty(contact) && isEditTextNotEmpty(resourceAmount)) {
 					contactString = contact.getText().toString();
 					amountString = resourceAmount.getText().toString();
 				} else if (isEditTextNotEmpty(contact)) {
@@ -73,10 +70,8 @@ public class CreateResourceActivity extends Activity implements OnClickListener 
 					amountString = resourceAmount.getText().toString();
 				}
 				try {
-					engine.createPHNXResource(resourceTypeEdit.getText()
-							.toString(), resourceNameEdit.getText().toString(),
-							ownerEdit.getText().toString(), contactString,
-							amountString, null);
+					engine.createPHNXResource(resourceTypeEdit.getText().toString(), resourceNameEdit.getText().toString(), ownerEdit.getText().toString(),
+							contactString, amountString, null);
 					successToast();
 				} catch (SharkKBException e) {
 					errorToast();
@@ -97,22 +92,18 @@ public class CreateResourceActivity extends Activity implements OnClickListener 
 	}
 
 	private void missingParamsToast() {
-		toast = Toast.makeText(getApplicationContext(),
-				"At least one required parameter is missing!",
-				Toast.LENGTH_LONG);
+		toast = Toast.makeText(getApplicationContext(), "At least one required parameter is missing!", Toast.LENGTH_LONG);
 		toast.show();
 	}
 
 	private void errorToast() {
-		toast = Toast.makeText(getApplicationContext(),
-				"Couldn't create the resource!", Toast.LENGTH_LONG);
+		toast = Toast.makeText(getApplicationContext(), "Couldn't create the resource!", Toast.LENGTH_LONG);
 		toast.show();
 	}
+
 	private void successToast() {
-	toast = Toast.makeText(getApplicationContext(),
-			"Resource created!",
-			Toast.LENGTH_LONG);
-	toast.show();
+		toast = Toast.makeText(getApplicationContext(), "Resource created!", Toast.LENGTH_LONG);
+		toast.show();
 	}
 
 }
