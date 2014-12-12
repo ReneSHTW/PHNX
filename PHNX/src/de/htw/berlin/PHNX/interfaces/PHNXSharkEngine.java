@@ -27,4 +27,6 @@ public interface PHNXSharkEngine {
 
 	public void removePHNXResource(String nameP, String TypP, String ownerP) throws SharkKBException;
 
+	public PHNXOrganization getPHNXOrganization(String wWWAddressP) throws SharkKBException;
+
 }

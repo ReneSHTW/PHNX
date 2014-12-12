@@ -12,14 +12,14 @@ import de.htw.berlin.PHNX.classes.PHNXName;
 import de.htw.berlin.PHNX.interfaces.PHNXOrganization;
 import de.htw.berlin.PHNX.interfaces.PHNXPicture;
 import de.htw.berlin.PHNX.interfaces.PHNXResource;
+import de.htw.berlin.PHNX.interfaces.PHNXSharkEngine;
 
 public class PHNXBusinessCardImpl implements PHNXBusinessCard {
 
 	private PHNXName name;
 	private PHNXContact contact;
 	private PHNXOrganization organization; // Es wird in der KB unter der BusinessCard nur der SI zur Organisation gespeichert
-	private PHNXResource profession; // der SI zur profession-Resource ist die email-Addresse der BusinessCard Die Resource wird zeitgleich also
-										// angelegt passiv.
+	private PHNXResource profession; // der SI zur profession-Resource ist die email-Addresse der BusinessCard
 	private String printableProfessionalDegree;
 	private Iterator<PHNXResource> skills; // genau wie beim Profession-Resource
 	private Date arrival;
@@ -43,8 +43,16 @@ public class PHNXBusinessCardImpl implements PHNXBusinessCard {
 		}
 	}
 
-	public PHNXBusinessCardImpl(SemanticTag bCP) {
-
+	public PHNXBusinessCardImpl(PHNXSharkEngine engine, SemanticTag bCP) throws SharkKBException {
+		name = new PHNXName(bCP.getProperty("PHNX_Name_firstName"), bCP.getProperty("PHNX_Name_lastName"),
+				concatenateStringsToIterator(bCP.getProperty("PHNX_Name_middleName")));
+		contact = new PHNXContact(bCP.getSI()[0], bCP.getProperty("PHNX_Contact_wwwAddress"), bCP.getProperty("PHNX_Contact_privateMobileNumber"),
+				bCP.getProperty("PHNX_Contact_privateLandLineNumber"), null);
+		organization = engine.getPHNXOrganization(bCP.getProperty("PHNX_Organization_SI"));
+		/*PHNXBusinessCard card = new PHNXBusinessCardImpl(name, contact, bCP.getProperty("PHNX_Organization_SI"), null,
+				bCP.getProperty("PHNX_printableProfessionalDegree"), null, new Date(Long.parseLong(kB.getPeerSemanticTag(emailAddress).getProperty(
+						"PHNX_departure"))), new Date(Long.parseLong(kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_arrival"))), null);
+		kB.getPeerSemanticTag(emailAddress);*/
 	}
 
 	public PHNXBusinessCardImpl(SharkKB kB, PHNXName nameP, PHNXContact contactP, String organizationSubjectIdentifierP, String degreeP, Date departureP,
@@ -222,4 +230,14 @@ public class PHNXBusinessCardImpl implements PHNXBusinessCard {
 		}
 		return concatenation;
 	}
+
+	private Iterator<String> concatenateStringsToIterator(String strings) {
+		String[] temp = strings.split(" ");
+		ArrayList<String> tempList = new ArrayList<String>();
+		for (int i = 0; i < temp.length; i++) {
+			tempList.add(temp[i]);
+		}
+		return tempList.iterator();
+	}
+
 }

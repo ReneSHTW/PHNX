@@ -13,6 +13,7 @@ import net.sharkfw.knowledgeBase.filesystem.FSSharkKB;
 import de.htw.berlin.PHNX.interfaces.PHNXBusinessCard;
 import de.htw.berlin.PHNX.classes.PHNXContact;
 import de.htw.berlin.PHNX.classes.PHNXName;
+import de.htw.berlin.PHNX.interfaces.PHNXOrganization;
 import de.htw.berlin.PHNX.interfaces.PHNXPicture;
 import de.htw.berlin.PHNX.interfaces.PHNXResource;
 import de.htw.berlin.PHNX.interfaces.PHNXSharkEngine;
@@ -108,8 +109,12 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 
 	@Override
 	public PHNXBusinessCard getPHNXBusinessCard(String emailAddressP) throws PHNXException, SharkKBException {
-		// TODO Auto-generated method stub
-		return null;
+		if (emailAddressP != null && (kB.getPeerSemanticTag(emailAddressP) != null)) {
+			PHNXBusinessCard card = new PHNXBusinessCardImpl(phnxSharkEngine, kB.getPeerSemanticTag(emailAddressP));
+			return card;
+		} else {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	@Override
@@ -188,5 +193,11 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 				// todo
 			}
 		}
+	}
+
+	@Override
+	public PHNXOrganization getPHNXOrganization(String wWWAddressP) throws SharkKBException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

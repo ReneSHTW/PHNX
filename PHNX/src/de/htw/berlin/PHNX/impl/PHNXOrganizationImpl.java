@@ -3,6 +3,8 @@ package de.htw.berlin.PHNX.impl;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import net.sharkfw.knowledgeBase.SemanticTag;
+
 import de.htw.berlin.PHNX.interfaces.PHNXOrganization;
 import de.htw.berlin.PHNX.interfaces.PHNXPicture;
 import de.htw.berlin.PHNX.interfaces.PHNXResource;
@@ -23,6 +25,10 @@ public class PHNXOrganizationImpl implements PHNXOrganization {
 		} else {
 			throw new IllegalArgumentException();
 		}
+	}
+
+	public PHNXOrganizationImpl(SemanticTag organizationP) {
+
 	}
 
 	@Override
@@ -95,6 +101,6 @@ public class PHNXOrganizationImpl implements PHNXOrganization {
 	@Override
 	public void setContactPersonEmailAddress(String value) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
