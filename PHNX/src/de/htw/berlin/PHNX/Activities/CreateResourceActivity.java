@@ -85,6 +85,10 @@ public class CreateResourceActivity extends Activity implements OnClickListener 
 				missingParamsToast();
 			}
 		}
+		toast = Toast.makeText(getApplicationContext(),
+				"Resource created!",
+				Toast.LENGTH_LONG);
+		toast.show();
 			break;
 		}
 	}

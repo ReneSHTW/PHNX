@@ -39,7 +39,7 @@ public class PHNXResourceImpl implements PHNXResource {
 			String[] tempStringArray = new String[2];
 			tempStringArray[0] = resourceTypeP;
 			tempStringArray[1] = resourceNameP;
-			kB.createContextPoint(kB.createContextCoordinates(kB.createSemanticTag(null, tempStringArray),
+			kB.createContextPoint(kB.createContextCoordinates(kB.createSemanticTag("null", tempStringArray),
 					kB.createPeerSemanticTag("OwnerIdentifier_" + ownerIdentifierP, ownerIdentifierP, "null"),
 					kB.createPeerSemanticTag("ContactPersonIdentifier_" + contactPersonP, contactPersonP, "null"), null, null, null, SharkCS.DIRECTION_NOTHING));
 			kB.getContextPoint(
