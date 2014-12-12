@@ -17,6 +17,7 @@ import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
 import de.htw.berlin.PHNX.interfaces.PHNXBusinessCard;
 import de.htw.berlin.PHNX.interfaces.PHNXContact;
 import de.htw.berlin.PHNX.interfaces.PHNXName;
+import de.htw.berlin.PHNX.interfaces.PHNXOrganization;
 import de.htw.berlin.PHNX.interfaces.PHNXPicture;
 import de.htw.berlin.PHNX.interfaces.PHNXResource;
 import de.htw.berlin.PHNX.interfaces.PHNXSharkEngine;
@@ -123,12 +124,12 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 	}
 
 	@Override
-	public void createPHNXBusinessCard(PHNXName nameP, PHNXContact contactP, String organizationSubjectIdentifierP, PHNXResource professionP, String degreeP,
-			Iterator<PHNXResource> skillsP, Date departureP, Date arrivalP, PHNXPicture pictureP) throws PHNXException, SharkKBException, ParseException {
+	public void createPHNXBusinessCard(PHNXName nameP, PHNXContact contactP, String organizationSubjectIdentifierP, String degreeP, Date departureP,
+			Date arrivalP, PHNXPicture pictureP) throws SharkKBException {
+		new PHNXBusinessCardImpl(kB, nameP, contactP, organizationSubjectIdentifierP, degreeP, departureP, arrivalP, pictureP);
 		// Keine verschachtelten Create aufrufe
-		// die Skills bekommt man wieder raus anhand von getPHNXResource (null, skill, SI der BusinessCard)
-		// dito für die profession (null, profession, SI der BusinessCard)
-
+		// die Skills bekommt man wieder raus anhand von getPHNXResource (null, skill, SI der BusinessCard[0])
+		// dito für die profession (null, profession, SI der BusinessCard[0])
 	}
 
 	@Override

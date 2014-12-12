@@ -1,8 +1,12 @@
 package de.htw.berlin.PHNX.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 
+import net.sharkfw.knowledgeBase.SemanticTag;
+import net.sharkfw.knowledgeBase.SharkKB;
+import net.sharkfw.knowledgeBase.SharkKBException;
 import de.htw.berlin.PHNX.interfaces.PHNXBusinessCard;
 import de.htw.berlin.PHNX.interfaces.PHNXContact;
 import de.htw.berlin.PHNX.interfaces.PHNXName;
@@ -35,6 +39,34 @@ public class PHNXBusinessCardImpl implements PHNXBusinessCard {
 			printableProfessionalDegree = degreeP;
 			skills = skillsP;
 			picture = pictureP;
+		} else {
+			throw new IllegalArgumentException();
+		}
+	}
+
+	public PHNXBusinessCardImpl(SemanticTag bCP) {
+
+	}
+
+	public PHNXBusinessCardImpl(SharkKB kB, PHNXName nameP, PHNXContact contactP, String organizationSubjectIdentifierP, String degreeP, Date departureP,
+			Date arrivalP, PHNXPicture pictureP) throws SharkKBException {
+		if (kB != null && nameP != null && arrivalP != null && departureP != null && contactP != null && contactP.getEmailAddress() != null) {
+			kB.createPeerSemanticTag("PHNX_BC_SI", contactP.getEmailAddress(), "null");
+			kB.getPeerSemanticTag(contactP.getEmailAddress()).setProperty("PHNX_Name_firstName", getName().getFirstName());
+			kB.getPeerSemanticTag(getContact().getEmailAddress()).setProperty("PHNX_Name_lastName", getName().getLastName());
+			kB.getPeerSemanticTag(getContact().getEmailAddress()).setProperty("PHNX_Name_middleNames",
+					concatenateStringiteratorToString(getName().getMiddleNames()));
+			kB.getPeerSemanticTag(getContact().getEmailAddress()).setProperty("PHNX_Contact_wwwAddress", getContact().getWwwAddress());
+			kB.getPeerSemanticTag(getContact().getEmailAddress()).setProperty("PHNX_Contact_privateMobileNumber", getContact().getMobileNumber());
+			kB.getPeerSemanticTag(getContact().getEmailAddress()).setProperty("PHNX_Contact_privateLandLineNumber", getContact().getLandLineNumber());
+			if (organizationSubjectIdentifierP != null) {
+				kB.getPeerSemanticTag(getContact().getEmailAddress()).setProperty("PHNX_Organization_SI", getOrganization().getWwwAddress());
+			}
+			if (getPrintableProfessionalDegree() != null) {
+				kB.getPeerSemanticTag(getContact().getEmailAddress()).setProperty("PHNX_printableProfessionalDegree", getPrintableProfessionalDegree());
+			}
+			kB.getPeerSemanticTag(getContact().getEmailAddress()).setProperty("PHNX_arrival", String.valueOf(getArrival().getTime()));
+			kB.getPeerSemanticTag(getContact().getEmailAddress()).setProperty("PHNX_departure", String.valueOf(getDeparture()));
 		} else {
 			throw new IllegalArgumentException();
 		}
@@ -178,5 +210,13 @@ public class PHNXBusinessCardImpl implements PHNXBusinessCard {
 		} else {
 			throw new IllegalArgumentException();
 		}
+	}
+
+	private String concatenateStringiteratorToString(Iterator<String> iterator) {
+		String concatenation = "";
+		while (iterator.hasNext()) {
+			concatenation += iterator.next() + " ";
+		}
+		return concatenation;
 	}
 }

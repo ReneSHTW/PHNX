@@ -35,7 +35,7 @@ public class PHNXResourceImpl implements PHNXResource {
 	public PHNXResourceImpl(SharkKB kB, String resourceTypeP, String resourceNameP, String ownerIdentifierP, String contactPersonP, String amountP,
 			PHNXPicture pictureP) throws SharkKBException {
 		// was wenn contactPersonP null ist?
-		if (resourceTypeP != null && resourceNameP != null && ownerIdentifierP != null) {
+		if (kB != null && resourceTypeP != null && resourceNameP != null && ownerIdentifierP != null) {
 			String[] tempStringArray = new String[2];
 			tempStringArray[0] = resourceTypeP;
 			tempStringArray[1] = resourceNameP;
