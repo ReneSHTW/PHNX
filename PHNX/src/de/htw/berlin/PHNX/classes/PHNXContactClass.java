@@ -1,9 +1,9 @@
-package de.htw.berlin.PHNX.impl;
+package de.htw.berlin.PHNX.classes;
 
 import de.htw.berlin.PHNX.interfaces.PHNXContact;
 import de.htw.berlin.PHNX.interfaces.PHNXMapPOI;
 
-public class PHNXContactImpl implements PHNXContact {
+public class PHNXContactClass implements PHNXContact {
 
 	private String emailAddress;
 	private String homeAddress;
@@ -12,7 +12,7 @@ public class PHNXContactImpl implements PHNXContact {
 	private String landLineNumber;
 	private PHNXMapPOI currentLocation;
 
-	public PHNXContactImpl(String anEmailAddress, String aHomeAddress, String aWwwAddress, String aMobileNumber, String aLandLineNumber,
+	public PHNXContactClass(String anEmailAddress, String aHomeAddress, String aWwwAddress, String aMobileNumber, String aLandLineNumber,
 			PHNXMapPOI aCurrentLocation) {
 		if (anEmailAddress != null) {
 			emailAddress = anEmailAddress;

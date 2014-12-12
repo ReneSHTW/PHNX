@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Iterator;
+
+import de.htw.berlin.PHNX.classes.PHNXContactClass;
+import de.htw.berlin.PHNX.classes.PHNXNameClass;
 import de.htw.berlin.PHNX.interfaces.PHNX;
 import de.htw.berlin.PHNX.interfaces.PHNXBusinessCard;
 import de.htw.berlin.PHNX.interfaces.PHNXContact;
@@ -47,9 +50,9 @@ public class PHNXEngine implements PHNX {
 	@Override
 	public PHNXBusinessCard getBusinessCard(String emailAddress) throws SharkKBException, ParseException {
 		if (emailAddress != null && (kB.getPeerSemanticTag(emailAddress) != null)) {
-			PHNXName name = new PHNXNameImpl(kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Name_firstName"), kB.getPeerSemanticTag(emailAddress)
+			PHNXName name = new PHNXNameClass(kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Name_firstName"), kB.getPeerSemanticTag(emailAddress)
 					.getProperty("PHNX_Name_lastName"), concatenateStringsToIterator(kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Name_middleName")));
-			PHNXContact contact = new PHNXContactImpl(emailAddress, kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Contact_homeAddress"), kB
+			PHNXContact contact = new PHNXContactClass(emailAddress, kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Contact_homeAddress"), kB
 					.getPeerSemanticTag(emailAddress).getProperty("PHNX_Contact_wwwAddress"), kB.getPeerSemanticTag(emailAddress).getProperty(
 					"PHNX_Contact_privateMobileNumber"), kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Contact_privateLandLineNumber"), null);
 			PHNXBusinessCard card = new PHNXBusinessCardImpl(name, contact, getOrganization(kB.getPeerSemanticTag(emailAddress).getProperty(

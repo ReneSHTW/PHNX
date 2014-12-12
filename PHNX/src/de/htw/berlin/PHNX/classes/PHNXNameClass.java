@@ -1,17 +1,17 @@
-package de.htw.berlin.PHNX.impl;
+package de.htw.berlin.PHNX.classes;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import de.htw.berlin.PHNX.interfaces.PHNXName;
 
-public class PHNXNameImpl implements PHNXName {
+public class PHNXNameClass implements PHNXName {
 
 	private String firstName;
 	private String lastName;
 	private Iterator<String> middleNames;
 
-	public PHNXNameImpl(String firstNameP, String lastNameP, Iterator<String> middleNamesP) {
+	public PHNXNameClass(String firstNameP, String lastNameP, Iterator<String> middleNamesP) {
 		if (firstNameP != null && lastNameP != null) {
 			firstName = firstNameP;
 			lastName = lastNameP;

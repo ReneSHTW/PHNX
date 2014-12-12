@@ -8,11 +8,11 @@ import java.util.Date;
 import java.util.Iterator;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
+import de.htw.berlin.PHNX.classes.PHNXContactClass;
+import de.htw.berlin.PHNX.classes.PHNXNameClass;
 import de.htw.berlin.PHNX.impl.PHNXBusinessCardImpl;
-import de.htw.berlin.PHNX.impl.PHNXContactImpl;
 import de.htw.berlin.PHNX.impl.PHNXEngine;
 import de.htw.berlin.PHNX.impl.PHNXException;
-import de.htw.berlin.PHNX.impl.PHNXNameImpl;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
@@ -46,8 +46,8 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 	private ImageView picture;
 	private Toast toast;
 	private PHNXBusinessCardImpl businessCard;
-	private PHNXContactImpl phnxContact;
-	private PHNXNameImpl phnxName;
+	private PHNXContactClass phnxContact;
+	private PHNXNameClass phnxName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -134,7 +134,7 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 				String[] temp = name.getText().toString().split(" ");
 
 				try {
-					phnxName = new PHNXNameImpl(temp[0], temp[1],
+					phnxName = new PHNXNameClass(temp[0], temp[1],
 							concatenateStringsToIterator(middleNames.getText()
 									.toString()));
 				} catch (ArrayIndexOutOfBoundsException aie) {
@@ -151,7 +151,7 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 							.toString());
 				} catch (ParseException e) {
 				}
-				phnxContact = new PHNXContactImpl(eMail.getText().toString(),
+				phnxContact = new PHNXContactClass(eMail.getText().toString(),
 						null, null, null, null, null);
 				try {
 
