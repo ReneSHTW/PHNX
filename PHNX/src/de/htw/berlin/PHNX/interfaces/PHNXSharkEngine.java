@@ -3,7 +3,8 @@ package de.htw.berlin.PHNX.interfaces;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Iterator;
-
+import de.htw.berlin.PHNX.classes.PHNXContact;
+import de.htw.berlin.PHNX.classes.PHNXName;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import de.htw.berlin.PHNX.impl.PHNXException;
 

@@ -7,8 +7,8 @@ import net.sharkfw.knowledgeBase.SemanticTag;
 import net.sharkfw.knowledgeBase.SharkKB;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import de.htw.berlin.PHNX.interfaces.PHNXBusinessCard;
-import de.htw.berlin.PHNX.interfaces.PHNXContact;
-import de.htw.berlin.PHNX.interfaces.PHNXName;
+import de.htw.berlin.PHNX.classes.PHNXContact;
+import de.htw.berlin.PHNX.classes.PHNXName;
 import de.htw.berlin.PHNX.interfaces.PHNXOrganization;
 import de.htw.berlin.PHNX.interfaces.PHNXPicture;
 import de.htw.berlin.PHNX.interfaces.PHNXResource;
@@ -44,7 +44,7 @@ public class PHNXBusinessCardImpl implements PHNXBusinessCard {
 	}
 
 	public PHNXBusinessCardImpl(SemanticTag bCP) {
-		
+
 	}
 
 	public PHNXBusinessCardImpl(SharkKB kB, PHNXName nameP, PHNXContact contactP, String organizationSubjectIdentifierP, String degreeP, Date departureP,

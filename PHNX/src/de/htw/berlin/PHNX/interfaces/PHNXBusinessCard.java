@@ -2,6 +2,8 @@ package de.htw.berlin.PHNX.interfaces;
 
 import java.util.Date;
 import java.util.Iterator;
+import de.htw.berlin.PHNX.classes.PHNXContact;
+import de.htw.berlin.PHNX.classes.PHNXName;
 
 /*Als Peer Semantik Tag dem PHNXContact zuordnen*/
 public interface PHNXBusinessCard {

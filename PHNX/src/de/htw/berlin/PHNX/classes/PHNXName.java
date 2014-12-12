@@ -3,15 +3,13 @@ package de.htw.berlin.PHNX.classes;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import de.htw.berlin.PHNX.interfaces.PHNXName;
-
-public class PHNXNameClass implements PHNXName {
+public class PHNXName {
 
 	private String firstName;
 	private String lastName;
 	private Iterator<String> middleNames;
 
-	public PHNXNameClass(String firstNameP, String lastNameP, Iterator<String> middleNamesP) {
+	public PHNXName(String firstNameP, String lastNameP, Iterator<String> middleNamesP) {
 		if (firstNameP != null && lastNameP != null) {
 			firstName = firstNameP;
 			lastName = lastNameP;
@@ -30,27 +28,22 @@ public class PHNXNameClass implements PHNXName {
 		return printableFullName;
 	}
 
-	@Override
 	public String getPrintableFullName() {
 		return buildFullName();
 	}
 
-	@Override
 	public String getFirstName() {
 		return firstName;
 	}
 
-	@Override
 	public String getLastName() {
 		return lastName;
 	}
 
-	@Override
 	public Iterator<String> getMiddleNames() {
 		return middleNames;
 	}
 
-	@Override
 	public void setFirstName(String value) {
 		if (value != null) {
 			firstName = value;
@@ -59,7 +52,6 @@ public class PHNXNameClass implements PHNXName {
 		}
 	}
 
-	@Override
 	public void setLastName(String value) {
 		if (value != null) {
 			lastName = value;
@@ -68,7 +60,6 @@ public class PHNXNameClass implements PHNXName {
 		}
 	}
 
-	@Override
 	public void addMiddleName(String value) {
 		if (value != null) {
 			ArrayList<String> tempList = new ArrayList<String>();
@@ -82,7 +73,6 @@ public class PHNXNameClass implements PHNXName {
 		}
 	}
 
-	@Override
 	public void removeMiddleName(String value) {
 		boolean noMatch = true;
 		while (middleNames.hasNext()) {

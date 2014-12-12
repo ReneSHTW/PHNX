@@ -1,23 +1,18 @@
 package de.htw.berlin.PHNX.impl;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Iterator;
-
 import net.sharkfw.knowledgeBase.ContextPoint;
 import net.sharkfw.knowledgeBase.Information;
-import net.sharkfw.knowledgeBase.SemanticTag;
 import net.sharkfw.knowledgeBase.SharkCS;
 import net.sharkfw.knowledgeBase.SharkKB;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.knowledgeBase.filesystem.FSSharkKB;
-import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
 import de.htw.berlin.PHNX.interfaces.PHNXBusinessCard;
-import de.htw.berlin.PHNX.interfaces.PHNXContact;
-import de.htw.berlin.PHNX.interfaces.PHNXName;
-import de.htw.berlin.PHNX.interfaces.PHNXOrganization;
+import de.htw.berlin.PHNX.classes.PHNXContact;
+import de.htw.berlin.PHNX.classes.PHNXName;
 import de.htw.berlin.PHNX.interfaces.PHNXPicture;
 import de.htw.berlin.PHNX.interfaces.PHNXResource;
 import de.htw.berlin.PHNX.interfaces.PHNXSharkEngine;
