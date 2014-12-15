@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="mapsforge-map-0.5.0-rc2 (2)">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/PHNX/libs/mapsforge-map-0.5.0-rc2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/PHNX/libs/mapsforge-map-android-0.5.0-rc2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/PHNX/libs/mapsforge-map-awt-0.5.0-rc2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/PHNX/libs/mapsforge-map-reader-0.5.0-rc2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/PHNX/libs/mapsforge-map-writer-0.5.0-rc2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/PHNX/libs/SwingMapViewer-0.5.0-rc3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
