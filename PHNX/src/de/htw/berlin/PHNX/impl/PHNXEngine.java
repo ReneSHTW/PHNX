@@ -5,11 +5,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Iterator;
+
+import de.htw.berlin.PHNX.classes.PHNXContact;
+import de.htw.berlin.PHNX.classes.PHNXName;
 import de.htw.berlin.PHNX.interfaces.PHNX;
 import de.htw.berlin.PHNX.interfaces.PHNXBusinessCard;
-import de.htw.berlin.PHNX.interfaces.PHNXContact;
 import de.htw.berlin.PHNX.interfaces.PHNXMapPOI;
-import de.htw.berlin.PHNX.interfaces.PHNXName;
+import de.htw.berlin.PHNX.classes.PHNXContact;
+import de.htw.berlin.PHNX.classes.PHNXName;
 import de.htw.berlin.PHNX.interfaces.PHNXOrganization;
 import de.htw.berlin.PHNX.interfaces.PHNXResource;
 import net.sharkfw.knowledgeBase.ContextCoordinates;
@@ -47,11 +50,11 @@ public class PHNXEngine implements PHNX {
 	@Override
 	public PHNXBusinessCard getBusinessCard(String emailAddress) throws SharkKBException, ParseException {
 		if (emailAddress != null && (kB.getPeerSemanticTag(emailAddress) != null)) {
-			PHNXName name = new PHNXNameImpl(kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Name_firstName"), kB.getPeerSemanticTag(emailAddress)
+			PHNXName name = new PHNXName(kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Name_firstName"), kB.getPeerSemanticTag(emailAddress)
 					.getProperty("PHNX_Name_lastName"), concatenateStringsToIterator(kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Name_middleName")));
-			PHNXContact contact = new PHNXContactImpl(emailAddress, kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Contact_homeAddress"), kB
-					.getPeerSemanticTag(emailAddress).getProperty("PHNX_Contact_wwwAddress"), kB.getPeerSemanticTag(emailAddress).getProperty(
-					"PHNX_Contact_privateMobileNumber"), kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Contact_privateLandLineNumber"), null);
+			PHNXContact contact = new PHNXContact(emailAddress, kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Contact_wwwAddress"), kB
+					.getPeerSemanticTag(emailAddress).getProperty("PHNX_Contact_privateMobileNumber"), kB.getPeerSemanticTag(emailAddress).getProperty(
+					"PHNX_Contact_privateLandLineNumber"), null);
 			PHNXBusinessCard card = new PHNXBusinessCardImpl(name, contact, getOrganization(kB.getPeerSemanticTag(emailAddress).getProperty(
 					"PHNX_Organization_SI")), null, kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_printableProfessionalDegree"), null, new Date(
 					Long.parseLong(kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_departure"))), new Date(Long.parseLong(kB.getPeerSemanticTag(
@@ -108,12 +111,9 @@ public class PHNXEngine implements PHNX {
 			if (value.getOrganization() != null) {
 				kB.getPeerSemanticTag(value.getContact().getEmailAddress()).setProperty("PHNX_Organization_SI", value.getOrganization().getWwwAddress());
 			}
-			/*if (value.getProfession() != null) {
-				resource = new PHNXResourceImpl(value.getProfession().getResourceType(), value.getProfession().getResourceName(), value.getProfession()
-						.getOwnerOrganization(), value.getProfession().getContactPerson(), value.getProfession().getAmount(), value.getProfession()
-						.getPicture());
-				setResource(resource);
-			}*/
+			/* if (value.getProfession() != null) { resource = new PHNXResourceImpl(value.getProfession().getResourceType(),
+			 * value.getProfession().getResourceName(), value.getProfession() .getOwnerOrganization(), value.getProfession().getContactPerson(),
+			 * value.getProfession().getAmount(), value.getProfession() .getPicture()); setResource(resource); } */
 			if (value.getPrintableProfessionalDegree() != null) {
 				kB.getPeerSemanticTag(value.getContact().getEmailAddress()).setProperty("PHNX_printableProfessionalDegree",
 						value.getPrintableProfessionalDegree());
@@ -132,16 +132,10 @@ public class PHNXEngine implements PHNX {
 
 	@Override
 	public void setResource(PHNXResource value) throws PHNXException, SharkKBException {
-	/*	if (value != null) {
-			ContextCoordinates cc = kB.createContextCoordinates(kB.createSemanticTag(value.getResourceName(), value.getResourceType()),
-					kB.getPeerSemanticTag(value.getOwnerOrganization().getWwwAddress()),
-					kB.getPeerSemanticTag(value.getContactPerson().getContact().getEmailAddress()), null, null, null, 0);
-			kB.createContextPoint(cc);
-			kB.getContextPoint(cc).addInformation(value.getAmount());
-			// Picture wird als eigener ContextPunkt erstellt
-		} else {
-			throw new IllegalArgumentException();
-		}*/
+		/* if (value != null) { ContextCoordinates cc = kB.createContextCoordinates(kB.createSemanticTag(value.getResourceName(), value.getResourceType()),
+		 * kB.getPeerSemanticTag(value.getOwnerOrganization().getWwwAddress()), kB.getPeerSemanticTag(value.getContactPerson().getContact().getEmailAddress()),
+		 * null, null, null, 0); kB.createContextPoint(cc); kB.getContextPoint(cc).addInformation(value.getAmount()); // Picture wird als eigener ContextPunkt
+		 * erstellt } else { throw new IllegalArgumentException(); } */
 	}
 
 	@Override

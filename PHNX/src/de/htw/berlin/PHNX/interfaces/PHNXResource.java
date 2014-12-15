@@ -1,5 +1,7 @@
 package de.htw.berlin.PHNX.interfaces;
 
+import de.htw.berlin.PHNX.impl.PHNXException;
+
 /*Als Topic speichern
  * Subject Identifier finden*/
 public interface PHNXResource {
@@ -10,19 +12,19 @@ public interface PHNXResource {
 
 	public String getOwnerSI();
 
-	public void setOwner(String ownerIdentifierP);
-
 	public String getContactPersonSI();
-
-	public void setContactPerson(String emailAddressP);
 
 	public String getAmount();
 
-	public void setAmount(String value);
-
 	public PHNXPicture getPicture();
 
-	public void setPicture(PHNXPicture value);
+	public void setOwner(PHNXSharkEngine engine, String ownerIdentifierP) throws PHNXException;
+
+	public void setContactPerson(PHNXSharkEngine engine, String emailAddressP) throws PHNXException;
+
+	public void setAmount(PHNXSharkEngine engine, String value) throws PHNXException;
+
+	public void setPicture(PHNXSharkEngine engine, PHNXPicture value) throws PHNXException;
 
 	// public PHNXLocation getPHNXCoordinates();
 }

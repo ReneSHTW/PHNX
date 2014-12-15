@@ -1,6 +1,8 @@
 package de.htw.berlin.PHNX.impl;
 
 import net.sharkfw.knowledgeBase.ContextPoint;
+import net.sharkfw.knowledgeBase.SharkCS;
+import net.sharkfw.knowledgeBase.SharkKB;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import de.htw.berlin.PHNX.interfaces.PHNXPicture;
 import de.htw.berlin.PHNX.interfaces.PHNXResource;
@@ -24,6 +26,25 @@ public class PHNXResourceImpl implements PHNXResource {
 			contactPersonSI = contactPersonP;
 			amount = amountP;
 			picture = pictureP;
+		} else {
+			throw new IllegalArgumentException();
+		}
+
+	}
+
+	public PHNXResourceImpl(SharkKB kB, String resourceTypeP, String resourceNameP, String ownerIdentifierP, String contactPersonP, String amountP,
+			PHNXPicture pictureP) throws SharkKBException {
+		// was wenn contactPersonP null ist?
+		if (kB != null && resourceTypeP != null && resourceNameP != null && ownerIdentifierP != null) {
+			String[] tempStringArray = new String[2];
+			tempStringArray[0] = resourceTypeP;
+			tempStringArray[1] = resourceNameP;
+			kB.createContextPoint(kB.createContextCoordinates(kB.createSemanticTag("null", tempStringArray),
+					kB.createPeerSemanticTag("OwnerIdentifier_" + ownerIdentifierP, ownerIdentifierP, "null"),
+					kB.createPeerSemanticTag("ContactPersonIdentifier_" + contactPersonP, contactPersonP, "null"), null, null, null, SharkCS.DIRECTION_NOTHING));
+			kB.getContextPoint(
+					kB.createContextCoordinates(kB.getSemanticTag(resourceTypeP), kB.getPeerSemanticTag(ownerIdentifierP),
+							kB.getPeerSemanticTag(contactPersonP), null, null, null, SharkCS.DIRECTION_NOTHING)).addInformation(amountP);
 		} else {
 			throw new IllegalArgumentException();
 		}
@@ -70,7 +91,7 @@ public class PHNXResourceImpl implements PHNXResource {
 	}
 
 	@Override
-	public void setOwner(String ownerIdentifierP) {
+	public void setOwner(PHNXSharkEngine engine, String ownerIdentifierP) {
 		if (ownerIdentifierP != null) {
 			ownerSI = ownerIdentifierP;
 		} else {
@@ -79,7 +100,7 @@ public class PHNXResourceImpl implements PHNXResource {
 	}
 
 	@Override
-	public void setContactPerson(String emailAddressP) {
+	public void setContactPerson(PHNXSharkEngine engine, String emailAddressP) {
 		if (emailAddressP != null) {
 			contactPersonSI = emailAddressP;
 		} else {
@@ -88,7 +109,7 @@ public class PHNXResourceImpl implements PHNXResource {
 	}
 
 	@Override
-	public void setAmount(String value) {
+	public void setAmount(PHNXSharkEngine engine, String value) {
 		if (value != null) {
 			amount = value;
 		} else {
@@ -97,7 +118,7 @@ public class PHNXResourceImpl implements PHNXResource {
 	}
 
 	@Override
-	public void setPicture(PHNXPicture value) {
+	public void setPicture(PHNXSharkEngine engine, PHNXPicture value) {
 		if (value != null) {
 			picture = value;
 		} else {
