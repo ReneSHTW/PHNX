@@ -49,10 +49,10 @@ public class PHNXBusinessCardImpl implements PHNXBusinessCard {
 		contact = new PHNXContact(bCP.getSI()[0], bCP.getProperty("PHNX_Contact_wwwAddress"), bCP.getProperty("PHNX_Contact_privateMobileNumber"),
 				bCP.getProperty("PHNX_Contact_privateLandLineNumber"), null);
 		organization = engine.getPHNXOrganization(bCP.getProperty("PHNX_Organization_SI"));
-		/*PHNXBusinessCard card = new PHNXBusinessCardImpl(name, contact, bCP.getProperty("PHNX_Organization_SI"), null,
-				bCP.getProperty("PHNX_printableProfessionalDegree"), null, new Date(Long.parseLong(kB.getPeerSemanticTag(emailAddress).getProperty(
-						"PHNX_departure"))), new Date(Long.parseLong(kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_arrival"))), null);
-		kB.getPeerSemanticTag(emailAddress);*/
+		/* PHNXBusinessCard card = new PHNXBusinessCardImpl(name, contact, bCP.getProperty("PHNX_Organization_SI"), null,
+		 * bCP.getProperty("PHNX_printableProfessionalDegree"), null, new Date(Long.parseLong(kB.getPeerSemanticTag(emailAddress).getProperty(
+		 * "PHNX_departure"))), new Date(Long.parseLong(kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_arrival"))), null);
+		 * kB.getPeerSemanticTag(emailAddress); */
 	}
 
 	public PHNXBusinessCardImpl(SharkKB kB, PHNXName nameP, PHNXContact contactP, String organizationSubjectIdentifierP, String degreeP, Date departureP,
@@ -61,7 +61,10 @@ public class PHNXBusinessCardImpl implements PHNXBusinessCard {
 			kB.createPeerSemanticTag("PHNX_BC_SI", contactP.getEmailAddress(), "null");
 			kB.getPeerSemanticTag(contactP.getEmailAddress()).setProperty("PHNX_Name_firstName", nameP.getFirstName());
 			kB.getPeerSemanticTag(contactP.getEmailAddress()).setProperty("PHNX_Name_lastName", nameP.getLastName());
-			kB.getPeerSemanticTag(contactP.getEmailAddress()).setProperty("PHNX_Name_middleNames", concatenateStringiteratorToString(nameP.getMiddleNames()));
+			if (nameP.getMiddleNames() != null) {
+				kB.getPeerSemanticTag(contactP.getEmailAddress()).setProperty("PHNX_Name_middleNames",
+						concatenateStringiteratorToString(nameP.getMiddleNames()));
+			}
 			kB.getPeerSemanticTag(contactP.getEmailAddress()).setProperty("PHNX_Contact_wwwAddress", contactP.getWwwAddress());
 			kB.getPeerSemanticTag(contactP.getEmailAddress()).setProperty("PHNX_Contact_privateMobileNumber", contactP.getMobileNumber());
 			kB.getPeerSemanticTag(contactP.getEmailAddress()).setProperty("PHNX_Contact_privateLandLineNumber", contactP.getLandLineNumber());
