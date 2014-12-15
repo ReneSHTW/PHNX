@@ -13,6 +13,8 @@ import de.htw.berlin.PHNX.classes.PHNXName;
 import de.htw.berlin.PHNX.impl.PHNXBusinessCardImpl;
 import de.htw.berlin.PHNX.impl.PHNXEngine;
 import de.htw.berlin.PHNX.impl.PHNXException;
+import de.htw.berlin.PHNX.impl.PHNXSharkEngineImpl;
+import de.htw.berlin.PHNX.interfaces.PHNXSharkEngine;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
@@ -35,7 +37,6 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 	private int selection;
 	private Calendar dateTime = Calendar.getInstance();
 	private SimpleDateFormat dateFormatter = new SimpleDateFormat("MMMM dd yyyy");
-	private PHNXEngine engine;
 	private EditText name;
 	private EditText middleNames;
 	private EditText phoneNumer;
@@ -47,13 +48,14 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 	private PHNXBusinessCardImpl businessCard;
 	private PHNXContact phnxContact;
 	private PHNXName phnxName;
+	private PHNXSharkEngine engine;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.profile_create_1);
 		try {
-			engine = PHNXEngine.getPHNXEngine();
+			engine = PHNXSharkEngineImpl.getPHNXSharkEngine();
 		} catch (PHNXException e) {
 			throw new IllegalStateException("Couldn't retrieve the PHNX Engine");
 		}
@@ -74,9 +76,6 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 		departure = (Button) findViewById(R.id.button2);
 		save = (Button) findViewById(R.id.button3);
 		save.setOnClickListener(this);
-		// arrival.setText(dateFormatter.format(dateTime.getTime()));
-		// departure.setText(dateFormatter.format(dateTime.getTime()));
-		// Bla
 		arrival.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				selection = 0;
@@ -123,47 +122,51 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		boolean cardCreated = false;
+
 		switch (v.getId()) {
 		case R.id.button3:
 			if (isEditTextNotEmpty(eMail) && isEditTextNotEmpty(name)) {
 				String[] temp = name.getText().toString().split(" ");
-
-				try {
+				if (isEditTextNotEmpty(middleNames)) {
 					phnxName = new PHNXName(temp[0], temp[1], concatenateStringsToIterator(middleNames.getText().toString()));
-				} catch (ArrayIndexOutOfBoundsException aie) {
+				} else {
+					phnxName = new PHNXName(temp[0], temp[1], null);
 				}
+
 				Date arrivalDate = null;
 				Date departureDate = null;
 				try {
 					arrivalDate = dateFormatter.parse(arrival.getText().toString());
 				} catch (ParseException e) {
+					toast = Toast.makeText(getApplicationContext(), "Parsing Error!", Toast.LENGTH_LONG);
+					toast.show();
 				}
 				try {
 					departureDate = dateFormatter.parse(arrival.getText().toString());
+
 				} catch (ParseException e) {
+					toast = Toast.makeText(getApplicationContext(), "Parsing Error", Toast.LENGTH_LONG);
+					toast.show();
 				}
 				phnxContact = new PHNXContact(eMail.getText().toString(), null, null, null, null);
-				try {
 
-					businessCard = new PHNXBusinessCardImpl(phnxName, phnxContact, null, null, null, null, arrivalDate, departureDate, null);
-					cardCreated = true;
-				} catch (IllegalArgumentException iae) {
-				}
 				try {
-					engine.setBusinessCard(businessCard);
-					toast = Toast.makeText(getApplicationContext(), "Business Card wurde erstellt".toString(), Toast.LENGTH_LONG);
-					toast.show();
+					engine.createPHNXBusinessCard(phnxName, phnxContact, null, null, arrivalDate, departureDate, null);
+					successToast();
 				} catch (SharkKBException e) {
+					errorToast();
+
 				} catch (PHNXException e) {
-				} catch (IllegalArgumentException e) {
-					toast = Toast.makeText(getApplicationContext(), "Mindestens eine der Pflichtangaben fehlt oder ist fehlerhaft", Toast.LENGTH_LONG);
-					toast.show();
+					errorToast();
+				} catch (ParseException e) {
+					errorToast();
+
 				}
+
 				break;
+
 			} else {
-				toast = Toast.makeText(getApplicationContext(), "Mindestens eine der Pflichtangaben fehlt oder ist fehlerhaft", Toast.LENGTH_LONG);
-				toast.show();
+				missingParamsToast();
 			}
 		default: {
 			break;
@@ -183,6 +186,21 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 
 	private boolean isEditTextNotEmpty(EditText etText) {
 		return (!(etText.getText().toString().matches("")));
+	}
+
+	private void missingParamsToast() {
+		toast = Toast.makeText(getApplicationContext(), "At least one required parameter is missing!", Toast.LENGTH_LONG);
+		toast.show();
+	}
+
+	private void errorToast() {
+		toast = Toast.makeText(getApplicationContext(), "Couldn't create the profile!", Toast.LENGTH_LONG);
+		toast.show();
+	}
+
+	private void successToast() {
+		toast = Toast.makeText(getApplicationContext(), "Profile created!", Toast.LENGTH_LONG);
+		toast.show();
 	}
 
 }
