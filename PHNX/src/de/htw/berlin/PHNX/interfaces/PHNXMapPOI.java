@@ -6,12 +6,10 @@ import java.util.Iterator;
 import de.htw.berlin.PHNX.Map.PHNXPoint;
 
 public interface PHNXMapPOI {
-	
+
 	public String getPOIIdentifier();
 
-	public Iterator<PHNXPoint> getPHNXPoints();
-
-	public void addPHNXPoint(PHNXPoint value);
+	public String getwktString();
 
 	public String getPointName();
 
@@ -27,5 +25,4 @@ public interface PHNXMapPOI {
 
 	public Date getTimestamp();
 
-	public void removePHNXPoint(PHNXPoint value);
 }

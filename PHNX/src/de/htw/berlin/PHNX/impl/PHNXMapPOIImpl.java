@@ -1,24 +1,20 @@
 package de.htw.berlin.PHNX.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
-
-import de.htw.berlin.PHNX.Map.PHNXPoint;
 import de.htw.berlin.PHNX.interfaces.PHNXMapPOI;
 
 public class PHNXMapPOIImpl implements PHNXMapPOI {
 
-	private Iterator<PHNXPoint> PHNXPoints;
 	private String pointName;
 	private String pointDescription;
 	private String pointCategorie;
 	private String pOIIdentifier;
+	private String wktString;
 	private Date timestamp;
 
-	public PHNXMapPOIImpl(Iterator<PHNXPoint> PHNXPointsP, String pointNameP, String pointDescriptionP, String pointCategorieP) {
-		if (PHNXPointsP != null && pointNameP != null && pointCategorieP != null) {
-			PHNXPoints = PHNXPointsP;
+	public PHNXMapPOIImpl(String wktStringP, String pointNameP, String pointDescriptionP, String pointCategorieP) {
+		if (wktStringP != null && pointNameP != null && pointCategorieP != null) {
+			wktString = wktStringP;
 			pointName = pointNameP;
 			pointDescription = pointDescriptionP;
 			pointCategorie = pointCategorieP;
@@ -30,22 +26,8 @@ public class PHNXMapPOIImpl implements PHNXMapPOI {
 	}
 
 	@Override
-	public Iterator<PHNXPoint> getPHNXPoints() {
-		return PHNXPoints;
-	}
-
-	@Override
-	public void addPHNXPoint(PHNXPoint value) {
-		if (value != null) {
-			ArrayList<PHNXPoint> tempList = new ArrayList<PHNXPoint>();
-			while (PHNXPoints.hasNext()) {
-				tempList.add(PHNXPoints.next());
-			}
-			tempList.add(value);
-			PHNXPoints = tempList.iterator();
-		} else {
-			throw new IllegalArgumentException();
-		}
+	public String getwktString() {
+		return wktString;
 	}
 
 	@Override
@@ -93,19 +75,6 @@ public class PHNXMapPOIImpl implements PHNXMapPOI {
 	@Override
 	public Date getTimestamp() {
 		return timestamp;
-	}
-
-	@Override
-	public void removePHNXPoint(PHNXPoint value) {
-		if (value != null) {
-			while (PHNXPoints.hasNext()) {
-				if ((PHNXPoints.next().getLatitude() == value.getLatitude()) && (PHNXPoints.next().getLongitude() == value.getLongitude())) {
-					PHNXPoints.remove();
-				}
-			}
-		} else {
-			throw new IllegalArgumentException();
-		}
 	}
 
 	@Override
