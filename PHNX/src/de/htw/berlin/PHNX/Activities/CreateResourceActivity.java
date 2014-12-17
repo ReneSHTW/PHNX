@@ -1,11 +1,14 @@
 package de.htw.berlin.PHNX.Activities;
 
+import java.io.InputStream;
+
 import net.sharkfw.knowledgeBase.SharkKBException;
 import de.htw.berlin.PHNX.impl.PHNXEngine;
 import de.htw.berlin.PHNX.impl.PHNXException;
 import de.htw.berlin.PHNX.impl.PHNXSharkEngineImpl;
 import de.htw.berlin.PHNX.interfaces.PHNXSharkEngine;
 import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -14,6 +17,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory;
+import android.graphics.Interpolator.Result;
 
 public class CreateResourceActivity extends Activity implements OnClickListener {
 
@@ -25,7 +33,9 @@ public class CreateResourceActivity extends Activity implements OnClickListener 
 	private ImageButton image;
 	private Button createBtn;
 	private Toast toast;
+	private String imagePath;
 	private PHNXSharkEngine engine;
+	private static final int SELECT_PHOTO = 100;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +54,7 @@ public class CreateResourceActivity extends Activity implements OnClickListener 
 		image = (ImageButton) findViewById(R.id.imageButton1);
 		createBtn = (Button) findViewById(R.id.button1);
 		createBtn.setOnClickListener(this);
+		image.setOnClickListener(this);
 		try {
 			engine = PHNXSharkEngineImpl.getPHNXSharkEngine();
 		} catch (PHNXException e) {
@@ -81,12 +92,34 @@ public class CreateResourceActivity extends Activity implements OnClickListener 
 			} else {
 				missingParamsToast();
 			}
-		}
-
 			break;
 		}
+		case R.id.imageButton1: {
+			Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+			photoPickerIntent.setType("image/*");
+			startActivityForResult(photoPickerIntent, SELECT_PHOTO);
+		}
+			
+		}
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) { 
+	    super.onActivityResult(requestCode, resultCode, imageReturnedIntent); 
+
+	    switch(requestCode) { 
+	    case SELECT_PHOTO:
+	        if(resultCode == RESULT_OK){  
+	            Uri selectedImage = imageReturnedIntent.getData();
+	            image.setImageURI(selectedImage);
+	            imagePath = image.toString();
+	            
+	        }
+	    }
 	}
 
+
+	
 	private boolean isEditTextNotEmpty(EditText etText) {
 		return (!(etText.getText().toString().matches("")));
 	}

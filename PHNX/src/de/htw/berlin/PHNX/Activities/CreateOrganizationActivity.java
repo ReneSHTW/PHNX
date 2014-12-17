@@ -3,6 +3,8 @@ package de.htw.berlin.PHNX.Activities;
 import de.htw.berlin.PHNX.impl.PHNXEngine;
 import de.htw.berlin.PHNX.impl.PHNXException;
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,6 +23,8 @@ public class CreateOrganizationActivity extends Activity implements
 	private Button createButton;
 	private Toast toast;
 	private PHNXEngine engine;
+	private String imagePath;
+	private static final int SELECT_PHOTO = 100;
 
 	// Location of oranization
 
@@ -32,7 +36,9 @@ public class CreateOrganizationActivity extends Activity implements
 		contactPerson = (EditText) findViewById(R.id.editText2);
 		urlAdress = (EditText) findViewById(R.id.editText4);
 		createButton = (Button) findViewById(R.id.button1);
+		picture = (ImageButton) findViewById(R.id.imageButton1);
 		createButton.setOnClickListener(this);
+		picture.setOnClickListener(this);
 		try {
 			engine = PHNXEngine.getPHNXEngine();
 		} catch (PHNXException e) {
@@ -60,10 +66,33 @@ public class CreateOrganizationActivity extends Activity implements
 			}
 			break;
 		}
+		case R.id.imageButton1: {
+			Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+			photoPickerIntent.setType("image/*");
+			startActivityForResult(photoPickerIntent, SELECT_PHOTO);
+			break;
+		}
 		}
 
 	}
 
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) { 
+	    super.onActivityResult(requestCode, resultCode, imageReturnedIntent); 
+
+	    switch(requestCode) { 
+	    case SELECT_PHOTO:
+	        if(resultCode == RESULT_OK){  
+	            Uri selectedImage = imageReturnedIntent.getData();
+	            picture.setImageURI(selectedImage);
+	            imagePath = picture.toString();
+	            
+	        }
+	    }
+	}
+
+	
 	private boolean isEditTextNotEmpty(EditText etText) {
 		return (!(etText.getText().toString().matches("")));
 	}
