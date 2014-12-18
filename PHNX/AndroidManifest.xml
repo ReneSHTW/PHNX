@@ -30,7 +30,9 @@
         <activity android:name="SearchResultActivity"></activity>
         <activity android:name="ShowOrganizationActivity"></activity>
         <activity android:name="CreateOrganizationActivity"></activity>
-        
+        <activity android:name=".MainMapActivity"></activity>
+
+
     </application>
 
 </manifest>
