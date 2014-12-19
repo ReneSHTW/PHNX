@@ -3,9 +3,14 @@ package de.htw.berlin.PHNX.interfaces;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Iterator;
+
 import de.htw.berlin.PHNX.classes.PHNXContact;
 import de.htw.berlin.PHNX.classes.PHNXName;
+import net.sharkfw.knowledgeBase.PeerSemanticTag;
+import net.sharkfw.knowledgeBase.SharkKB;
 import net.sharkfw.knowledgeBase.SharkKBException;
+import net.sharkfw.knowledgeBase.TXSemanticTag;
+import net.sharkfw.knowledgeBase.Taxonomy;
 import de.htw.berlin.PHNX.impl.PHNXException;
 
 public interface PHNXSharkEngine {
@@ -28,5 +33,10 @@ public interface PHNXSharkEngine {
 	public void removePHNXResource(String nameP, String TypP, String ownerP) throws SharkKBException;
 
 	public PHNXOrganization getPHNXOrganization(String wWWAddressP) throws SharkKBException;
-
+	
+	public TXSemanticTag getRessourceTag(Taxonomy topicsTX, PHNXResource.RessourceType type) throws SharkKBException;
+	
+	public String getResourceTypeSI(PHNXResource.RessourceType type);
+	
+	public PeerSemanticTag getOwnerPST(SharkKB kb, String si) throws SharkKBException;
 }

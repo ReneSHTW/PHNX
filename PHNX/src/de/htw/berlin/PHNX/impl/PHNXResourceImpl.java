@@ -1,63 +1,92 @@
 package de.htw.berlin.PHNX.impl;
 
+import net.sharkfw.knowledgeBase.ContextCoordinates;
 import net.sharkfw.knowledgeBase.ContextPoint;
+import net.sharkfw.knowledgeBase.Information;
+import net.sharkfw.knowledgeBase.PeerSemanticTag;
+import net.sharkfw.knowledgeBase.STSet;
+import net.sharkfw.knowledgeBase.SemanticTag;
 import net.sharkfw.knowledgeBase.SharkCS;
 import net.sharkfw.knowledgeBase.SharkKB;
 import net.sharkfw.knowledgeBase.SharkKBException;
+import net.sharkfw.knowledgeBase.TXSemanticTag;
+import net.sharkfw.knowledgeBase.Taxonomy;
 import de.htw.berlin.PHNX.interfaces.PHNXPicture;
 import de.htw.berlin.PHNX.interfaces.PHNXResource;
 import de.htw.berlin.PHNX.interfaces.PHNXSharkEngine;
 
 /*Als Peer Semantic Tag speichern*/
 public class PHNXResourceImpl implements PHNXResource {
+	private SharkKB kb = null;
+	private ContextPoint cp;
+	private PHNXSharkEngine phnxEngine;
 
-	private String resourceType;
-	private String resourceName;
-	private String ownerSI;
-	private String contactPersonSI;
-	private String amount;
-	private PHNXPicture picture;
+	/**
+	 * That constructor is only used when a new (really new) resource is to be created.
+	 * 
+	 * @param kB
+	 * @param ressourceTypeP
+	 * @param resourceNameP
+	 * @param ownerIdentifierP
+	 * @param contactPersonP
+	 * @param amountP
+	 * @param pictureP
+	 * @throws SharkKBException
+	 */
+	public PHNXResourceImpl(PHNXSharkEngine phnxEngine, SharkKB kB, PHNXResource.RessourceType ressourceTypeP, String resourceNameP, String ownerIdentifierP,
+			String contactPersonP, String amountP, PHNXPicture pictureP) throws SharkKBException {
 
-	public PHNXResourceImpl(String resourceTypeP, String resourceNameP, String ownerIdentifierP, String contactPersonP, String amountP, PHNXPicture pictureP) {
-		if (resourceTypeP != null && resourceNameP != null && ownerIdentifierP != null) {
-			resourceName = resourceNameP;
-			resourceType = resourceTypeP;
-			ownerSI = ownerIdentifierP;
-			contactPersonSI = contactPersonP;
-			amount = amountP;
-			picture = pictureP;
-		} else {
-			throw new IllegalArgumentException();
-		}
+		this.kb = kb;
+		this.phnxEngine = phnxEngine;
 
-	}
-
-	public PHNXResourceImpl(SharkKB kB, String resourceTypeP, String resourceNameP, String ownerIdentifierP, String contactPersonP, String amountP,
-			PHNXPicture pictureP) throws SharkKBException {
 		// was wenn contactPersonP null ist?
-		if (kB != null && resourceTypeP != null && resourceNameP != null && ownerIdentifierP != null) {
-			String[] tempStringArray = new String[2];
-			tempStringArray[0] = resourceTypeP;
-			tempStringArray[1] = resourceNameP;
-			kB.createContextPoint(kB.createContextCoordinates(kB.createSemanticTag("null", tempStringArray),
-					kB.createPeerSemanticTag("OwnerIdentifier_" + ownerIdentifierP, ownerIdentifierP, "null"),
-					kB.createPeerSemanticTag("ContactPersonIdentifier_" + contactPersonP, contactPersonP, "null"), null, null, null, SharkCS.DIRECTION_NOTHING));
-			kB.getContextPoint(
-					kB.createContextCoordinates(kB.getSemanticTag(resourceTypeP), kB.getPeerSemanticTag(ownerIdentifierP),
-							kB.getPeerSemanticTag(contactPersonP), null, null, null, SharkCS.DIRECTION_NOTHING)).addInformation(amountP);
+		if (kB != null && resourceNameP != null && ownerIdentifierP != null) {
+
+			Taxonomy topicTX = kb.getTopicsAsTaxonomy();
+
+			// get (or create) tag representing resource type (not actual resource!)
+			TXSemanticTag typeTag = phnxEngine.getRessourceTag(topicTX, ressourceTypeP);
+
+			if (resourceNameP == null || resourceNameP.length() == 0) {
+				resourceNameP = "unknown"; // TODO: wichtig: hier muss irgendwie ein eindeutiger Name erzeugt werden: Mit aktuellen Datum/Uhrzeit???!
+			}
+
+			String si = phnxEngine.getResourceTypeSI(ressourceTypeP) + "/" + resourceNameP;
+
+			// create tag representing actual resource with unique (!) si
+			TXSemanticTag resourceTag = topicTX.createTXSemanticTag(resourceNameP, si);
+
+			// now tell taxonomy that this newly created tag is a sub concept of type tag
+			resourceTag.move(typeTag);
+
+			// get peer semantic tag that represents our owner
+			PeerSemanticTag ownerPST = phnxEngine.getOwnerPST(this.kb, ownerIdentifierP);
+			if (ownerPST == null) {
+				// panic - please handle that case here!
+			}
+
+			// ownerPST is not null here
+			PeerSemanticTag contactPST = phnxEngine.getOwnerPST(this.kb, contactPersonP);
+			if (contactPersonP == null) {
+				// panic - please handle that case here!
+			}
+
+			// contactPST is not null here
+
+			// let's create our context point that represents the resource
+			ContextCoordinates cc = kb.createContextCoordinates(resourceTag, ownerPST, contactPST, null, null, null, SharkCS.DIRECTION_NOTHING);
+			ContextPoint cp = kB.createContextPoint(cc);
+
+			cp.addInformation(amountP);
 		} else {
 			throw new IllegalArgumentException();
 		}
 
 	}
 
-	public PHNXResourceImpl(ContextPoint pointP) throws SharkKBException {
-		resourceType = pointP.getContextCoordinates().getTopic().getSI()[0];
-		resourceName = pointP.getContextCoordinates().getTopic().getName();
-		ownerSI = pointP.getContextCoordinates().getOriginator().getSI()[0];
-		contactPersonSI = pointP.getContextCoordinates().getPeer().getSI()[0];
-		amount = pointP.getInformation().next().getContentAsString();
-		picture = null;
+	public PHNXResourceImpl(PHNXSharkEngine phnxEngine, ContextPoint pointP) throws SharkKBException {
+		this.phnxEngine = phnxEngine;
+		this.cp = cp;
 	}
 
 	@Override
@@ -77,7 +106,14 @@ public class PHNXResourceImpl implements PHNXResource {
 
 	@Override
 	public String getContactPersonSI() {
-		return contactPersonSI;
+		// resourceType = pointP.getContextCoordinates().getTopic().getSI()[0];
+		// resourceName = pointP.getContextCoordinates().getTopic().getName();
+		// ownerSI = pointP.getContextCoordinates().getOriginator().getSI()[0];
+		// contactPersonSI = pointP
+		// amount = pointP.getInformation().next().getContentAsString();
+		// picture = null;
+
+		return this.cp.getContextCoordinates().getPeer().getSI()[0];
 	}
 
 	@Override

@@ -5,6 +5,13 @@ import de.htw.berlin.PHNX.impl.PHNXException;
 /*Als Topic speichern
  * Subject Identifier finden*/
 public interface PHNXResource {
+	
+	public enum RessourceType {
+	    PHNX_EQUIPMENT, PHNX_MEDICINE 
+	}
+	
+	public static final String PHNX_EQUIPMENT_SI = "http:/phnx.berlin/shark/equipment.html";
+	public static final String PHNX_MEDICINE_SI = "http:/phnx.berlin/shark/equipment.html";
 
 	public String getResourceType();
 
