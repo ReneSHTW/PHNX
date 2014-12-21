@@ -22,7 +22,7 @@ public interface PHNXSharkEngine {
 
 	public void removePHNXBusinessCard(String emailAddressP) throws PHNXException, SharkKBException;
 
-	public void createPHNXResource(String resourceTypeP, String resourceNameP, String ownerIdentifierP, String contactPersonP, String amountP,
+	public void createPHNXResource(PHNXResource.RessourceType type, String resourceNameP, String ownerIdentifierP, String contactPersonP, String amountP,
 			PHNXPicture pictureP) throws PHNXException, SharkKBException;
 
 	public Iterator<PHNXResource> getPHNXResource(String nameP, String TypP, String ownerP) throws SharkKBException;
@@ -33,10 +33,10 @@ public interface PHNXSharkEngine {
 	public void removePHNXResource(String nameP, String TypP, String ownerP) throws SharkKBException;
 
 	public PHNXOrganization getPHNXOrganization(String wWWAddressP) throws SharkKBException;
-	
+
 	public TXSemanticTag getRessourceTag(Taxonomy topicsTX, PHNXResource.RessourceType type) throws SharkKBException;
-	
+
 	public String getResourceTypeSI(PHNXResource.RessourceType type);
-	
+
 	public PeerSemanticTag getOwnerPST(SharkKB kb, String si) throws SharkKBException;
 }

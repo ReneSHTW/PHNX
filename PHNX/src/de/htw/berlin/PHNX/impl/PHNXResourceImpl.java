@@ -2,10 +2,7 @@ package de.htw.berlin.PHNX.impl;
 
 import net.sharkfw.knowledgeBase.ContextCoordinates;
 import net.sharkfw.knowledgeBase.ContextPoint;
-import net.sharkfw.knowledgeBase.Information;
 import net.sharkfw.knowledgeBase.PeerSemanticTag;
-import net.sharkfw.knowledgeBase.STSet;
-import net.sharkfw.knowledgeBase.SemanticTag;
 import net.sharkfw.knowledgeBase.SharkCS;
 import net.sharkfw.knowledgeBase.SharkKB;
 import net.sharkfw.knowledgeBase.SharkKBException;
@@ -15,7 +12,6 @@ import de.htw.berlin.PHNX.interfaces.PHNXPicture;
 import de.htw.berlin.PHNX.interfaces.PHNXResource;
 import de.htw.berlin.PHNX.interfaces.PHNXSharkEngine;
 
-/*Als Peer Semantic Tag speichern*/
 public class PHNXResourceImpl implements PHNXResource {
 	private SharkKB kb = null;
 	private ContextPoint cp;
@@ -33,14 +29,11 @@ public class PHNXResourceImpl implements PHNXResource {
 	 * @param pictureP
 	 * @throws SharkKBException
 	 */
-	public PHNXResourceImpl(PHNXSharkEngine phnxEngine, SharkKB kB, PHNXResource.RessourceType ressourceTypeP, String resourceNameP, String ownerIdentifierP,
+	public PHNXResourceImpl(PHNXSharkEngine PHNXEngineP, SharkKB kBP, PHNXResource.RessourceType ressourceTypeP, String resourceNameP, String ownerIdentifierP,
 			String contactPersonP, String amountP, PHNXPicture pictureP) throws SharkKBException {
-
-		this.kb = kb;
-		this.phnxEngine = phnxEngine;
-
-		// was wenn contactPersonP null ist?
-		if (kB != null && resourceNameP != null && ownerIdentifierP != null) {
+		if (kBP != null && resourceNameP != null && ownerIdentifierP != null) {
+			this.kb = kBP;
+			this.phnxEngine = PHNXEngineP;
 
 			Taxonomy topicTX = kb.getTopicsAsTaxonomy();
 
@@ -62,104 +55,61 @@ public class PHNXResourceImpl implements PHNXResource {
 			// get peer semantic tag that represents our owner
 			PeerSemanticTag ownerPST = phnxEngine.getOwnerPST(this.kb, ownerIdentifierP);
 			if (ownerPST == null) {
-				// panic - please handle that case here!
+				throw new SharkKBException(); // error Text hinzufuegen
 			}
 
-			// ownerPST is not null here
-			PeerSemanticTag contactPST = phnxEngine.getOwnerPST(this.kb, contactPersonP);
-			if (contactPersonP == null) {
-				// panic - please handle that case here!
+			if (contactPersonP != null) {
+				PeerSemanticTag contactPST = phnxEngine.getOwnerPST(this.kb, contactPersonP);
+				if (contactPST == null) {
+					throw new SharkKBException(); // error Text hinzufuegen
+				}
+				// let's create our context point that represents the resource
+				ContextCoordinates cc = kb.createContextCoordinates(resourceTag, ownerPST, contactPST, null, null, null, SharkCS.DIRECTION_NOTHING);
+				ContextPoint cp = kb.createContextPoint(cc);
+				cp.addInformation(amountP);
+			} else {
+				// let's create our context point that represents the resource without contactPST
+				ContextCoordinates cc = kb.createContextCoordinates(resourceTag, ownerPST, null, null, null, null, SharkCS.DIRECTION_NOTHING);
+				ContextPoint cp = kb.createContextPoint(cc);
+				cp.addInformation(amountP);
 			}
-
-			// contactPST is not null here
-
-			// let's create our context point that represents the resource
-			ContextCoordinates cc = kb.createContextCoordinates(resourceTag, ownerPST, contactPST, null, null, null, SharkCS.DIRECTION_NOTHING);
-			ContextPoint cp = kB.createContextPoint(cc);
-
-			cp.addInformation(amountP);
 		} else {
 			throw new IllegalArgumentException();
 		}
-
 	}
 
-	public PHNXResourceImpl(PHNXSharkEngine phnxEngine, ContextPoint pointP) throws SharkKBException {
-		this.phnxEngine = phnxEngine;
-		this.cp = cp;
+	public PHNXResourceImpl(PHNXSharkEngine phnxEngineP, ContextPoint cPointP) throws SharkKBException {
+		this.phnxEngine = phnxEngineP;
+		this.cp = cPointP;
 	}
 
 	@Override
 	public String getResourceType() {
-		return resourceType;
+		return cp.getContextCoordinates().getTopic().getSI()[0];
 	}
 
 	@Override
 	public String getResourceName() {
-		return resourceName;
+		return cp.getContextCoordinates().getTopic().getName();
 	}
 
 	@Override
 	public String getOwnerSI() {
-		return ownerSI;
+		return cp.getContextCoordinates().getOriginator().getSI()[0];
 	}
 
 	@Override
 	public String getContactPersonSI() {
-		// resourceType = pointP.getContextCoordinates().getTopic().getSI()[0];
-		// resourceName = pointP.getContextCoordinates().getTopic().getName();
-		// ownerSI = pointP.getContextCoordinates().getOriginator().getSI()[0];
-		// contactPersonSI = pointP
-		// amount = pointP.getInformation().next().getContentAsString();
-		// picture = null;
-
 		return this.cp.getContextCoordinates().getPeer().getSI()[0];
 	}
 
 	@Override
-	public String getAmount() {
-		return amount;
+	public String getAmount() throws SharkKBException {
+		return cp.getInformation().next().getContentAsString();
 	}
 
 	@Override
 	public PHNXPicture getPicture() {
-		return picture;
+		return null;
 	}
-
-	@Override
-	public void setOwner(PHNXSharkEngine engine, String ownerIdentifierP) {
-		if (ownerIdentifierP != null) {
-			ownerSI = ownerIdentifierP;
-		} else {
-			throw new IllegalArgumentException();
-		}
-	}
-
-	@Override
-	public void setContactPerson(PHNXSharkEngine engine, String emailAddressP) {
-		if (emailAddressP != null) {
-			contactPersonSI = emailAddressP;
-		} else {
-			throw new IllegalArgumentException();
-		}
-	}
-
-	@Override
-	public void setAmount(PHNXSharkEngine engine, String value) {
-		if (value != null) {
-			amount = value;
-		} else {
-			throw new IllegalArgumentException();
-		}
-	}
-
-	@Override
-	public void setPicture(PHNXSharkEngine engine, PHNXPicture value) {
-		if (value != null) {
-			picture = value;
-		} else {
-			throw new IllegalArgumentException();
-		}
-	}
-
 }

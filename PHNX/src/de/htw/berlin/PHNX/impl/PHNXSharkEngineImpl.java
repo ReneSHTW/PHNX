@@ -31,35 +31,42 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 
 	private static PHNXSharkEngine phnxSharkEngine = null;
 	private SharkKB kB;
-	
+
 	public TXSemanticTag getRessourceTag(Taxonomy topicsTX, PHNXResource.RessourceType type) throws SharkKBException {
-		
+
 		String si = this.getResourceTypeSI(type);
 		String name = null;
-		
-		switch(type) {
-		case PHNX_EQUIPMENT: name = "Equipment"; break;
-		case PHNX_MEDICINE: name = "Medicine"; break;
+
+		switch (type) {
+		case PHNX_EQUIPMENT:
+			name = "Equipment";
+			break;
+		case PHNX_MEDICINE:
+			name = "Medicine";
+			break;
 		}
-		
+
 		return topicsTX.createTXSemanticTag(name, si);
 	}
-	
+
 	public String getResourceTypeSI(PHNXResource.RessourceType type) {
 		String si = null;
-		
-		switch(type) {
-		case PHNX_EQUIPMENT: si = PHNXResource.PHNX_EQUIPMENT_SI; break;
-		case PHNX_MEDICINE: si = PHNXResource.PHNX_MEDICINE_SI; break;
+
+		switch (type) {
+		case PHNX_EQUIPMENT:
+			si = PHNXResource.PHNX_EQUIPMENT_SI;
+			break;
+		case PHNX_MEDICINE:
+			si = PHNXResource.PHNX_MEDICINE_SI;
+			break;
 		}
-		
+
 		return si;
 	}
-	
+
 	public PeerSemanticTag getOwnerPST(SharkKB kb, String si) throws SharkKBException {
 		return kb.getPeerSTSet().getSemanticTag(si);
 	}
-
 
 	private PHNXSharkEngineImpl(/* eventuell Folder Name */) throws PHNXException {
 
@@ -79,115 +86,118 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 	}
 
 	/**
-	 * @param nameP not necessarily unique (can be null)
-	 * @param typeP unique (must not be null)
-	 * @param ownerP unique SI of owner peer (can be null)
+	 * @param nameP
+	 *            not necessarily unique (can be null)
+	 * @param typeP
+	 *            unique (must not be null)
+	 * @param ownerP
+	 *            unique SI of owner peer (can be null)
 	 * 
 	 */
-	public Iterator<PHNXResource> getPHNXResource(String nameP, PHNXResource.RessourceType typeR, String ownerP) throws SharkKBException {
+	public Iterator<PHNXResource> getPHNXResource(String nameP, PHNXResource.RessourceType typeP, String ownerP) throws SharkKBException {
 		// let's create a coordinate to extract knowledge later.
-		
+
 		// tag representing resource type (not the actual resource!)
-		SemanticTag resourceTypeTag = this.getRessourceTag(this.kB.getTopicsAsTaxonomy(), typeR);
+		SemanticTag resourceTypeTag = this.getRessourceTag(this.kB.getTopicsAsTaxonomy(), typeP);
 
 		// owner tag
 		PeerSemanticTag ownerPST = this.getOwnerPST(this.kB, ownerP);
-		
+
 		// catch exception?
-		
+
 		ContextCoordinates cc = this.kB.createContextCoordinates(resourceTypeTag, ownerPST, null, null, null, null, SharkCS.DIRECTION_INOUT);
-		
+
 		FragmentationParameter[] fps = new FragmentationParameter[SharkCS.MAXDIMENSIONS];
-		
-		/* define parameter to find resources of give type
-		 * we have to look for concepts which are sub concepts of given type in topic dimension
+
+		/*
+		 * define parameter to find resources of give type we have to look for concepts which are sub concepts of given type in topic dimension
 		 */
 		FragmentationParameter fpTopic = new FragmentationParameter(false, true, 1);
 		fps[SharkCS.DIM_TOPIC] = fpTopic;
-		
+
 		// lets find all context point representing resources of given type
 		Knowledge k = SharkCSAlgebra.extract(this.kB, cc, fps);
-		
+
 		Enumeration<ContextPoint> tempEnum = k.contextPoints();
-		
+
 		ArrayList<PHNXResource> tempListResource = new ArrayList<PHNXResource>();
-		if(tempEnum != null) {
-			while(tempEnum.hasMoreElements()) {
+		if (tempEnum != null) {
+			while (tempEnum.hasMoreElements()) {
 				ContextPoint cp = tempEnum.nextElement();
-				
-				if(nameP == null) {
+
+				if (nameP == null) {
 					tempListResource.add(new PHNXResourceImpl(this, cp));
 				} else {
-					if(cp.getContextCoordinates().getTopic().getName().equals(nameP)) {
+					if (cp.getContextCoordinates().getTopic().getName().equals(nameP)) {
 						tempListResource.add(new PHNXResourceImpl(this, cp));
 					}
 				}
 			}
 		}
-		
-//		Iterator<PHNXResource> resources = null;
-//		
-//		ArrayList<ContextPoint> tempListCP = new ArrayList<ContextPoint>();
-//		ContextPoint tempPoint = null;
-//		String tempStringTyp;
-//		String tempStringOwner;
-//		String tempStringName;
-//		if (TypP == null) {
-//			throw new IllegalArgumentException();
-//		} else if (ownerP == null && nameP != null) {
-//			while (tempEnum.hasMoreElements()) {
-//				tempPoint = kB.getAllContextPoints().nextElement();
-//				tempStringTyp = tempPoint.getContextCoordinates().getTopic().getSI()[0];
-//				tempStringName = tempPoint.getContextCoordinates().getTopic().getSI()[1];
-//				if (tempStringTyp.equals(TypP) && tempStringName.equals(nameP)) {
-//					tempListCP.add(tempPoint);
-//				}
-//				for (int i = 0; i < tempListCP.size(); i++) {
-//					tempListResource.add(new PHNXResourceImpl(tempListCP.get(i)));
-//				}
-//			}
-//			tempListResource.iterator();
-//		} else if (nameP == null && ownerP != null) {
-//			while (tempEnum.hasMoreElements()) {
-//				tempPoint = kB.getAllContextPoints().nextElement();
-//				tempStringTyp = tempPoint.getContextCoordinates().getTopic().getSI()[0];
-//				tempStringOwner = tempPoint.getContextCoordinates().getOriginator().getSI()[0];
-//				if (tempStringTyp.equals(TypP) && tempStringOwner.equals(ownerP)) {
-//					tempListCP.add(tempPoint);
-//				}
-//				for (int i = 0; i < tempListCP.size(); i++) {
-//					tempListResource.add(new PHNXResourceImpl(tempListCP.get(i)));
-//				}
-//			}
-//			tempListResource.iterator();
-//		} else if (ownerP == null && nameP == null) {
-//			while (tempEnum.hasMoreElements()) {
-//				tempPoint = kB.getAllContextPoints().nextElement();
-//				tempStringTyp = tempPoint.getContextCoordinates().getTopic().getSI()[0];
-//				if (tempStringTyp.equals(TypP)) {
-//					tempListCP.add(tempPoint);
-//				}
-//				for (int i = 0; i < tempListCP.size(); i++) {
-//					tempListResource.add(new PHNXResourceImpl(tempListCP.get(i)));
-//				}
-//			}
-//			tempListResource.iterator();
-//		} else {
-//			while (tempEnum.hasMoreElements()) {
-//				tempPoint = kB.getAllContextPoints().nextElement();
-//				tempStringTyp = tempPoint.getContextCoordinates().getTopic().getSI()[0];
-//				tempStringName = tempPoint.getContextCoordinates().getTopic().getSI()[1];
-//				tempStringOwner = tempPoint.getContextCoordinates().getOriginator().getSI()[0];
-//				if (tempStringTyp.equals(TypP) && tempStringOwner.equals(ownerP) && tempStringName.equals(nameP)) {
-//					tempListCP.add(tempPoint);
-//				}
-//				for (int i = 0; i < tempListCP.size(); i++) {
-//					tempListResource.add(new PHNXResourceImpl(tempListCP.get(i)));
-//				}
-//			}
-//			resources = tempListResource.iterator();
-//		}
-				
+
+		// Iterator<PHNXResource> resources = null;
+		//
+		// ArrayList<ContextPoint> tempListCP = new ArrayList<ContextPoint>();
+		// ContextPoint tempPoint = null;
+		// String tempStringTyp;
+		// String tempStringOwner;
+		// String tempStringName;
+		// if (TypP == null) {
+		// throw new IllegalArgumentException();
+		// } else if (ownerP == null && nameP != null) {
+		// while (tempEnum.hasMoreElements()) {
+		// tempPoint = kB.getAllContextPoints().nextElement();
+		// tempStringTyp = tempPoint.getContextCoordinates().getTopic().getSI()[0];
+		// tempStringName = tempPoint.getContextCoordinates().getTopic().getSI()[1];
+		// if (tempStringTyp.equals(TypP) && tempStringName.equals(nameP)) {
+		// tempListCP.add(tempPoint);
+		// }
+		// for (int i = 0; i < tempListCP.size(); i++) {
+		// tempListResource.add(new PHNXResourceImpl(tempListCP.get(i)));
+		// }
+		// }
+		// tempListResource.iterator();
+		// } else if (nameP == null && ownerP != null) {
+		// while (tempEnum.hasMoreElements()) {
+		// tempPoint = kB.getAllContextPoints().nextElement();
+		// tempStringTyp = tempPoint.getContextCoordinates().getTopic().getSI()[0];
+		// tempStringOwner = tempPoint.getContextCoordinates().getOriginator().getSI()[0];
+		// if (tempStringTyp.equals(TypP) && tempStringOwner.equals(ownerP)) {
+		// tempListCP.add(tempPoint);
+		// }
+		// for (int i = 0; i < tempListCP.size(); i++) {
+		// tempListResource.add(new PHNXResourceImpl(tempListCP.get(i)));
+		// }
+		// }
+		// tempListResource.iterator();
+		// } else if (ownerP == null && nameP == null) {
+		// while (tempEnum.hasMoreElements()) {
+		// tempPoint = kB.getAllContextPoints().nextElement();
+		// tempStringTyp = tempPoint.getContextCoordinates().getTopic().getSI()[0];
+		// if (tempStringTyp.equals(TypP)) {
+		// tempListCP.add(tempPoint);
+		// }
+		// for (int i = 0; i < tempListCP.size(); i++) {
+		// tempListResource.add(new PHNXResourceImpl(tempListCP.get(i)));
+		// }
+		// }
+		// tempListResource.iterator();
+		// } else {
+		// while (tempEnum.hasMoreElements()) {
+		// tempPoint = kB.getAllContextPoints().nextElement();
+		// tempStringTyp = tempPoint.getContextCoordinates().getTopic().getSI()[0];
+		// tempStringName = tempPoint.getContextCoordinates().getTopic().getSI()[1];
+		// tempStringOwner = tempPoint.getContextCoordinates().getOriginator().getSI()[0];
+		// if (tempStringTyp.equals(TypP) && tempStringOwner.equals(ownerP) && tempStringName.equals(nameP)) {
+		// tempListCP.add(tempPoint);
+		// }
+		// for (int i = 0; i < tempListCP.size(); i++) {
+		// tempListResource.add(new PHNXResourceImpl(tempListCP.get(i)));
+		// }
+		// }
+		// resources = tempListResource.iterator();
+		// }
+
 		return tempListResource.iterator();
 	}
 
@@ -226,9 +236,9 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 	}
 
 	@Override
-	public void createPHNXResource(String resourceTypeP, String resourceNameP, String ownerIdentifierP, String contactPersonP, String amountP,
+	public void createPHNXResource(PHNXResource.RessourceType type, String resourceNameP, String ownerIdentifierP, String contactPersonP, String amountP,
 			PHNXPicture pictureP) throws PHNXException, SharkKBException {
-		new PHNXResourceImpl(kB, resourceTypeP, resourceNameP, ownerIdentifierP, contactPersonP, amountP, pictureP);
+		new PHNXResourceImpl(this, kB, type, resourceNameP, ownerIdentifierP, contactPersonP, amountP, pictureP);
 	}
 
 	@Override
@@ -281,6 +291,12 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 
 	@Override
 	public PHNXOrganization getPHNXOrganization(String wWWAddressP) throws SharkKBException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Iterator<PHNXResource> getPHNXResource(String nameP, String TypP, String ownerP) throws SharkKBException {
 		// TODO Auto-generated method stub
 		return null;
 	}
