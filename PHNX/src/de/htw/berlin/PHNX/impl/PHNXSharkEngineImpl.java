@@ -44,8 +44,13 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 		case PHNX_MEDICINE:
 			name = "Medicine";
 			break;
+		case PHNX_PROFESSION:
+			name = "Profession";
+			break;
+		case PHNX_SKILL:
+			name = "Skill";
+			break;
 		}
-
 		return topicsTX.createTXSemanticTag(name, si);
 	}
 
@@ -59,8 +64,13 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 		case PHNX_MEDICINE:
 			si = PHNXResource.PHNX_MEDICINE_SI;
 			break;
+		case PHNX_PROFESSION:
+			si = PHNXResource.PHNX_PROFESSION_SI;
+			break;
+		case PHNX_SKILL:
+			si = PHNXResource.PHNX_SKILL_SI;
+			break;
 		}
-
 		return si;
 	}
 
@@ -69,7 +79,6 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 	}
 
 	private PHNXSharkEngineImpl(/* eventuell Folder Name */) throws PHNXException {
-
 		String folderName = "keineAhnung";
 		try {
 			this.kB = new FSSharkKB(folderName);
@@ -85,18 +94,8 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 		return phnxSharkEngine;
 	}
 
-	/**
-	 * @param nameP
-	 *            not necessarily unique (can be null)
-	 * @param typeP
-	 *            unique (must not be null)
-	 * @param ownerP
-	 *            unique SI of owner peer (can be null)
-	 * 
-	 */
-	public Iterator<PHNXResource> getPHNXResource(String nameP, PHNXResource.RessourceType typeP, String ownerP) throws SharkKBException {
+	private Enumeration<ContextPoint> getPHNXResourceAsCP(String nameP, PHNXResource.RessourceType typeP, String ownerP) throws SharkKBException {
 		// let's create a coordinate to extract knowledge later.
-
 		// tag representing resource type (not the actual resource!)
 		SemanticTag resourceTypeTag = this.getRessourceTag(this.kB.getTopicsAsTaxonomy(), typeP);
 
@@ -134,7 +133,35 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 				}
 			}
 		}
+		return tempEnum;
+	}
 
+	/**
+	 * @param nameP
+	 *            not necessarily unique (can be null)
+	 * @param typeP
+	 *            unique (must not be null)
+	 * @param ownerP
+	 *            unique SI of owner peer (can be null)
+	 * 
+	 */
+	public Iterator<PHNXResource> getPHNXResource(String nameP, PHNXResource.RessourceType typeP, String ownerP) throws SharkKBException {
+		Enumeration<ContextPoint> tempEnum = getPHNXResourceAsCP(nameP, typeP, ownerP);
+		ArrayList<PHNXResource> tempListResource = new ArrayList<PHNXResource>();
+		if (tempEnum != null) {
+			while (tempEnum.hasMoreElements()) {
+				ContextPoint cp = tempEnum.nextElement();
+
+				if (nameP == null) {
+					tempListResource.add(new PHNXResourceImpl(this, cp));
+				} else {
+					if (cp.getContextCoordinates().getTopic().getName().equals(nameP)) {
+						tempListResource.add(new PHNXResourceImpl(this, cp));
+					}
+				}
+			}
+		}
+		return tempListResource.iterator();
 		// Iterator<PHNXResource> resources = null;
 		//
 		// ArrayList<ContextPoint> tempListCP = new ArrayList<ContextPoint>();
@@ -197,14 +224,12 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 		// }
 		// resources = tempListResource.iterator();
 		// }
-
-		return tempListResource.iterator();
 	}
 
 	@Override
 	public PHNXBusinessCard getPHNXBusinessCard(String emailAddressP) throws PHNXException, SharkKBException {
 		if (emailAddressP != null && (kB.getPeerSemanticTag(emailAddressP) != null)) {
-			PHNXBusinessCard card = new PHNXBusinessCardImpl(phnxSharkEngine, kB.getPeerSemanticTag(emailAddressP));
+			PHNXBusinessCard card = new PHNXBusinessCardImpl(this, kB, kB.getPeerSemanticTag(emailAddressP));
 			return card;
 		} else {
 			throw new IllegalArgumentException();
@@ -220,19 +245,20 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 	@Override
 	public void createPHNXBusinessCard(PHNXName nameP, PHNXContact contactP, String organizationSubjectIdentifierP, String degreeP, Date departureP,
 			Date arrivalP, PHNXPicture pictureP) throws SharkKBException {
-		new PHNXBusinessCardImpl(kB, nameP, contactP, organizationSubjectIdentifierP, degreeP, departureP, arrivalP, pictureP);
+		new PHNXBusinessCardImpl(this, kB, nameP, contactP, organizationSubjectIdentifierP, degreeP, departureP, arrivalP, pictureP);
 		// Keine verschachtelten Create aufrufe
 		// die Skills bekommt man wieder raus anhand von getPHNXResource (null, skill, SI der BusinessCard[0])
 		// dito für die profession (null, profession, SI der BusinessCard[0])
 	}
 
 	@Override
-	public void removePHNXResource(String nameP, String TypP, String ownerP) throws SharkKBException {
-		String[] tempStringArray = new String[2];
-		tempStringArray[0] = TypP;
-		tempStringArray[1] = nameP;
-		kB.removeContextPoint(kB.createContextCoordinates(kB.getSemanticTag(tempStringArray), kB.getPeerSemanticTag(ownerP), null, null, null, null,
-				SharkCS.DIRECTION_NOTHING));
+	public void removePHNXResource(String nameP, PHNXResource.RessourceType typP, String ownerP) throws SharkKBException {
+		if (nameP != null && typP != null && ownerP != null) {
+			ContextPoint cp = getPHNXResourceAsCP(nameP, typP, ownerP).nextElement();
+			kB.removeContextPoint(cp.getContextCoordinates());
+		} else {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	@Override
@@ -242,29 +268,14 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 	}
 
 	@Override
-	public void editPHNXResource(String resourceNameP, String resourceTypeP, String ownerIdentifierP, String changeResourceTypeP, String changeResourceNameP,
-			String changeOwnerIdentifierP, String changeContactPersonP, String changeAmountP, PHNXPicture changePictureP) throws SharkKBException {
+	public void editPHNXResource(String resourceNameP, PHNXResource.RessourceType resourceTypeP, String ownerIdentifierP,
+			PHNXResource.RessourceType changeResourceTypeP, String changeResourceNameP, String changeOwnerIdentifierP, String changeContactPersonP,
+			String changeAmountP, PHNXPicture changePictureP) throws SharkKBException {
 		if (resourceTypeP == null && resourceNameP != null && ownerIdentifierP != null) {
-			Enumeration<ContextPoint> tempEnum = kB.getAllContextPoints();
-			ContextPoint resource = null;
-			ContextPoint tempPoint = null;
-			String tempStringTyp;
-			String tempStringOwner;
-			String tempStringName;
-			boolean stopWhileLoop = false;
-			while (tempEnum.hasMoreElements() && stopWhileLoop == false) {
-				tempPoint = kB.getAllContextPoints().nextElement();
-				tempStringTyp = tempPoint.getContextCoordinates().getTopic().getSI()[0];
-				tempStringName = tempPoint.getContextCoordinates().getTopic().getName();
-				tempStringOwner = tempPoint.getContextCoordinates().getOriginator().getSI()[0];
-				if (tempStringTyp.equals(resourceTypeP) && tempStringOwner.equals(ownerIdentifierP) && tempStringName.equals(resourceNameP)) {
-					resource = tempPoint;
-					stopWhileLoop = true;
-				}
-			}
+			ContextPoint resource = getPHNXResourceAsCP(resourceNameP, resourceTypeP, ownerIdentifierP).nextElement();
 			if (changeResourceTypeP != null) {
-				resource.getContextCoordinates().getTopic().addSI(changeResourceTypeP);
-				resource.getContextCoordinates().getTopic().removeSI(resourceTypeP);
+				resource.getContextCoordinates().getTopic().addSI(getResourceTypeSI(changeResourceTypeP));
+				resource.getContextCoordinates().getTopic().removeSI(getResourceTypeSI(resourceTypeP));
 			}
 			if (changeResourceNameP != null) {
 				resource.getContextCoordinates().getTopic().setName(changeResourceNameP);
@@ -291,12 +302,6 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 
 	@Override
 	public PHNXOrganization getPHNXOrganization(String wWWAddressP) throws SharkKBException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Iterator<PHNXResource> getPHNXResource(String nameP, String TypP, String ownerP) throws SharkKBException {
 		// TODO Auto-generated method stub
 		return null;
 	}

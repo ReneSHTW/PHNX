@@ -13,7 +13,7 @@ import de.htw.berlin.PHNX.interfaces.PHNXResource;
 import de.htw.berlin.PHNX.interfaces.PHNXSharkEngine;
 
 public class PHNXResourceImpl implements PHNXResource {
-	private SharkKB kb = null;
+	private SharkKB kb;
 	private ContextPoint cp;
 	private PHNXSharkEngine phnxEngine;
 

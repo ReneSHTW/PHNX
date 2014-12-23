@@ -49,25 +49,26 @@ public class PHNXEngine implements PHNX {
 
 	@Override
 	public PHNXBusinessCard getBusinessCard(String emailAddress) throws SharkKBException, ParseException {
-		if (emailAddress != null && (kB.getPeerSemanticTag(emailAddress) != null)) {
-			PHNXName name = new PHNXName(kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Name_firstName"), kB.getPeerSemanticTag(emailAddress)
-					.getProperty("PHNX_Name_lastName"), concatenateStringsToIterator(kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Name_middleName")));
-			PHNXContact contact = new PHNXContact(emailAddress, kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Contact_wwwAddress"), kB
-					.getPeerSemanticTag(emailAddress).getProperty("PHNX_Contact_privateMobileNumber"), kB.getPeerSemanticTag(emailAddress).getProperty(
-					"PHNX_Contact_privateLandLineNumber"), null);
-			PHNXBusinessCard card = new PHNXBusinessCardImpl(name, contact, getOrganization(kB.getPeerSemanticTag(emailAddress).getProperty(
-					"PHNX_Organization_SI")), null, kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_printableProfessionalDegree"), null, new Date(
-					Long.parseLong(kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_departure"))), new Date(Long.parseLong(kB.getPeerSemanticTag(
-					emailAddress).getProperty("PHNX_arrival"))), null);
-			kB.getPeerSemanticTag(emailAddress);
-			return card;
-		} else {
-			throw new IllegalArgumentException();
-		}
-
-		/* null #1 -> getPHNXResource fuer Profession */
-		/* null #2 -> getPHNXResource fuer Skills */
-		/* null #3 -> Bild Holen */
+//		if (emailAddress != null && (kB.getPeerSemanticTag(emailAddress) != null)) {
+//			PHNXName name = new PHNXName(kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Name_firstName"), kB.getPeerSemanticTag(emailAddress)
+//					.getProperty("PHNX_Name_lastName"), concatenateStringsToIterator(kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Name_middleName")));
+//			PHNXContact contact = new PHNXContact(emailAddress, kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_Contact_wwwAddress"), kB
+//					.getPeerSemanticTag(emailAddress).getProperty("PHNX_Contact_privateMobileNumber"), kB.getPeerSemanticTag(emailAddress).getProperty(
+//					"PHNX_Contact_privateLandLineNumber"), null);
+//			PHNXBusinessCard card = new PHNXBusinessCardImpl(name, contact, getOrganization(kB.getPeerSemanticTag(emailAddress).getProperty(
+//					"PHNX_Organization_SI")), null, kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_printableProfessionalDegree"), null, new Date(
+//					Long.parseLong(kB.getPeerSemanticTag(emailAddress).getProperty("PHNX_departure"))), new Date(Long.parseLong(kB.getPeerSemanticTag(
+//					emailAddress).getProperty("PHNX_arrival"))), null);
+//			kB.getPeerSemanticTag(emailAddress);
+//			return card;
+//		} else {
+//			throw new IllegalArgumentException();
+//		}
+//
+//		/* null #1 -> getPHNXResource fuer Profession */
+//		/* null #2 -> getPHNXResource fuer Skills */
+//		/* null #3 -> Bild Holen */
+		return null;
 	}
 
 	@Override

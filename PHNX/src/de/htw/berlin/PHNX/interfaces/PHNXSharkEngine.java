@@ -25,12 +25,13 @@ public interface PHNXSharkEngine {
 	public void createPHNXResource(PHNXResource.RessourceType type, String resourceNameP, String ownerIdentifierP, String contactPersonP, String amountP,
 			PHNXPicture pictureP) throws PHNXException, SharkKBException;
 
-	public Iterator<PHNXResource> getPHNXResource(String nameP, String TypP, String ownerP) throws SharkKBException;
+	public Iterator<PHNXResource> getPHNXResource(String nameP, PHNXResource.RessourceType TypP, String ownerP) throws SharkKBException;
 
-	public void editPHNXResource(String resourceNameP, String resourceTypeP, String ownerIdentifierP, String changeResourceTypeP, String changeResourceNameP,
-			String changeOwnerIdentifierP, String changeContactPersonP, String changeAmountP, PHNXPicture changePictureP) throws SharkKBException;
+	public void editPHNXResource(String resourceNameP, PHNXResource.RessourceType resourceTypeP, String ownerIdentifierP,
+			PHNXResource.RessourceType changeResourceTypeP, String changeResourceNameP, String changeOwnerIdentifierP, String changeContactPersonP,
+			String changeAmountP, PHNXPicture changePictureP) throws SharkKBException;
 
-	public void removePHNXResource(String nameP, String TypP, String ownerP) throws SharkKBException;
+	public void removePHNXResource(String nameP, PHNXResource.RessourceType TypP, String ownerP) throws SharkKBException;
 
 	public PHNXOrganization getPHNXOrganization(String wWWAddressP) throws SharkKBException;
 
