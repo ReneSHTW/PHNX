@@ -305,4 +305,28 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void editPHNXBusinessCard() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void createPHNXOrganization() throws SharkKBException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editPHNXOrganization() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removePHNXOrganization() {
+		// TODO Auto-generated method stub
+		
+	}
 }
