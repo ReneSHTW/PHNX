@@ -63,7 +63,7 @@ public class PHNXBusinessCardImpl implements PHNXBusinessCard {
 	@Override
 	public PHNXContact getContact() {
 		return new PHNXContact(pst.getSI()[0], pst.getProperty("PHNX_Contact_wwwAddress"), pst.getProperty("PHNX_Contact_privateMobileNumber"),
-				pst.getProperty("PHNX_Contact_privateLandLineNumber"), null);
+				pst.getProperty("PHNX_Contact_privateLandLineNumber"), null /*current Location*/);
 	}
 
 	@Override

@@ -1,27 +1,29 @@
 package de.htw.berlin.PHNX.impl;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 
+import net.sharkfw.knowledgeBase.PeerSemanticTag;
 import net.sharkfw.knowledgeBase.SemanticTag;
-
+import net.sharkfw.knowledgeBase.SharkKB;
+import net.sharkfw.knowledgeBase.SharkKBException;
 import de.htw.berlin.PHNX.interfaces.PHNXOrganization;
 import de.htw.berlin.PHNX.interfaces.PHNXPicture;
 import de.htw.berlin.PHNX.interfaces.PHNXResource;
+import de.htw.berlin.PHNX.interfaces.PHNXSharkEngine;
 
 public class PHNXOrganizationImpl implements PHNXOrganization {
 
-	private String name;
-	private String wwwAddress;
-	private PHNXPicture logo;
-	private Iterator<PHNXResource> resources;
+	private SharkKB kb;
+	private PeerSemanticTag pst;
+	private PHNXSharkEngine phnxEngine;
 
-	public PHNXOrganizationImpl(String nameP, String wwwAddressP, PHNXPicture logoP, Iterator<PHNXResource> resourcesP) {
+	public PHNXOrganizationImpl(PHNXSharkEngine phnxEngineP, SharkKB kBP, String nameP, String wwwAddressP, PHNXPicture logoP, Iterator<PHNXResource> resourcesP)
+			throws SharkKBException {
 		if (nameP != null && wwwAddressP != null) {
-			name = nameP;
-			wwwAddress = wwwAddressP;
-			logo = logoP;
-			resources = resourcesP;
+			phnxEngine = phnxEngineP;
+			kb = kBP;
+			pst = kb.createPeerSemanticTag("PHNX_Organization_SI", wwwAddressP, "null");
+
 		} else {
 			throw new IllegalArgumentException();
 		}
@@ -33,74 +35,31 @@ public class PHNXOrganizationImpl implements PHNXOrganization {
 
 	@Override
 	public String getName() {
-		return name;
+		// return name;
+		return null;
 	}
 
 	@Override
 	public String getWwwAddress() {
-		return wwwAddress;
+		// return wwwAddress;
+		return null;
 	}
 
 	@Override
 	public PHNXPicture getLogo() {
-		return logo;
+		// return logo;
+		return null;
 	}
 
 	@Override
 	public Iterator<PHNXResource> getResources() {
-		return resources;
-	}
-
-	@Override
-	public void setName(String value) {
-		if (value != null) {
-			name = value;
-		} else {
-			throw new IllegalArgumentException();
-		}
-	}
-
-	@Override
-	public void setWwwAddress(String value) {
-		if (value != null) {
-			wwwAddress = value;
-		} else {
-			throw new IllegalArgumentException();
-		}
-	}
-
-	@Override
-	public void setLogo(PHNXPicture value) {
-		if (value != null) {
-			logo = value;
-		} else {
-			throw new IllegalArgumentException();
-		}
-	}
-
-	@Override
-	public void addResource(PHNXResource value) {
-		if (value != null) {
-			ArrayList<PHNXResource> tempList = new ArrayList<PHNXResource>();
-			while (resources.hasNext()) {
-				tempList.add(resources.next());
-			}
-			tempList.add(value);
-			resources = tempList.iterator();
-		} else {
-			throw new IllegalArgumentException();
-		}
+		// return resources;
+		return null;
 	}
 
 	@Override
 	public String getContactPersonEmailAddress() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public void setContactPersonEmailAddress(String value) {
-		// TODO Auto-generated method stub
-
 	}
 }

@@ -84,7 +84,7 @@ public class PHNXEngine implements PHNX {
 	@Override
 	public PHNXOrganization getOrganization(String wwwAddress) throws SharkKBException {
 		if (wwwAddress != null && (kB.getPeerSemanticTag(wwwAddress) != null)) {
-			PHNXOrganization organization = new PHNXOrganizationImpl(kB.getPeerSemanticTag(wwwAddress).getName(), kB.getPeerSemanticTag(wwwAddress).getSI()[0],
+			PHNXOrganization organization = new PHNXOrganizationImpl(null, null, kB.getPeerSemanticTag(wwwAddress).getName(), kB.getPeerSemanticTag(wwwAddress).getSI()[0],
 					null, null);
 			return organization;
 		} else {
