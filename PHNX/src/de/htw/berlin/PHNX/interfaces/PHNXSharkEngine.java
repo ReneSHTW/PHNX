@@ -22,7 +22,7 @@ public interface PHNXSharkEngine {
 	
 	public void editPHNXBusinessCard();
 
-	public void removePHNXBusinessCard(String emailAddressP) throws PHNXException, SharkKBException; 
+	public void removePHNXBusinessCard(String emailAddressP) throws PHNXException, SharkKBException; //fertig
 
 	public void createPHNXResource(PHNXResource.RessourceType type, String resourceNameP, String ownerIdentifierP, String contactPersonP, String amountP,
 			PHNXPicture pictureP) throws PHNXException, SharkKBException; //fertig

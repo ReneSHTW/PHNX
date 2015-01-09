@@ -108,9 +108,7 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 
 		FragmentationParameter[] fps = new FragmentationParameter[SharkCS.MAXDIMENSIONS];
 
-		/*
-		 * define parameter to find resources of give type we have to look for concepts which are sub concepts of given type in topic dimension
-		 */
+		/* define parameter to find resources of give type we have to look for concepts which are sub concepts of given type in topic dimension */
 		FragmentationParameter fpTopic = new FragmentationParameter(false, true, 1);
 		fps[SharkCS.DIM_TOPIC] = fpTopic;
 
@@ -238,8 +236,7 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 
 	@Override
 	public void removePHNXBusinessCard(String emailAddressP) throws PHNXException, SharkKBException {
-		// TODO Auto-generated method stub
-
+		kB.getPeerSTSet().removeSemanticTag(kB.getPeerSemanticTag(emailAddressP));
 	}
 
 	@Override
@@ -309,24 +306,24 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 	@Override
 	public void editPHNXBusinessCard() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void createPHNXOrganization() throws SharkKBException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void editPHNXOrganization() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void removePHNXOrganization() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
