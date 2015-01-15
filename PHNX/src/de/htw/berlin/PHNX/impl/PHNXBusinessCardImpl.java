@@ -29,7 +29,7 @@ public class PHNXBusinessCardImpl implements PHNXBusinessCard {
 
 	public PHNXBusinessCardImpl(PHNXSharkEngine phnxEngineP, SharkKB kBP, PHNXName nameP, PHNXContact contactP, String organizationSubjectIdentifierP,
 			String degreeP, Date departureP, Date arrivalP, PHNXPicture pictureP) throws SharkKBException {
-		if (kb != null && nameP != null && arrivalP != null && departureP != null && contactP != null && contactP.getEmailAddress() != null) {
+		if (kBP != null && nameP != null && arrivalP != null && departureP != null && contactP != null && contactP.getEmailAddress() != null) {
 			phnxEngine = phnxEngineP;
 			kb = kBP;
 			pst = kb.createPeerSemanticTag("PHNX_BC_SI", contactP.getEmailAddress(), "null");

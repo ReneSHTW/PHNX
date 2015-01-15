@@ -13,6 +13,7 @@ import de.htw.berlin.PHNX.classes.PHNXName;
 import de.htw.berlin.PHNX.impl.PHNXBusinessCardImpl;
 import de.htw.berlin.PHNX.impl.PHNXException;
 import de.htw.berlin.PHNX.impl.PHNXSharkEngineImpl;
+import de.htw.berlin.PHNX.interfaces.PHNXBusinessCard;
 import de.htw.berlin.PHNX.interfaces.PHNXSharkEngine;
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -151,6 +152,9 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 
 				try {
 					engine.createPHNXBusinessCard(phnxName, phnxContact, null, null, arrivalDate, departureDate, null);
+					PHNXBusinessCard test = engine.getPHNXBusinessCard(phnxContact.getEmailAddress());
+					toast = Toast.makeText(getApplicationContext(), "ARRIVAL: " + test.getArrival(), Toast.LENGTH_LONG);
+					toast.show();
 					successToast();
 				} catch (SharkKBException e) {
 					errorToast();

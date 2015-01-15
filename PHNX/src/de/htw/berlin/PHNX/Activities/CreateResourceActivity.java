@@ -5,6 +5,7 @@ import java.io.InputStream;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import de.htw.berlin.PHNX.impl.PHNXException;
 import de.htw.berlin.PHNX.impl.PHNXSharkEngineImpl;
+import de.htw.berlin.PHNX.interfaces.PHNXResource;
 import de.htw.berlin.PHNX.interfaces.PHNXSharkEngine;
 import android.app.Activity;
 import android.net.Uri;
@@ -79,15 +80,19 @@ public class CreateResourceActivity extends Activity implements OnClickListener 
 				} else if (isEditTextNotEmpty(resourceAmount)) {
 					amountString = resourceAmount.getText().toString();
 				}
-//				try {
-//					engine.createPHNXResource(resourceTypeEdit.getText().toString(), resourceNameEdit.getText().toString(), ownerEdit.getText().toString(),
-//							contactString, amountString, null);
-//					successToast();
-//				} catch (SharkKBException e) {
-//					errorToast();
-//				} catch (PHNXException e) {
-//					errorToast();
-//				}
+				
+				try {
+					engine.createPHNXResource(PHNXResource.RessourceType.PHNX_EQUIPMENT, resourceNameEdit.toString(), ownerEdit.toString(), contact.toString(), resourceAmount.toString(), null);
+					successToast();
+				} catch (SharkKBException e) {
+					errorToast2();
+					System.out.println("HIER DER FEHLER:");
+					e.printStackTrace(System.out);
+				} catch (PHNXException e) {
+					errorToast();
+					System.out.println("HIER DER FEHLER:");
+					e.printStackTrace(System.out);
+				}
 			} else {
 				missingParamsToast();
 			}
@@ -117,7 +122,6 @@ public class CreateResourceActivity extends Activity implements OnClickListener 
 	    }
 	}
 
-
 	
 	private boolean isEditTextNotEmpty(EditText etText) {
 		return (!(etText.getText().toString().matches("")));
@@ -129,7 +133,12 @@ public class CreateResourceActivity extends Activity implements OnClickListener 
 	}
 
 	private void errorToast() {
-		toast = Toast.makeText(getApplicationContext(), "Couldn't create the resource!", Toast.LENGTH_LONG);
+		toast = Toast.makeText(getApplicationContext(), "Couldn't create the resource! [PHNXKBException]", Toast.LENGTH_LONG);
+		toast.show();
+	}
+	
+	private void errorToast2() {
+		toast = Toast.makeText(getApplicationContext(), "Couldn't create the resource! [SharkKBException]", Toast.LENGTH_LONG);
 		toast.show();
 	}
 
