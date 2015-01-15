@@ -22,6 +22,7 @@ import net.sharkfw.knowledgeBase.filesystem.FSSharkKB;
 import de.htw.berlin.PHNX.interfaces.PHNXBusinessCard;
 import de.htw.berlin.PHNX.classes.PHNXContact;
 import de.htw.berlin.PHNX.classes.PHNXName;
+import de.htw.berlin.PHNX.interfaces.PHNXMapPOI;
 import de.htw.berlin.PHNX.interfaces.PHNXOrganization;
 import de.htw.berlin.PHNX.interfaces.PHNXPicture;
 import de.htw.berlin.PHNX.interfaces.PHNXResource;
@@ -389,5 +390,50 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 			concatenation += iterator.next() + " ";
 		}
 		return concatenation;
+	}
+
+	@Override
+	public void createPHNXMapPOI(String wktStringP, String pointNameP, String pointDescriptionP, String pointCategorieP, String pointIdentifierP)
+			throws SharkKBException {
+		new PHNXMapPOIImpl(kB, wktStringP, pointNameP, pointDescriptionP, pointCategorieP, pointIdentifierP);
+	}
+
+	@Override
+	public PHNXMapPOI getPHNXMapPOI(String pointIdentifierP) throws SharkKBException {
+		if (pointIdentifierP != null && (kB.getSemanticTag(pointIdentifierP) != null)) {
+			PHNXMapPOI MapPOI = new PHNXMapPOIImpl(kB, kB.getSemanticTag(pointIdentifierP));
+			return MapPOI;
+		} else {
+			throw new IllegalArgumentException();
+		}
+	}
+
+	@Override
+	public void editPHNXMapPOI(String pointIdentifierP, String changeWktStringP, String changePointNameP, String changePointDescriptionP,
+			String changePointCategorieP, String changePointIdentifierP) throws SharkKBException {
+		SemanticTag st = kB.getSemanticTag(pointIdentifierP);
+		if (changePointIdentifierP != null) {
+			st.addSI(changePointIdentifierP);
+			st.removeSI(pointIdentifierP);
+		}
+		if (changeWktStringP != null) {
+			st.setProperty("PHNX_MapPOI_wktString", changeWktStringP);
+		}
+		if (changePointNameP != null) {
+			st.setProperty("PHNX_MapPOI_name", changePointNameP);
+		}
+		if (changePointDescriptionP != null) {
+			st.setProperty("PHNX_MapPOI_description", changePointDescriptionP);
+		}
+		if (changePointCategorieP != null) {
+			st.setProperty("PHNX_MapPOI_categorie", changePointCategorieP);
+		}
+	}
+
+	@Override
+	public void removePHNXMapPOI(String pointIdentifierP) throws SharkKBException {
+		String[] tempArray = new String[1];
+		tempArray[0] = pointIdentifierP;
+		kB.removeSemanticTag(tempArray);
 	}
 }

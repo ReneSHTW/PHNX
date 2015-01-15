@@ -51,4 +51,14 @@ public interface PHNXSharkEngine {
 	public String getResourceTypeSI(PHNXResource.RessourceType type); // fertig
 
 	public PeerSemanticTag getOwnerPST(SharkKB kb, String si) throws SharkKBException; // fertig
+
+	public void createPHNXMapPOI(String wktStringP, String pointNameP, String pointDescriptionP, String pointCategorieP, String pointIdentifierP)
+			throws SharkKBException; // fertig
+
+	public PHNXMapPOI getPHNXMapPOI(String pointIdentifierP) throws SharkKBException; // fertig
+
+	public void editPHNXMapPOI(String pointIdentifierP, String changeWktStringP, String changePointNameP, String changePointDescriptionP,
+			String changePointCategorieP, String changePointIdentifierP) throws SharkKBException; // fertig
+
+	public void removePHNXMapPOI(String pointIdentifierP) throws SharkKBException; // fertig
 }

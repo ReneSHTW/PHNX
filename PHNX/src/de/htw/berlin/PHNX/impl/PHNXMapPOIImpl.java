@@ -1,85 +1,59 @@
 package de.htw.berlin.PHNX.impl;
 
-import java.util.Date;
+import net.sharkfw.knowledgeBase.SemanticTag;
+import net.sharkfw.knowledgeBase.SharkKB;
+import net.sharkfw.knowledgeBase.SharkKBException;
 import de.htw.berlin.PHNX.interfaces.PHNXMapPOI;
 
 public class PHNXMapPOIImpl implements PHNXMapPOI {
 
-	private String pointName;
-	private String pointDescription;
-	private String pointCategorie;
-	private String pOIIdentifier;
-	private String wktString;
-	private Date timestamp;
+	private SharkKB kb;
+	private SemanticTag st;
 
-	public PHNXMapPOIImpl(String wktStringP, String pointNameP, String pointDescriptionP, String pointCategorieP) {
-		if (wktStringP != null && pointNameP != null && pointCategorieP != null) {
-			wktString = wktStringP;
-			pointName = pointNameP;
-			pointDescription = pointDescriptionP;
-			pointCategorie = pointCategorieP;
-			timestamp = new Date(System.currentTimeMillis());
-			pOIIdentifier = pointName + "_" + timestamp.getTime();
+	public PHNXMapPOIImpl(SharkKB kBP, String wktStringP, String pointNameP, String pointDescriptionP, String pointCategorieP, String pointIdentifierP)
+			throws SharkKBException {
+		if (wktStringP != null && pointNameP != null && pointCategorieP != null && pointIdentifierP != null) {
+			kb = kBP;
+			st = kb.createSemanticTag("PHNX_MapPOI_SI", pointIdentifierP);
+			st.setProperty("PHNX_MapPOI_wktString", wktStringP);
+			st.setProperty("PHNX_MapPOI_name", pointNameP);
+			st.setProperty("PHNX_MapPOI_categorie", pointCategorieP);
+			if (pointDescriptionP != null) {
+				st.setProperty("PHNX_MapPOI_description", pointDescriptionP);
+			}
 		} else {
 			throw new IllegalArgumentException();
 		}
+	}
+
+	public PHNXMapPOIImpl(SharkKB kBP, SemanticTag MapPOIP) {
+		kb = kBP;
+		st = MapPOIP;
 	}
 
 	@Override
 	public String getwktString() {
-		return wktString;
+		return st.getProperty("PHNX_MapPOI_wktString");
 	}
 
 	@Override
 	public String getPointName() {
-		return pointName;
-	}
-
-	@Override
-	public void setPointName(String value) {
-		if (value != null) {
-			pointName = value;
-		} else {
-			throw new IllegalArgumentException();
-		}
+		return st.getProperty("PHNX_MapPOI_name");
 	}
 
 	@Override
 	public String getPointDescription() {
-		return pointDescription;
-	}
-
-	@Override
-	public void setPointDescription(String value) {
-		if (value != null) {
-			pointDescription = value;
-		} else {
-			throw new IllegalArgumentException();
-		}
+		return st.getProperty("PHNX_MapPOI_description");
 	}
 
 	@Override
 	public String getPointCategorie() {
-		return pointCategorie;
-	}
-
-	@Override
-	public void setPointCategorie(String value) {
-		if (value != null) {
-			pointCategorie = value;
-		} else {
-			throw new IllegalArgumentException();
-		}
-	}
-
-	@Override
-	public Date getTimestamp() {
-		return timestamp;
+		return st.getProperty("PHNX_MapPOI_categorie");
 	}
 
 	@Override
 	public String getPOIIdentifier() {
-		return pOIIdentifier;
+		return st.getSI()[0];
 	}
 
 }

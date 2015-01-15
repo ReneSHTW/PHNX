@@ -3,7 +3,6 @@ package de.htw.berlin.PHNX.impl;
 import java.util.Iterator;
 
 import net.sharkfw.knowledgeBase.PeerSemanticTag;
-import net.sharkfw.knowledgeBase.SemanticTag;
 import net.sharkfw.knowledgeBase.SharkKB;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import de.htw.berlin.PHNX.interfaces.PHNXOrganization;
