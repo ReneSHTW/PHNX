@@ -80,15 +80,15 @@ public class CreateResourceActivity extends Activity implements OnClickListener 
 				} else if (isEditTextNotEmpty(resourceAmount)) {
 					amountString = resourceAmount.getText().toString();
 				}
-				try {
-					engine.createPHNXResource(resourceTypeEdit.getText().toString(), resourceNameEdit.getText().toString(), ownerEdit.getText().toString(),
-							contactString, amountString, null);
-					successToast();
-				} catch (SharkKBException e) {
-					errorToast();
-				} catch (PHNXException e) {
-					errorToast();
-				}
+//				try {
+//					engine.createPHNXResource(resourceTypeEdit.getText().toString(), resourceNameEdit.getText().toString(), ownerEdit.getText().toString(),
+//							contactString, amountString, null);
+//					successToast();
+//				} catch (SharkKBException e) {
+//					errorToast();
+//				} catch (PHNXException e) {
+//					errorToast();
+//				}
 			} else {
 				missingParamsToast();
 			}

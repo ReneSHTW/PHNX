@@ -76,8 +76,8 @@ public class MainMenuActivity extends Activity implements OnClickListener
 			startActivity(intent);
 			break;
 		case R.id.buttonMap:
-			intent = new Intent(MainMenuActivity.this, MainMapActivity.class);
-			startActivity(intent);
+			//intent = new Intent(MainMenuActivity.this, MainMapActivity.class);
+			//startActivity(intent);
 			break;
 		case R.id.buttonEditProfile:
 			intent = new Intent(MainMenuActivity.this, BusinessCardActivity.class);
