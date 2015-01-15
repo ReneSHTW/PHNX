@@ -3,7 +3,6 @@ package de.htw.berlin.PHNX.Activities;
 import java.io.InputStream;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
-import de.htw.berlin.PHNX.impl.PHNXEngine;
 import de.htw.berlin.PHNX.impl.PHNXException;
 import de.htw.berlin.PHNX.impl.PHNXSharkEngineImpl;
 import de.htw.berlin.PHNX.interfaces.PHNXSharkEngine;

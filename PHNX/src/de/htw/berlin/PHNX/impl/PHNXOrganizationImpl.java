@@ -17,49 +17,50 @@ public class PHNXOrganizationImpl implements PHNXOrganization {
 	private PeerSemanticTag pst;
 	private PHNXSharkEngine phnxEngine;
 
-	public PHNXOrganizationImpl(PHNXSharkEngine phnxEngineP, SharkKB kBP, String nameP, String wwwAddressP, PHNXPicture logoP, Iterator<PHNXResource> resourcesP)
+	public PHNXOrganizationImpl(PHNXSharkEngine phnxEngineP, SharkKB kBP, String nameP, String wwwAddressP, String contactPersonEmailP, PHNXPicture logoP)
 			throws SharkKBException {
 		if (nameP != null && wwwAddressP != null) {
 			phnxEngine = phnxEngineP;
 			kb = kBP;
 			pst = kb.createPeerSemanticTag("PHNX_Organization_SI", wwwAddressP, "null");
-
+			pst.setProperty("PHNX_Organization_Name", nameP);
+			if (contactPersonEmailP != null) {
+				pst.setProperty("PHNX_Organization_contactPersonEmail", contactPersonEmailP);
+			}
 		} else {
 			throw new IllegalArgumentException();
 		}
 	}
 
-	public PHNXOrganizationImpl(SemanticTag organizationP) {
-
+	public PHNXOrganizationImpl(PHNXSharkEngine phnxEngineP, SharkKB kBP, PeerSemanticTag organizationP) {
+		kb = kBP;
+		phnxEngine = phnxEngineP;
+		pst = organizationP;
 	}
 
 	@Override
 	public String getName() {
-		// return name;
-		return null;
+		return pst.getProperty("PHNX_Organization_Name");
 	}
 
 	@Override
 	public String getWwwAddress() {
-		// return wwwAddress;
-		return null;
+		return pst.getSI()[0];
 	}
 
 	@Override
 	public PHNXPicture getLogo() {
-		// return logo;
+		// todo
 		return null;
 	}
 
 	@Override
-	public Iterator<PHNXResource> getResources() {
-		// return resources;
-		return null;
+	public Iterator<PHNXResource> getResources() throws SharkKBException {
+		return phnxEngine.getPHNXResource(null, null, pst.getSI()[0]);
 	}
 
 	@Override
 	public String getContactPersonEmailAddress() {
-		// TODO Auto-generated method stub
-		return null;
+		return pst.getProperty("PHNX_Organization_contactPersonEmail");
 	}
 }

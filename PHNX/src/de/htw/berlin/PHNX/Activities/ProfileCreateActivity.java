@@ -11,7 +11,6 @@ import net.sharkfw.knowledgeBase.SharkKBException;
 import de.htw.berlin.PHNX.classes.PHNXContact;
 import de.htw.berlin.PHNX.classes.PHNXName;
 import de.htw.berlin.PHNX.impl.PHNXBusinessCardImpl;
-import de.htw.berlin.PHNX.impl.PHNXEngine;
 import de.htw.berlin.PHNX.impl.PHNXException;
 import de.htw.berlin.PHNX.impl.PHNXSharkEngineImpl;
 import de.htw.berlin.PHNX.interfaces.PHNXSharkEngine;

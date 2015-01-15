@@ -18,34 +18,37 @@ public interface PHNXSharkEngine {
 	public void createPHNXBusinessCard(PHNXName nameP, PHNXContact contactP, String organizationSubjectIdentifierP, String degreeP, Date departureP,
 			Date arrivalP, PHNXPicture pictureP) throws PHNXException, SharkKBException, ParseException; // fertig
 
-	public PHNXBusinessCard getPHNXBusinessCard(String emailAddressP) throws PHNXException, SharkKBException; //fertig
-	
-	public void editPHNXBusinessCard();
+	public PHNXBusinessCard getPHNXBusinessCard(String emailAddressP) throws PHNXException, SharkKBException; // fertig
 
-	public void removePHNXBusinessCard(String emailAddressP) throws PHNXException, SharkKBException; //fertig
+	public void editPHNXBusinessCard(String SIP, String changeSubjectIdentifierP, PHNXName changeNameP, PHNXContact changeContactP,
+			String changeOrganizationSubjectIdentifierP, String changeDegreeP, Date changeDepartureP, Date changeArrivalP, PHNXPicture changePictureP)
+			throws SharkKBException; // fertig
+
+	public void removePHNXBusinessCard(String emailAddressP) throws PHNXException, SharkKBException; // fertig
 
 	public void createPHNXResource(PHNXResource.RessourceType type, String resourceNameP, String ownerIdentifierP, String contactPersonP, String amountP,
-			PHNXPicture pictureP) throws PHNXException, SharkKBException; //fertig
+			PHNXPicture pictureP) throws PHNXException, SharkKBException; // fertig
 
-	public Iterator<PHNXResource> getPHNXResource(String nameP, PHNXResource.RessourceType TypP, String ownerP) throws SharkKBException; //fertig
+	public Iterator<PHNXResource> getPHNXResource(String nameP, PHNXResource.RessourceType TypP, String ownerP) throws SharkKBException; // fertig
 
 	public void editPHNXResource(String resourceNameP, PHNXResource.RessourceType resourceTypeP, String ownerIdentifierP,
 			PHNXResource.RessourceType changeResourceTypeP, String changeResourceNameP, String changeOwnerIdentifierP, String changeContactPersonP,
-			String changeAmountP, PHNXPicture changePictureP) throws SharkKBException; //fertig
+			String changeAmountP, PHNXPicture changePictureP) throws SharkKBException; // fertig
 
-	public void removePHNXResource(String nameP, PHNXResource.RessourceType TypP, String ownerP) throws SharkKBException; //fertig
-	
-	public void createPHNXOrganization()throws SharkKBException;
+	public void removePHNXResource(String nameP, PHNXResource.RessourceType TypP, String ownerP) throws SharkKBException; // fertig
 
-	public PHNXOrganization getPHNXOrganization(String wWWAddressP) throws SharkKBException;
-	
-	public void editPHNXOrganization();
-	
-	public void removePHNXOrganization();
+	public void createPHNXOrganization(String nameP, String wwwAddressP, String contactPersonEmailP, PHNXPicture logoP) throws SharkKBException; // fertig
 
-	public TXSemanticTag getRessourceTag(Taxonomy topicsTX, PHNXResource.RessourceType type) throws SharkKBException; //fertig
+	public PHNXOrganization getPHNXOrganization(String wWWAddressP) throws SharkKBException; // fertig
 
-	public String getResourceTypeSI(PHNXResource.RessourceType type); //fertig
+	public void editPHNXOrganization(String wwwAddressP, String changeWwwAddressP, String changeNameP, String changeContactPersonEmailP, PHNXPicture changeLogoP)
+			throws SharkKBException; // fertig
 
-	public PeerSemanticTag getOwnerPST(SharkKB kb, String si) throws SharkKBException; //fertig
+	public void removePHNXOrganization(String wwwAddressP) throws SharkKBException; // fertig
+
+	public TXSemanticTag getRessourceTag(Taxonomy topicsTX, PHNXResource.RessourceType type) throws SharkKBException; // fertig
+
+	public String getResourceTypeSI(PHNXResource.RessourceType type); // fertig
+
+	public PeerSemanticTag getOwnerPST(SharkKB kb, String si) throws SharkKBException; // fertig
 }

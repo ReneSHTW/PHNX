@@ -1,7 +1,8 @@
 package de.htw.berlin.PHNX.Activities;
 
-import de.htw.berlin.PHNX.impl.PHNXEngine;
 import de.htw.berlin.PHNX.impl.PHNXException;
+import de.htw.berlin.PHNX.impl.PHNXSharkEngineImpl;
+import de.htw.berlin.PHNX.interfaces.PHNXSharkEngine;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -13,8 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-public class CreateOrganizationActivity extends Activity implements
-		OnClickListener {
+public class CreateOrganizationActivity extends Activity implements OnClickListener {
 
 	private EditText nameOrganization;
 	private EditText contactPerson;
@@ -22,7 +22,7 @@ public class CreateOrganizationActivity extends Activity implements
 	private ImageButton picture;
 	private Button createButton;
 	private Toast toast;
-	private PHNXEngine engine;
+	private PHNXSharkEngine engine;
 	private String imagePath;
 	private static final int SELECT_PHOTO = 100;
 
@@ -40,11 +40,10 @@ public class CreateOrganizationActivity extends Activity implements
 		createButton.setOnClickListener(this);
 		picture.setOnClickListener(this);
 		try {
-			engine = PHNXEngine.getPHNXEngine();
+			engine = PHNXSharkEngineImpl.getPHNXSharkEngine();
 		} catch (PHNXException e) {
 
-			throw new IllegalStateException(
-					"Couldn't retrieve the PHNX Engine");
+			throw new IllegalStateException("Couldn't retrieve the PHNX Engine");
 		}
 		// Location
 	}
@@ -53,15 +52,10 @@ public class CreateOrganizationActivity extends Activity implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.button1: {
-			if (isEditTextNotEmpty(nameOrganization)
-					&& isEditTextNotEmpty(urlAdress)) {
+			if (isEditTextNotEmpty(nameOrganization) && isEditTextNotEmpty(urlAdress)) {
 				// engine.createOranization()
 			} else {
-				toast = Toast
-						.makeText(
-								getApplicationContext(),
-								"Mindestens eine der Pflichtangaben fehlt oder ist fehlerhaft",
-								Toast.LENGTH_LONG);
+				toast = Toast.makeText(getApplicationContext(), "Mindestens eine der Pflichtangaben fehlt oder ist fehlerhaft", Toast.LENGTH_LONG);
 				toast.show();
 			}
 			break;
@@ -76,23 +70,21 @@ public class CreateOrganizationActivity extends Activity implements
 
 	}
 
-	
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) { 
-	    super.onActivityResult(requestCode, resultCode, imageReturnedIntent); 
+	protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
+		super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
 
-	    switch(requestCode) { 
-	    case SELECT_PHOTO:
-	        if(resultCode == RESULT_OK){  
-	            Uri selectedImage = imageReturnedIntent.getData();
-	            picture.setImageURI(selectedImage);
-	            imagePath = picture.toString();
-	            
-	        }
-	    }
+		switch (requestCode) {
+		case SELECT_PHOTO:
+			if (resultCode == RESULT_OK) {
+				Uri selectedImage = imageReturnedIntent.getData();
+				picture.setImageURI(selectedImage);
+				imagePath = picture.toString();
+
+			}
+		}
 	}
 
-	
 	private boolean isEditTextNotEmpty(EditText etText) {
 		return (!(etText.getText().toString().matches("")));
 	}

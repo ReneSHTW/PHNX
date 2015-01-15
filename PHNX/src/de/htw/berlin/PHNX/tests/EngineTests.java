@@ -20,8 +20,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import de.htw.berlin.PHNX.impl.PHNXEngine;
 import de.htw.berlin.PHNX.impl.PHNXException;
+import de.htw.berlin.PHNX.impl.PHNXSharkEngineImpl;
+import de.htw.berlin.PHNX.interfaces.PHNXSharkEngine;
 
 public class EngineTests {
 
@@ -46,7 +47,7 @@ public class EngineTests {
 
 	@Test
 	public void engineTest() throws PHNXException {
-		PHNXEngine engine = PHNXEngine.getPHNXEngine();
+		PHNXSharkEngine engine = PHNXSharkEngineImpl.getPHNXSharkEngine();
 		Assert.assertNotNull(engine);
 	}
 

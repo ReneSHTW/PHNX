@@ -243,9 +243,8 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 	public void createPHNXBusinessCard(PHNXName nameP, PHNXContact contactP, String organizationSubjectIdentifierP, String degreeP, Date departureP,
 			Date arrivalP, PHNXPicture pictureP) throws SharkKBException {
 		new PHNXBusinessCardImpl(this, kB, nameP, contactP, organizationSubjectIdentifierP, degreeP, departureP, arrivalP, pictureP);
-		// Keine verschachtelten Create aufrufe
-		// die Skills bekommt man wieder raus anhand von getPHNXResource (null, skill, SI der BusinessCard[0])
-		// dito für die profession (null, profession, SI der BusinessCard[0])
+		// die Skills bekommt man wieder raus anhand von getPHNXResource (null, PHNX_SKILL, SI der BusinessCard[0])
+		// dito für die profession (null, PHNX_PROFESSION, SI der BusinessCard[0])
 	}
 
 	@Override
@@ -299,31 +298,96 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 
 	@Override
 	public PHNXOrganization getPHNXOrganization(String wWWAddressP) throws SharkKBException {
-		// TODO Auto-generated method stub
-		return null;
+		if (wWWAddressP != null && (kB.getPeerSemanticTag(wWWAddressP) != null)) {
+			PHNXOrganization organization = new PHNXOrganizationImpl(this, kB, kB.getPeerSemanticTag(wWWAddressP));
+			return organization;
+		} else {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	@Override
-	public void editPHNXBusinessCard() {
-		// TODO Auto-generated method stub
-
+	public void editPHNXBusinessCard(String subjectIdentifierP, String changeSubjectIdentifierP, PHNXName changeNameP, PHNXContact changeContactP,
+			String changeOrganizationSubjectIdentifierP, String changeDegreeP, Date changeDepartureP, Date changeArrivalP, PHNXPicture changePictureP)
+			throws SharkKBException {
+		PeerSemanticTag pst = kB.getPeerSemanticTag(subjectIdentifierP);
+		if (changeSubjectIdentifierP != null) {
+			pst.addSI(changeSubjectIdentifierP);
+			pst.removeSI(subjectIdentifierP);
+		}
+		if (changeNameP != null) {
+			if (changeNameP.getFirstName() != null) {
+				pst.setProperty("PHNX_Name_firstName", changeNameP.getFirstName());
+			}
+			if (changeNameP.getLastName() != null) {
+				pst.setProperty("PHNX_Name_lastName", changeNameP.getLastName());
+			}
+			if (changeNameP.getMiddleNames() != null) {
+				pst.setProperty("PHNX_Name_middleNames", concatenateStringiteratorToString(changeNameP.getMiddleNames()));
+			}
+		}
+		if (changeContactP != null) {
+			if (changeContactP.getWwwAddress() != null) {
+				pst.setProperty("PHNX_Contact_wwwAddress", changeContactP.getWwwAddress());
+			}
+			if (changeContactP.getMobileNumber() != null) {
+				pst.setProperty("PHNX_Contact_privateMobileNumber", changeContactP.getMobileNumber());
+			}
+			if (changeContactP.getLandLineNumber() != null) {
+				pst.setProperty("PHNX_Contact_privateLandLineNumber", changeContactP.getLandLineNumber());
+			}
+		}
+		if (changeOrganizationSubjectIdentifierP != null) {
+			pst.setProperty("PHNX_Organization_SI", changeOrganizationSubjectIdentifierP);
+		}
+		if (changeDegreeP != null) {
+			pst.setProperty("PHNX_printableProfessionalDegree", changeDegreeP);
+		}
+		if (changeDepartureP != null) {
+			pst.setProperty("PHNX_departure", String.valueOf(changeDepartureP.getTime()));
+		}
+		if (changeArrivalP != null) {
+			pst.setProperty("PHNX_arrival", String.valueOf(changeArrivalP.getTime()));
+		}
+		if (changePictureP != null) {
+			// todo
+		}
 	}
 
 	@Override
-	public void createPHNXOrganization() throws SharkKBException {
-		// TODO Auto-generated method stub
-
+	public void createPHNXOrganization(String nameP, String wwwAddressP, String contactPersonEmailP, PHNXPicture logoP) throws SharkKBException {
+		new PHNXOrganizationImpl(this, kB, nameP, wwwAddressP, contactPersonEmailP, logoP);
 	}
 
 	@Override
-	public void editPHNXOrganization() {
-		// TODO Auto-generated method stub
-
+	public void editPHNXOrganization(String wwwAddressP, String changeWwwAddressP, String changeNameP, String changeContactPersonEmailP, PHNXPicture changeLogoP)
+			throws SharkKBException {
+		PeerSemanticTag pst = kB.getPeerSemanticTag(wwwAddressP);
+		if (changeWwwAddressP != null) {
+			pst.addSI(changeWwwAddressP);
+			pst.removeSI(wwwAddressP);
+		}
+		if (changeNameP != null) {
+			pst.setProperty("PHNX_Organization_Name", changeNameP);
+		}
+		if (changeContactPersonEmailP != null) {
+			pst.setProperty("PHNX_Organization_contactPersonEmail", changeContactPersonEmailP);
+		}
+		if (changeLogoP != null) {
+			// todo
+		}
 	}
 
 	@Override
-	public void removePHNXOrganization() {
-		// TODO Auto-generated method stub
+	public void removePHNXOrganization(String wwwAddressP) throws SharkKBException {
+		kB.getPeerSTSet().removeSemanticTag(kB.getPeerSemanticTag(wwwAddressP));
+	}
 
+	private String concatenateStringiteratorToString(Iterator<String> iterator) {
+		String concatenation = "";
+		while (iterator.hasNext()) {
+			concatenation += iterator.next() + " ";
+		}
+		return concatenation;
 	}
 }
