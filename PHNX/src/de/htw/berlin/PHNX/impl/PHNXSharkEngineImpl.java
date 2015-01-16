@@ -32,6 +32,7 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 
 	private static PHNXSharkEngine phnxSharkEngine = null;
 	private SharkKB kB;
+	private static String foldername = "PHNXSharkKB";
 
 	public TXSemanticTag getRessourceTag(Taxonomy topicsTX, PHNXResource.RessourceType type) throws SharkKBException {
 
@@ -79,10 +80,9 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 		return kb.getPeerSTSet().getSemanticTag(si);
 	}
 
-	private PHNXSharkEngineImpl(/* eventuell Folder Name */) throws PHNXException {
-		String folderName = "keineAhnung";
+	private PHNXSharkEngineImpl() throws PHNXException {
 		try {
-			this.kB = new FSSharkKB(folderName);
+			this.kB = new FSSharkKB(foldername);
 		} catch (SharkKBException e) {
 			throw new PHNXException(e);
 		}
@@ -239,7 +239,7 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 	public void removePHNXBusinessCard(String emailAddressP) throws PHNXException, SharkKBException {
 		kB.getPeerSTSet().removeSemanticTag(kB.getPeerSemanticTag(emailAddressP));
 	}
-
+//sdfsd
 	@Override
 	public void createPHNXBusinessCard(PHNXName nameP, PHNXContact contactP, String organizationSubjectIdentifierP, String degreeP, Date departureP,
 			Date arrivalP, PHNXPicture pictureP) throws SharkKBException {
