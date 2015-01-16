@@ -19,6 +19,8 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -45,10 +47,12 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 	private EditText website;
 	private ImageView picture;
 	private Toast toast;
+	private String picturePath;
 	private PHNXBusinessCardImpl businessCard;
 	private PHNXContact phnxContact;
 	private PHNXName phnxName;
 	private PHNXSharkEngine engine;
+	private static final int SELECT_PHOTO = 100;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +80,7 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 		departure = (Button) findViewById(R.id.button2);
 		save = (Button) findViewById(R.id.button3);
 		save.setOnClickListener(this);
+		picture.setOnClickListener(this);
 		arrival.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				selection = 0;
@@ -171,6 +176,12 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 			} else {
 				missingParamsToast();
 			}
+		case R.id.imageView1: {
+			Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+			photoPickerIntent.setType("image/*");
+			startActivityForResult(photoPickerIntent, SELECT_PHOTO);
+		}
+			
 		default: {
 			break;
 		}
@@ -178,6 +189,23 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 		}
 	}
 
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) { 
+	    super.onActivityResult(requestCode, resultCode, imageReturnedIntent); 
+
+	    switch(requestCode) { 
+	    case SELECT_PHOTO:
+	        if(resultCode == RESULT_OK){  
+	            Uri selectedImage = imageReturnedIntent.getData();
+	            picture.setImageURI(selectedImage);
+	            picturePath = picture.toString();
+	            
+	        }
+	    }
+	}
+
+	
 	private Iterator<String> concatenateStringsToIterator(String strings) {
 		String[] temp = strings.split(" ");
 		ArrayList<String> tempList = new ArrayList<String>();

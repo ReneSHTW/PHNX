@@ -239,7 +239,7 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 	public void removePHNXBusinessCard(String emailAddressP) throws PHNXException, SharkKBException {
 		kB.getPeerSTSet().removeSemanticTag(kB.getPeerSemanticTag(emailAddressP));
 	}
-
+//sdfsd
 	@Override
 	public void createPHNXBusinessCard(PHNXName nameP, PHNXContact contactP, String organizationSubjectIdentifierP, String degreeP, Date departureP,
 			Date arrivalP, PHNXPicture pictureP) throws SharkKBException {
