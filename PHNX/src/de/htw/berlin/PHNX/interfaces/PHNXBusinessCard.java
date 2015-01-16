@@ -59,6 +59,10 @@ public interface PHNXBusinessCard {
 	 */
 	public Iterator<PHNXResource> getSkills() throws SharkKBException;
 
+	/**
+	 * 
+	 * @return
+	 */
 	public Date getArrival();
 
 	public Date getDeparture();
