@@ -1,7 +1,9 @@
 package de.htw.berlin.PHNX.Activities;
 
+import net.sharkfw.knowledgeBase.SharkKBException;
 import de.htw.berlin.PHNX.impl.PHNXException;
 import de.htw.berlin.PHNX.impl.PHNXSharkEngineImpl;
+import de.htw.berlin.PHNX.interfaces.PHNXOrganization;
 import de.htw.berlin.PHNX.interfaces.PHNXSharkEngine;
 import android.app.Activity;
 import android.content.Intent;
@@ -53,7 +55,15 @@ public class CreateOrganizationActivity extends Activity implements OnClickListe
 		switch (v.getId()) {
 		case R.id.button1: {
 			if (isEditTextNotEmpty(nameOrganization) && isEditTextNotEmpty(urlAdress)) {
-				// engine.createOranization()
+				try {
+					engine.createPHNXOrganization(nameOrganization.getText().toString(), urlAdress.getText().toString(), contactPerson.getText().toString(), null);
+					toast = Toast.makeText(getApplicationContext(), "Organization created!", Toast.LENGTH_LONG);
+					toast.show();
+					PHNXOrganization test = engine.getPHNXOrganization("www.a.de");
+					contactPerson.setText(test.getName());
+				} catch (SharkKBException e) {
+					e.printStackTrace();
+				}
 			} else {
 				toast = Toast.makeText(getApplicationContext(), "Mindestens eine der Pflichtangaben fehlt oder ist fehlerhaft", Toast.LENGTH_LONG);
 				toast.show();

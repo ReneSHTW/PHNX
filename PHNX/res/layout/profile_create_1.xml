@@ -19,14 +19,6 @@
         android:text="@string/myCard"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <EditText
-        android:id="@+id/editText4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/editText3"
-        android:ems="10" />
-
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
@@ -102,16 +94,6 @@
         android:inputType="textUri" />
 
     <EditText
-        android:id="@+id/editText5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/editText4"
-        android:ems="10"
-        android:hint="Your hometown (optional)" />
-
-    <EditText
         android:id="@+id/editText1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -167,6 +149,16 @@
         android:layout_toLeftOf="@+id/imageView1"
         android:text="Click here for your picture >>>"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <EditText
+        android:id="@+id/editText5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/editText3"
+        android:ems="10"
+        android:hint="Your hometown (optional)" />
 
 </RelativeLayout>
 </ScrollView>

@@ -4,6 +4,7 @@ import java.io.InputStream;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
 import de.htw.berlin.PHNX.impl.PHNXException;
+import de.htw.berlin.PHNX.impl.PHNXResourceImpl;
 import de.htw.berlin.PHNX.impl.PHNXSharkEngineImpl;
 import de.htw.berlin.PHNX.interfaces.PHNXResource;
 import de.htw.berlin.PHNX.interfaces.PHNXSharkEngine;
@@ -80,15 +81,22 @@ public class CreateResourceActivity extends Activity implements OnClickListener 
 				} else if (isEditTextNotEmpty(resourceAmount)) {
 					amountString = resourceAmount.getText().toString();
 				}
-				
+
 				try {
-					engine.createPHNXResource(PHNXResource.RessourceType.PHNX_EQUIPMENT, resourceNameEdit.toString(), ownerEdit.toString(), contact.toString(), resourceAmount.toString(), null);
+					engine.createPHNXResource(PHNXResource.RessourceType.PHNX_EQUIPMENT, resourceNameEdit.getText().toString(), ownerEdit.getText().toString(), contact.getText().toString(),
+							resourceAmount.toString(), null);
 					successToast();
+					PHNXResource test = engine.getPHNXResource(null, PHNXResource.RessourceType.PHNX_EQUIPMENT, ownerEdit.getText().toString()).next();
+					resourceAmount.setText(test.getOwnerSI());
 				} catch (SharkKBException e) {
 					errorToast2();
 					System.out.println("HIER DER FEHLER:");
 					e.printStackTrace(System.out);
 				} catch (PHNXException e) {
+					errorToast();
+					System.out.println("HIER DER FEHLER:");
+					e.printStackTrace(System.out);
+				} catch (IllegalArgumentException e) {
 					errorToast();
 					System.out.println("HIER DER FEHLER:");
 					e.printStackTrace(System.out);
@@ -103,26 +111,25 @@ public class CreateResourceActivity extends Activity implements OnClickListener 
 			photoPickerIntent.setType("image/*");
 			startActivityForResult(photoPickerIntent, SELECT_PHOTO);
 		}
-			
+
 		}
 	}
-	
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) { 
-	    super.onActivityResult(requestCode, resultCode, imageReturnedIntent); 
 
-	    switch(requestCode) { 
-	    case SELECT_PHOTO:
-	        if(resultCode == RESULT_OK){  
-	            Uri selectedImage = imageReturnedIntent.getData();
-	            image.setImageURI(selectedImage);
-	            imagePath = image.toString();
-	            
-	        }
-	    }
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
+		super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+
+		switch (requestCode) {
+		case SELECT_PHOTO:
+			if (resultCode == RESULT_OK) {
+				Uri selectedImage = imageReturnedIntent.getData();
+				image.setImageURI(selectedImage);
+				imagePath = image.toString();
+
+			}
+		}
 	}
 
-	
 	private boolean isEditTextNotEmpty(EditText etText) {
 		return (!(etText.getText().toString().matches("")));
 	}
@@ -136,7 +143,7 @@ public class CreateResourceActivity extends Activity implements OnClickListener 
 		toast = Toast.makeText(getApplicationContext(), "Couldn't create the resource! [PHNXKBException]", Toast.LENGTH_LONG);
 		toast.show();
 	}
-	
+
 	private void errorToast2() {
 		toast = Toast.makeText(getApplicationContext(), "Couldn't create the resource! [SharkKBException]", Toast.LENGTH_LONG);
 		toast.show();

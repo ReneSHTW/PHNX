@@ -32,7 +32,7 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 
 	private static PHNXSharkEngine phnxSharkEngine = null;
 	private SharkKB kB;
-	private static String foldername = "PHNXSharkKB";
+	private final static String FOLDERNAME = "PHNXSharkKB";
 
 	public TXSemanticTag getRessourceTag(Taxonomy topicsTX, PHNXResource.RessourceType type) throws SharkKBException {
 
@@ -82,7 +82,7 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 
 	private PHNXSharkEngineImpl() throws PHNXException {
 		try {
-			this.kB = new FSSharkKB(foldername);
+			kB = new FSSharkKB(FOLDERNAME);
 		} catch (SharkKBException e) {
 			throw new PHNXException(e);
 		}

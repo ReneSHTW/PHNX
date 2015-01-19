@@ -153,7 +153,8 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 					toast = Toast.makeText(getApplicationContext(), "Parsing Error", Toast.LENGTH_LONG);
 					toast.show();
 				}
-				phnxContact = new PHNXContact(eMail.getText().toString(), null, null, null, null);
+				phnxContact = new PHNXContact(eMail.getText().toString(), null, phoneNumer.getText().toString(), null, null);
+				//new PHNXContact(anEmailAddress, aWwwAddress, aMobileNumber, aLandLineNumber, aCurrentLocation)
 
 				try {
 					engine.createPHNXBusinessCard(phnxName, phnxContact, null, null, arrivalDate, departureDate, null);

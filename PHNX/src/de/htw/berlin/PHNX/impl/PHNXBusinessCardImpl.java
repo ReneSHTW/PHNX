@@ -57,7 +57,7 @@ public class PHNXBusinessCardImpl implements PHNXBusinessCard {
 	@Override
 	public PHNXName getName() {
 		return new PHNXName(pst.getProperty("PHNX_Name_firstName"), pst.getProperty("PHNX_Name_lastName"),
-				concatenateStringsToIterator(pst.getProperty("PHNX_Name_middleName")));
+				concatenateStringsToIterator(pst.getProperty("PHNX_Name_middleNames")));
 	}
 
 	@Override
