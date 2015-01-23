@@ -32,7 +32,7 @@ public interface PHNXBusinessCard {
 	 * The organization will consist of organization name, optional logo picture, organization Internet address, organization email address, and contact person.
 	 * 
 	 * @return the organization information of the person according to the standard defined in PHNXContact interface
-	 * @throws SharkKBException 
+	 * @throws SharkKBException if the organization doesn't exist
 	 */
 	public PHNXOrganization getOrganization() throws SharkKBException;
 
@@ -40,7 +40,7 @@ public interface PHNXBusinessCard {
 	 * The profession is the job they are performing currently in the NGO on this particular mission.
 	 * 
 	 * @return the person's profession according to the standard defined in PHNXOrganization interface
-	 * @throws SharkKBException
+	 * @throws SharkKBException if profession doesn't exist
 	 */
 	public PHNXResource getProfession() throws SharkKBException;
 
@@ -55,17 +55,27 @@ public interface PHNXBusinessCard {
 	 * Skills are what the person can offer while being on the current mission (e.g. perform surgeries, translate between German and Russian, etc).
 	 * Skills might differ from the professional degree and don't have to only contain professional skills.
 	 * @return an Iterator with PHNXResourse since skills are considered a resource (resources are skills, medicine, food, tools, all kinds of equipment, etc).
-	 * @throws SharkKBException
+	 * @throws SharkKBException if there are no skills saved
 	 */
 	public Iterator<PHNXResource> getSkills() throws SharkKBException;
 
-	/**
-	 * 
-	 * @return
+	/**getArrival()provides access to the arrival date (the date when the owner of PHNX app arrives to the catastrophe territory).
+	 * The date is important because information validity can be checked based on the date.
+	 * @return the arrival date in Date format
 	 */
 	public Date getArrival();
-
+	
+	/**getDeparture() provides access to the departure date (the date when the owner of PHNX app is scheduled to leave the catastrophe area).
+	 * The date is important because information validity can be checked based on this date.
+	 * The application could be set up so that all information saved in the app is deleted after this date.
+	 * @return the departure date in Date format
+	 */
 	public Date getDeparture();
 
+	/**getPicture() provides access to the photo/ picture of the app owner. 
+	 * The format of the picture is to be decided during the implementation.
+	 * 
+	 * @return the picture or the path to the picture, depending on implementation.
+	 */
 	public PHNXPicture getPicture();
 }
