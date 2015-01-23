@@ -57,8 +57,9 @@ public class BusinessCardActivity extends Activity implements OnClickListener {
 		lv.setAdapter(simpleAdpt);
 		try {
 			PHNXBusinessCard test = engine.getPHNXBusinessCard("bosche@hotmail.de");
-			//nameView.setText(test.getName().getPrintableFullName());
+			nameView.setText(test.getName().getPrintableFullName());
 			eMailView.setText(test.getContact().getEmailAddress());
+			telNumberView.setText(test.getContact().getMobileNumber());
 			
 		} catch (SharkKBException e) {
 			errorToast();
