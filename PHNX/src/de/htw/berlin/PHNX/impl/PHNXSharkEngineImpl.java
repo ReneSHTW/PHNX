@@ -1,10 +1,13 @@
 package de.htw.berlin.PHNX.impl;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Iterator;
 
+import android.os.Environment;
+import net.sharkfw.kep.format.XMLSerializer;
 import net.sharkfw.knowledgeBase.ContextCoordinates;
 import net.sharkfw.knowledgeBase.ContextPoint;
 import net.sharkfw.knowledgeBase.FragmentationParameter;
@@ -19,6 +22,7 @@ import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.knowledgeBase.TXSemanticTag;
 import net.sharkfw.knowledgeBase.Taxonomy;
 import net.sharkfw.knowledgeBase.filesystem.FSSharkKB;
+import net.sharkfw.system.L;
 import de.htw.berlin.PHNX.interfaces.PHNXBusinessCard;
 import de.htw.berlin.PHNX.classes.PHNXContact;
 import de.htw.berlin.PHNX.classes.PHNXName;
@@ -32,7 +36,10 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 
 	private static PHNXSharkEngine phnxSharkEngine = null;
 	private SharkKB kB;
-	private final static String FOLDERNAME = "PHNXSharkKB";
+	private static File path = Environment.getExternalStoragePublicDirectory(
+            Environment.DIRECTORY_DOCUMENTS);
+
+	private final static String FOLDERNAME = path + "PHNXSharkKB";
 
 	public TXSemanticTag getRessourceTag(Taxonomy topicsTX, PHNXResource.RessourceType type) throws SharkKBException {
 
@@ -112,9 +119,27 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 		/* define parameter to find resources of give type we have to look for concepts which are sub concepts of given type in topic dimension */
 		FragmentationParameter fpTopic = new FragmentationParameter(false, true, 1);
 		fps[SharkCS.DIM_TOPIC] = fpTopic;
+		
+		L.d("about getting getPHNXResourceAsCP");
+		L.d("parameter: nameP:" + nameP);
+		
+		XMLSerializer x = new XMLSerializer();
+		String ccString = x.serializeSharkCS(cc);
+		
+		L.d("Knowledge base:\n" + L.kb2String(this.kB));
+		L.d("context as context coordinates\n" + ccString);
 
 		// lets find all context point representing resources of given type
 		Knowledge k = SharkCSAlgebra.extract(this.kB, cc, fps);
+		
+		if(k != null) {
+			L.d("knowledge found: ");
+			L.d(L.knowledge2String(k));
+		}
+		else {
+			L.d("no knowledge found -- oops");
+		}
+		
 
 		Enumeration<ContextPoint> tempEnum = k.contextPoints();
 
