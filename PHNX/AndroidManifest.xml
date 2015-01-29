@@ -30,11 +30,12 @@
         <activity android:name="SearchResultActivity"></activity>
         <activity android:name="ShowOrganizationActivity"></activity>
         <activity android:name="CreateOrganizationActivity"></activity>
-        <activity android:name=".MainMapActivity"></activity>
+        <!--<activity android:name=".MainMapActivity"></activity>-->
 
 
     </application>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     
 
 </manifest>

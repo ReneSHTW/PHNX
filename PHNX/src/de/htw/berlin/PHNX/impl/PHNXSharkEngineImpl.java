@@ -1,11 +1,13 @@
 package de.htw.berlin.PHNX.impl;
 
 import java.io.File;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Iterator;
 
+import android.content.Context;
 import android.os.Environment;
 import net.sharkfw.kep.format.XMLSerializer;
 import net.sharkfw.knowledgeBase.ContextCoordinates;
@@ -23,6 +25,8 @@ import net.sharkfw.knowledgeBase.TXSemanticTag;
 import net.sharkfw.knowledgeBase.Taxonomy;
 import net.sharkfw.knowledgeBase.filesystem.FSSharkKB;
 import net.sharkfw.system.L;
+
+
 import de.htw.berlin.PHNX.interfaces.PHNXBusinessCard;
 import de.htw.berlin.PHNX.classes.PHNXContact;
 import de.htw.berlin.PHNX.classes.PHNXName;
@@ -38,8 +42,12 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 	private SharkKB kB;
 	private static File path = Environment.getExternalStoragePublicDirectory(
             Environment.DIRECTORY_DOCUMENTS);
+     private final static String FOLDERNAME = path + "PHNXSharkKB";
+    File PHNXDir = new File(path, "PHNXDir");
+    //PHNXDir.mkdirs();
+    //File saveFile = new File(PHNXDir, kB.get);
+    //OutputStream os;
 
-	private final static String FOLDERNAME = path + "PHNXSharkKB";
 
 	public TXSemanticTag getRessourceTag(Taxonomy topicsTX, PHNXResource.RessourceType type) throws SharkKBException {
 
@@ -270,7 +278,7 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 			Date arrivalP, PHNXPicture pictureP) throws SharkKBException {
 		new PHNXBusinessCardImpl(this, kB, nameP, contactP, organizationSubjectIdentifierP, degreeP, departureP, arrivalP, pictureP);
 		// die Skills bekommt man wieder raus anhand von getPHNXResource (null, PHNX_SKILL, SI der BusinessCard[0])
-		// dito für die profession (null, PHNX_PROFESSION, SI der BusinessCard[0])
+		// dito fï¿½r die profession (null, PHNX_PROFESSION, SI der BusinessCard[0])
 	}
 
 	@Override
