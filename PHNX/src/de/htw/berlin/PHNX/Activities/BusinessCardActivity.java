@@ -43,7 +43,8 @@ public class BusinessCardActivity extends Activity implements OnClickListener {
 		} catch (PHNXException e) {
 			throw new IllegalStateException("Couldn't retrieve the PHNX Engine");
 		}
-
+        Button buttontest;
+        //Test
 		showMainMenuBtn = (Button) findViewById(R.id.button1);
 		editProfileBtn = (Button) findViewById(R.id.button2);
 		nameView = (TextView) findViewById(R.id.textView2);
