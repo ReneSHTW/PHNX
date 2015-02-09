@@ -6,7 +6,9 @@ import de.htw.berlin.PHNX.impl.PHNXSharkEngineImpl;
 import de.htw.berlin.PHNX.interfaces.PHNXOrganization;
 import de.htw.berlin.PHNX.interfaces.PHNXSharkEngine;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -59,7 +61,14 @@ public class CreateOrganizationActivity extends Activity implements OnClickListe
 					engine.createPHNXOrganization(nameOrganization.getText().toString(), urlAdress.getText().toString(), contactPerson.getText().toString(), null);
 					toast = Toast.makeText(getApplicationContext(), "Organization created!", Toast.LENGTH_LONG);
 					toast.show();
-					PHNXOrganization test = engine.getPHNXOrganization("www.a.de");
+                    SharedPreferences settings = getSharedPreferences("mysettings",
+                            Context.MODE_PRIVATE);
+
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putString("SIOrga", urlAdress.getText().toString());
+                    editor.commit();
+					PHNXOrganization test = engine.getPHNXOrganization(urlAdress.getText().toString());
+
 					contactPerson.setText(test.getName());
 				} catch (SharkKBException e) {
 					e.printStackTrace();

@@ -19,7 +19,9 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -45,6 +47,7 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 	private EditText eMail;
 	private EditText hometown;
 	private EditText website;
+    private EditText profession;
 	private ImageView picture;
 	private Toast toast;
 	private String picturePath;
@@ -53,6 +56,7 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 	private PHNXName phnxName;
 	private PHNXSharkEngine engine;
 	private static final int SELECT_PHOTO = 100;
+   // public static final String PREFS_NAME = "MyPrefsFile";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +79,7 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 		middleNames = (EditText) findViewById(R.id.editText3);
 		hometown = (EditText) findViewById(R.id.editText5);
 		website = (EditText) findViewById(R.id.editText7);
+        profession = (EditText) findViewById(R.id.editText);
 		picture = (ImageView) findViewById(R.id.imageView1);
 		arrival = (Button) findViewById(R.id.button1);
 		departure = (Button) findViewById(R.id.button2);
@@ -147,21 +152,32 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 					toast.show();
 				}
 				try {
-					departureDate = dateFormatter.parse(arrival.getText().toString());
+					departureDate = dateFormatter.parse(departure.getText().toString());
 
 				} catch (ParseException e) {
 					toast = Toast.makeText(getApplicationContext(), "Parsing Error", Toast.LENGTH_LONG);
 					toast.show();
 				}
 				phnxContact = new PHNXContact(eMail.getText().toString(), null, phoneNumer.getText().toString(), null, null);
+
 				//new PHNXContact(anEmailAddress, aWwwAddress, aMobileNumber, aLandLineNumber, aCurrentLocation)
 
 				try {
-					engine.createPHNXBusinessCard(phnxName, phnxContact, null, null, arrivalDate, departureDate, null);
-					PHNXBusinessCard test = engine.getPHNXBusinessCard(phnxContact.getEmailAddress());
-					toast = Toast.makeText(getApplicationContext(), "ARRIVAL: " + test.getArrival(), Toast.LENGTH_LONG);
-					toast.show();
+					engine.createPHNXBusinessCard(phnxName, phnxContact, null, profession.getText().toString(), arrivalDate, departureDate, null);
 					successToast();
+                   // SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+                    //SharedPreferences.Editor editor = settings.edit();
+                    //editor.putString("SI", eMail.getText().toString());
+                    SharedPreferences settings = getSharedPreferences("mysettings",
+                            Context.MODE_PRIVATE);
+
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putString("SI", eMail.getText().toString());
+                    editor.commit();
+                    Intent intent = new Intent(ProfileCreateActivity.this,
+                            MainMenuActivity.class);
+                    startActivity(intent);
+
 				} catch (SharkKBException e) {
 					errorToast();
 

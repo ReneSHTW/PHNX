@@ -4,12 +4,20 @@ package de.htw.berlin.PHNX.Activities;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import net.sharkfw.knowledgeBase.SharkKBException;
+
+import de.htw.berlin.PHNX.impl.PHNXException;
+import de.htw.berlin.PHNX.impl.PHNXSharkEngineImpl;
+import de.htw.berlin.PHNX.interfaces.PHNXSharkEngine;
 
 public class MainMenuActivity extends Activity implements OnClickListener
 {
@@ -22,10 +30,12 @@ public class MainMenuActivity extends Activity implements OnClickListener
 	private Button helpButtonTwo;
 	private Button helpButtonThree;
 	private Button organizationButton;
-
+    private PHNXSharkEngine engine;
+    private String name = "";
+    private String result2;
 	private Context context;
 	private Toast toast;
-
+    private TextView welcomeView;
 	private Intent intent;
 
 	@Override
@@ -33,6 +43,11 @@ public class MainMenuActivity extends Activity implements OnClickListener
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_menu);
+        try {
+            engine = PHNXSharkEngineImpl.getPHNXSharkEngine();
+        } catch (PHNXException e) {
+            throw new IllegalStateException("Couldn't retrieve the PHNX Engine");
+        }
 	}
 
 	@Override
@@ -57,6 +72,23 @@ public class MainMenuActivity extends Activity implements OnClickListener
 		helpButtonThree.setOnClickListener(this);
 		organizationButton = (Button) findViewById(R.id.buttonOrganization);
 		organizationButton.setOnClickListener(this);
+        welcomeView = (TextView) findViewById(R.id.textView1);
+        SharedPreferences settings = getSharedPreferences("mysettings",
+                Context.MODE_PRIVATE);
+        String result = settings.getString("SI", null);
+
+            if (result != null /*&& engine.getPHNXBusinessCard(result) != null*/) {
+                try {
+                    welcomeView.setText("Welcome " + engine.getPHNXBusinessCard(result).getName().getFirstName() + "!");
+                } catch (PHNXException e) {
+                    e.printStackTrace();
+                } catch (SharkKBException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        result2 = settings.getString("SIOrga", null);
+
 
 		return true;
 
@@ -84,8 +116,16 @@ public class MainMenuActivity extends Activity implements OnClickListener
 			startActivity(intent);
 			break;
 		case R.id.buttonOrganization:
-			intent = new Intent(MainMenuActivity.this, ShowOrganizationActivity.class);
-			startActivity(intent);	
+            if (result2 != null) {
+                intent = new Intent(MainMenuActivity.this, ShowOrganizationActivity.class);
+
+            }
+            else {
+                intent = new Intent(MainMenuActivity.this, CreateOrganizationActivity.class);
+            }
+
+			startActivity(intent);
+            break;
 		case R.id.buttonHelpOne:
 			toast = Toast.makeText(context, "Hilfe Text Eins", Toast.LENGTH_SHORT);
 			toast.show();

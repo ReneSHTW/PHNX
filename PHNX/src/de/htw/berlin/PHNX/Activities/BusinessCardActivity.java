@@ -1,5 +1,6 @@
 package de.htw.berlin.PHNX.Activities;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +13,9 @@ import de.htw.berlin.PHNX.interfaces.PHNXBusinessCard;
 import de.htw.berlin.PHNX.interfaces.PHNXSharkEngine;
 //import de.htwberlin.phnx.R;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,7 +27,7 @@ import android.widget.Toast;
 
 public class BusinessCardActivity extends Activity implements OnClickListener {
 
-	SimpleAdapter simpleAdpt = null;
+
 	private Button showMainMenuBtn;
 	private Button editProfileBtn;
 	private Intent intent;
@@ -32,7 +35,11 @@ public class BusinessCardActivity extends Activity implements OnClickListener {
 	private TextView nameView;
 	private TextView telNumberView;
 	private TextView eMailView;
+    private TextView professionView;
+    private TextView arrivalView;
+    private TextView departureView;
 	private Toast toast;
+    private SimpleDateFormat dateFormatter = new SimpleDateFormat("MMMM dd yyyy");
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -43,24 +50,33 @@ public class BusinessCardActivity extends Activity implements OnClickListener {
 		} catch (PHNXException e) {
 			throw new IllegalStateException("Couldn't retrieve the PHNX Engine");
 		}
-        Button buttontest;
-        //Test
+
 		showMainMenuBtn = (Button) findViewById(R.id.button1);
 		editProfileBtn = (Button) findViewById(R.id.button2);
 		nameView = (TextView) findViewById(R.id.textView2);
 		telNumberView = (TextView) findViewById(R.id.textView3);
 		eMailView = (TextView) findViewById(R.id.textView4);
+        professionView = (TextView) findViewById(R.id.textView10);
+        arrivalView = (TextView) findViewById(R.id.textView13);
+        departureView = (TextView) findViewById(R.id.textView15);
 		showMainMenuBtn.setOnClickListener(this);
 		editProfileBtn.setOnClickListener(this);
-		initList();
-		ListView lv = (ListView) findViewById(R.id.listView1);
-		simpleAdpt = new SimpleAdapter(this, planetsList, android.R.layout.simple_list_item_1, new String[] { "planet" }, new int[] { android.R.id.text1 });
-		lv.setAdapter(simpleAdpt);
+
+        SharedPreferences settings = getSharedPreferences("mysettings",
+                Context.MODE_PRIVATE);
+        String result = settings.getString("SI", null);
+        toast = Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG);
+        toast.show();
+
 		try {
-			PHNXBusinessCard test = engine.getPHNXBusinessCard("bosche@hotmail.de");
+			PHNXBusinessCard test = engine.getPHNXBusinessCard(result);
 			nameView.setText(test.getName().getPrintableFullName());
 			eMailView.setText(test.getContact().getEmailAddress());
 			telNumberView.setText(test.getContact().getMobileNumber());
+            professionView.setText(test.getPrintableProfessionalDegree());
+            arrivalView.setText(test.getArrival().toString());
+            departureView.setText(test.getDeparture().toString());
+
 			
 		} catch (SharkKBException e) {
 			errorToast();
@@ -70,38 +86,16 @@ public class BusinessCardActivity extends Activity implements OnClickListener {
 			e.printStackTrace();
 		}
 		 catch (IllegalArgumentException e){
-				errorToast();
+				//errorToast();
 				e.printStackTrace();
 		 }
 		 catch (NullPointerException e){
-				errorToast();
+				//errorToast();
 				e.printStackTrace();
 		 }
 	}
 
-	// The data to show
-	List<Map<String, String>> planetsList = new ArrayList<Map<String, String>>();
 
-	private void initList() {
-		// We populate the planets
-
-		planetsList.add(createPlanet("planet", "Mercury"));
-		planetsList.add(createPlanet("planet", "Venus"));
-		planetsList.add(createPlanet("planet", "Mars"));
-		planetsList.add(createPlanet("planet", "Jupiter"));
-		planetsList.add(createPlanet("planet", "Saturn"));
-		planetsList.add(createPlanet("planet", "Uranus"));
-		planetsList.add(createPlanet("planet", "Neptune"));
-		planetsList.add(createPlanet("planet", "Pluto"));
-
-	}
-
-	private HashMap<String, String> createPlanet(String key, String name) {
-		HashMap<String, String> planet = new HashMap<String, String>();
-		planet.put(key, name);
-
-		return planet;
-	}
 
 	@Override
 	public void onClick(View v) {

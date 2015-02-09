@@ -48,6 +48,8 @@ public interface PHNXSharkEngine {
 
 	public TXSemanticTag getRessourceTag(Taxonomy topicsTX, PHNXResource.RessourceType type) throws SharkKBException; // fertig
 
+
+
 	public String getResourceTypeSI(PHNXResource.RessourceType type); // fertig
 
 	public PeerSemanticTag getOwnerPST(SharkKB kb, String si) throws SharkKBException; // fertig

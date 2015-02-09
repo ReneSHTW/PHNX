@@ -66,6 +66,8 @@ public class PHNXBusinessCardImpl implements PHNXBusinessCard {
 				pst.getProperty("PHNX_Contact_privateLandLineNumber"), null /*current Location*/);
 	}
 
+
+
 	@Override
 	public PHNXOrganization getOrganization() throws SharkKBException {
 		return phnxEngine.getPHNXOrganization(pst.getProperty("PHNX_Organization_SI"));
