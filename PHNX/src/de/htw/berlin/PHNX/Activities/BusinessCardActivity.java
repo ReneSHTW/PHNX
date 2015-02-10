@@ -38,6 +38,7 @@ public class BusinessCardActivity extends Activity implements OnClickListener {
     private TextView professionView;
     private TextView arrivalView;
     private TextView departureView;
+    private TextView orgaView;
 	private Toast toast;
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("MMMM dd yyyy");
 
@@ -59,12 +60,14 @@ public class BusinessCardActivity extends Activity implements OnClickListener {
         professionView = (TextView) findViewById(R.id.textView10);
         arrivalView = (TextView) findViewById(R.id.textView13);
         departureView = (TextView) findViewById(R.id.textView15);
+        orgaView = (TextView) findViewById(R.id.textView6);
 		showMainMenuBtn.setOnClickListener(this);
 		editProfileBtn.setOnClickListener(this);
 
         SharedPreferences settings = getSharedPreferences("mysettings",
                 Context.MODE_PRIVATE);
         String result = settings.getString("SI", null);
+        String result2 = settings.getString("SIOrga", null);
         toast = Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG);
         toast.show();
 
@@ -93,6 +96,10 @@ public class BusinessCardActivity extends Activity implements OnClickListener {
 				//errorToast();
 				e.printStackTrace();
 		 }
+         if (result2 != null)  {
+            orgaView.setText(result2);
+        }
+
 	}
 
 

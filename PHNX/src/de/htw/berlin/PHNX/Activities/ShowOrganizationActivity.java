@@ -32,8 +32,8 @@ public class ShowOrganizationActivity extends Activity implements OnClickListene
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.show_organization_card);
-		editOrganization = (Button) findViewById(R.id.button5);
-		editOrganization.setOnClickListener(this);
+		//editOrganization = (Button) findViewById(R.id.button5);
+		//editOrganization.setOnClickListener(this);
         orgaName = (TextView) findViewById(R.id.textView1);
         contactBtn = (Button) findViewById(R.id.button3);
         try {
@@ -60,11 +60,11 @@ public class ShowOrganizationActivity extends Activity implements OnClickListene
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.button5: {
+		/*case R.id.button5: {
 			intent = new Intent(ShowOrganizationActivity.this, CreateOrganizationActivity.class);
 			startActivity(intent);
 			break;
-		}
+		}*/
 		
 		
 		

@@ -31,7 +31,7 @@
         android:layout_below="@+id/textView2"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:text="enter a word" >
+        android:hint="enter a word" >
 
         <requestFocus />
     </EditText>

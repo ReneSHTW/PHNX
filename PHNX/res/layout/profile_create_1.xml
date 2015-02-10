@@ -23,10 +23,9 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button1"
-        android:layout_alignBottom="@+id/button1"
-        android:layout_alignLeft="@+id/textView3"
-        android:text="today" />
+        android:text="today"
+        android:layout_alignTop="@+id/button1"
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:id="@+id/button3"
@@ -66,21 +65,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="73dp"
         android:text="My departure:"
         android:textSize="22dp"
-        android:layout_below="@+id/editText7"
-        android:layout_alignEnd="@+id/textView4" />
+        android:layout_below="@+id/editText"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView3"
-        android:layout_alignBottom="@+id/textView3"
-        android:layout_alignParentLeft="true"
+
         android:text="My arrival:"
-        android:textSize="22dp" />
+        android:textSize="22dp"
+        android:layout_alignTop="@+id/textView3"
+        android:layout_toEndOf="@+id/dpResult" />
 
     <EditText
         android:id="@+id/editText7"
