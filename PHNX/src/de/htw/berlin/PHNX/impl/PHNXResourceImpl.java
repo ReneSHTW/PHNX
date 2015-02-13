@@ -17,7 +17,8 @@ public class PHNXResourceImpl implements PHNXResource {
 	private ContextPoint cp;
 	private PHNXSharkEngine phnxEngine;
 
-	/** That constructor is only used when a new (really new) resource is to be created.
+	/**
+	 * That constructor is only used when a new (really new) resource is to be created.
 	 * 
 	 * @param kB
 	 * @param ressourceTypeP
@@ -26,7 +27,8 @@ public class PHNXResourceImpl implements PHNXResource {
 	 * @param contactPersonP
 	 * @param amountP
 	 * @param pictureP
-	 * @throws SharkKBException */
+	 * @throws SharkKBException
+	 */
 	public PHNXResourceImpl(PHNXSharkEngine PHNXEngineP, SharkKB kBP, PHNXResource.RessourceType ressourceTypeP, String resourceNameP, String ownerIdentifierP,
 			String contactPersonP, String amountP, PHNXPicture pictureP) throws SharkKBException {
 		if (kBP != null && resourceNameP != null && ownerIdentifierP != null) {
@@ -56,7 +58,7 @@ public class PHNXResourceImpl implements PHNXResource {
 				throw new SharkKBException(); // error Text hinzufuegen
 			}
 
-			if (contactPersonP != null) {
+			if (contactPersonP != null && !contactPersonP.equals("")) {
 				PeerSemanticTag contactPST = phnxEngine.getOwnerPST(this.kb, contactPersonP);
 				if (contactPST == null) {
 					throw new SharkKBException(); // error Text hinzufuegen

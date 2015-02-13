@@ -11,7 +11,9 @@ import java.util.Locale;
 
 import net.sharkfw.knowledgeBase.STSet;
 import net.sharkfw.knowledgeBase.SemanticTag;
+import net.sharkfw.knowledgeBase.SharkKB;
 import net.sharkfw.knowledgeBase.SharkKBException;
+import net.sharkfw.knowledgeBase.Taxonomy;
 import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
 
 import org.junit.After;
@@ -20,6 +22,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import de.htw.berlin.PHNX.impl.PHNXException;
 import de.htw.berlin.PHNX.impl.PHNXSharkEngineImpl;
 import de.htw.berlin.PHNX.interfaces.PHNXSharkEngine;
@@ -93,9 +96,15 @@ public class EngineTests {
 		STSet plainSet = InMemoSharkKB.createInMemoSTSet();
 		SemanticTag one = plainSet.createSemanticTag("eins", "Nummer");
 		SemanticTag two = plainSet.createSemanticTag("zwei", "Nummer");
-		
+
 		plainSet.getSemanticTag("Nummer").getName();
 		System.out.println(plainSet.getSemanticTag("Nummer").getName());
+	}
+
+	@Test
+	public void TaxonomyTest() throws SharkKBException {
+		SharkKB kb = new InMemoSharkKB();
+		Taxonomy topicTX = kb.getTopicsAsTaxonomy();
 	}
 
 }
