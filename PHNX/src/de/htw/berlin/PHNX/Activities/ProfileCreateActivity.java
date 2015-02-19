@@ -40,7 +40,7 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 	private Button save;
 	private int selection;
 	private Calendar dateTime = Calendar.getInstance();
-	private SimpleDateFormat dateFormatter = new SimpleDateFormat("MMMM dd yyyy");
+	private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
 	private EditText name;
 	private EditText middleNames;
 	private EditText phoneNumer;
@@ -56,6 +56,8 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 	private PHNXName phnxName;
 	private PHNXSharkEngine engine;
 	private static final int SELECT_PHOTO = 100;
+    private Date arrivalDate = null;
+    private Date departureDate = null;
    // public static final String PREFS_NAME = "MyPrefsFile";
 
 	@Override
@@ -143,8 +145,7 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 					phnxName = new PHNXName(temp[0], temp[1], null);
 				}
 
-				Date arrivalDate = null;
-				Date departureDate = null;
+
 				try {
 					arrivalDate = dateFormatter.parse(arrival.getText().toString());
 				} catch (ParseException e) {
@@ -163,6 +164,10 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 				//new PHNXContact(anEmailAddress, aWwwAddress, aMobileNumber, aLandLineNumber, aCurrentLocation)
 
 				try {
+                    if (arrivalDate.after(departureDate)) {
+                        throw new IllegalArgumentException();
+
+                    }
 					engine.createPHNXBusinessCard(phnxName, phnxContact, null, profession.getText().toString(), arrivalDate, departureDate, null);
 					successToast();
                    // SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
@@ -187,11 +192,16 @@ public class ProfileCreateActivity extends Activity implements OnClickListener {
 					errorToast();
 
 				}
+                  catch (IllegalArgumentException e) {
+                      toast = Toast.makeText(getApplicationContext(), "Time machines are not invented yet!", Toast.LENGTH_LONG);
+                      toast.show();
+                  }
 
 				break;
 
 			} else {
 				missingParamsToast();
+                break;
 			}
 		case R.id.imageView1: {
 			Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);

@@ -2,6 +2,7 @@ package de.htw.berlin.PHNX.Activities;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,6 +78,9 @@ public class BusinessCardActivity extends Activity implements OnClickListener {
 			eMailView.setText(test.getContact().getEmailAddress());
 			telNumberView.setText(test.getContact().getMobileNumber());
             professionView.setText(test.getPrintableProfessionalDegree());
+           /* SimpleDateFormat sdfDestination = new SimpleDateFormat(
+                    "dd/MM/yyyy, ha");
+            Date date = sdfSource.parse(test.getArrival().toString());*/
             arrivalView.setText(test.getArrival().toString());
             departureView.setText(test.getDeparture().toString());
 
