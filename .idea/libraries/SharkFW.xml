@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="libs">
+  <library name="SharkFW">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/PHNX/libs/android-support-v4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/PHNX/libs/SharkFW.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

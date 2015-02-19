@@ -120,7 +120,7 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 
 		// catch exception?
 
-		ContextCoordinates cc = this.kB.createContextCoordinates(resourceTypeTag, ownerPST, null, null, null, null, SharkCS.DIRECTION_INOUT);
+		ContextCoordinates cc = this.kB.createContextCoordinates(null, ownerPST, null, null, null, null, SharkCS.DIRECTION_NOTHING);
 
 		FragmentationParameter[] fps = new FragmentationParameter[SharkCS.MAXDIMENSIONS];
 
@@ -137,9 +137,11 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 		L.d("Knowledge base:\n" + L.kb2String(this.kB));
 		L.d("context as context coordinates\n" + ccString);
 
+        L.setLogLevel(L.LOGLEVEL_ALL);
 		// lets find all context point representing resources of given type
 		Knowledge k = SharkCSAlgebra.extract(this.kB, cc, fps);
-		
+        L.setLogLevel(L.LOGLEVEL_ERROR);
+
 		if(k != null) {
 			L.d("knowledge found: ");
 			L.d(L.knowledge2String(k));
@@ -151,7 +153,7 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 
 		Enumeration<ContextPoint> tempEnum = k.contextPoints();
 
-		ArrayList<PHNXResource> tempListResource = new ArrayList<PHNXResource>();
+		/*ArrayList<PHNXResource> tempListResource = new ArrayList<PHNXResource>();
 		if (tempEnum != null) {
 			while (tempEnum.hasMoreElements()) {
 				ContextPoint cp = tempEnum.nextElement();
@@ -164,7 +166,7 @@ public class PHNXSharkEngineImpl implements PHNXSharkEngine {
 					}
 				}
 			}
-		}
+		}*/
 		return tempEnum;
 	}
 

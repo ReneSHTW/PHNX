@@ -24,6 +24,7 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="mapsforge-map-0.5.0-rc2 (2)" level="project" />
+    <orderEntry type="library" name="SharkFW" level="project" />
   </component>
 </module>
 
