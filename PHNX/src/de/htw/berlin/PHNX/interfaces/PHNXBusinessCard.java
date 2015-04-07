@@ -2,6 +2,17 @@ package de.htw.berlin.PHNX.interfaces;
 
 /** Public interface PHNXBusinessCard represents methods to provide access to the information about persons saved in  
  * in the Phoenix app. Each person, including the user/owner of the app, has a PHNXBusinessCard.
+ * The user of the app can create their personal business card as well as business cards for other persons to be able to search easily for them and for the resources associated with these people, even if they don't use the PHNX app.
+ * Hence a business card created for another person (not the owner of the app) has to be replaceable with the business card created by the actual person represented by the business card.
+ * The person, whom the PHNXBusinessCard represents, must have entered the following necessary pieces of information for easy identification and search:
+ * - Their name (can also include their nickname);
+ * - Their contact information which has to at least contain an easily identifiable, unique resource, like an email address or a URI;
+ * - Their organization - since one of the major requirement from our customers was that each person using this app has to be sent to the area by an organization. Adventure seekers and "lone wolves" cannot be taken into account in crisis areas.
+ * - Their profession - the customers found it useful to have the information about the person's actual education/degree/sphere of training, and not only the role they currently play in their organization.
+ * - Their skills - which could be any relevant skills (medical, language etc) that the person can offer to be used during the catastrophe relief operation.
+ * - Their arrival and departure dates - since a person deployed in a catastrophe relief operation normally knows their arrival and departure dates. Those dates may help determine the relevance of information generated and shared by those people.
+ * - Their picture - optional.
+ *
  */
 
 import java.util.Date;
