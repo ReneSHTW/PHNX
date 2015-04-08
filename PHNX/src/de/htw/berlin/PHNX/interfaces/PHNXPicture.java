@@ -1,7 +1,6 @@
 /**The interface PHNXPicture contains methods allowing access to pictures in PHNX app.
  * Since a picture is not uniquely defined for all possible different implementations,
  * this interface is used as a wrapper for possible picture formats and implementations.
- * 
  */
 package de.htw.berlin.PHNX.interfaces;
 
